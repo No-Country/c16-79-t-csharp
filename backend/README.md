@@ -1,11 +1,7 @@
 # Inicio
 
-## Crear imagen
-Ejecutar el comando en la raiz del proyecto.
-`docker build -t veterinaria -f Dockerfile.dev .`
+## Ejecucion con docker compose en modo desarrollo
+`docker compose -f docker-compose-dev.yml up`
 
-## Crear y ejecutar contenedor
-`docker run --rm -it --name veterinariawebapi -p5103:5102 veterinaria`
-
-## Probar Web API
-`http://localhost:5103/swagger`
+## Probar Web Api
+`http://localhost:5104/swagger`
