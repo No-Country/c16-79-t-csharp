@@ -18,6 +18,8 @@ services:
       - "5104:5102"
     networks:
       - veterinaria-red-dev
+    volumes:
+      - ./:/app
 volumes:
   data-db-dev:
 networks:
