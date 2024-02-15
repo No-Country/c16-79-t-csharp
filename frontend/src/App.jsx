@@ -1,6 +1,7 @@
 
 import './App.css'
 import NavBar from './Common/NavBar'
+import {FooterComponent}   from './Common/FooterComponent' 
 
 function App() {
 
@@ -8,6 +9,7 @@ function App() {
   return (
     <>
       <NavBar />
+      <FooterComponent></FooterComponent>
     </>
   )
 }
