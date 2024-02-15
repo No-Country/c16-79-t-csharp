@@ -18,4 +18,9 @@
     <ProjectReference Include="..\src\Veterinaria.Infrastructure\Veterinaria.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Controllers\" />
+    <Folder Include="Utilities\" />
+  </ItemGroup>
+
 </Project>
