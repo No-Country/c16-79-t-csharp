@@ -1,29 +1,35 @@
 version: '3'
 services:
-  db-dev:
+  database:
+    container_name: "${CONTAINER_DB_NAME}-dev"
     image: postgres
     ports:
-      - "5456:5432"
+      - "${DB_PORT_HOST}:${DB_PORT_CONTAINER}"
     environment:
-      - POSTGRES_PASSWORD=password
-      - POSTGRES_DB=veterinaria
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
     volumes:
       - data-db-dev:/var/lib/postgresql/data
       - ./db/backup/:/docker-entrypoint-initdb.d/
     networks:
       - veterinaria-red-dev
-  webapi-dev:
+  webapi:
+    container_name: webapi-dev
     build: 
       context: .
       dockerfile: Dockerfile.dev
     ports:
-      - "5104:5102"
+      - "${WEB_API_PORT_HOST}:5102"
     networks:
       - veterinaria-red-dev
     volumes:
       - ./:/app
+    environment:
+      - ConnectionStrings__DefaultConnection=Host=${CONTAINER_DB_NAME}-dev;Username=postgres;Port=${DB_PORT_CONTAINER};Password=${DB_PASSWORD};Database=${DB_NAME}
     profiles:
       - web-api
+    env_file:
+      - .env
 volumes:
   data-db-dev:
 networks:

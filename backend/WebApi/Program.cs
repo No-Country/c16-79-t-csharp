@@ -6,6 +6,7 @@ using WebApi.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
+
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 
@@ -25,10 +26,13 @@ if (app.Environment.IsDevelopment())
 {
     if (File.Exists("/.dockerenv") || Directory.Exists("/.docker"))
     {
+        var portHost = app.Configuration["WEB_API_PORT_HOST"];
+        Console.WriteLine($"--> Now listening on host machine: http://localhost:{portHost}");
+
         app.Urls.Add("http://0.0.0.0:5102");
-        Console.WriteLine("-- Ejecutando dentro de Docker --");
+        Console.WriteLine("-- Running inside Docker --");
     }
-    Console.WriteLine($"-- Modo desarrollo --");
+    Console.WriteLine($"-- Development Mode --");
     app.UseSwagger();
     app.UseSwaggerUI();
 }
