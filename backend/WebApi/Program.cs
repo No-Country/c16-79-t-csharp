@@ -1,9 +1,11 @@
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
+using Veterinaria.Infrastructure.Persistance.Context;
 using WebApi.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
+
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -14,7 +16,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddHealthChecks()
-    .AddCheck("self", () => HealthCheckResult.Healthy());
+    .AddCheck("self", () => HealthCheckResult.Healthy())
+    .AddDbContextCheck<VeterinariaDbContext>();
 
 var app = builder.Build();
 
@@ -23,10 +26,13 @@ if (app.Environment.IsDevelopment())
 {
     if (File.Exists("/.dockerenv") || Directory.Exists("/.docker"))
     {
+        var portHost = app.Configuration["WEB_API_PORT_HOST"];
+        Console.WriteLine($"--> Now listening on host machine: http://localhost:{portHost}");
+
         app.Urls.Add("http://0.0.0.0:5102");
-        Console.WriteLine("-- Ejecutando dentro de Docker --");
+        Console.WriteLine("-- Running inside Docker --");
     }
-    Console.WriteLine($"-- Modo desarrollo --");
+    Console.WriteLine($"-- Development Mode --");
     app.UseSwagger();
     app.UseSwaggerUI();
 }
