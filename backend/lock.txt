@@ -1,0 +1,17 @@
+
+-- Ejecucion de solo la base de datos
+docker compose -f docker-compose-dev.yml up
+
+-- Ejecucion de todo (tambien la Web API)
+docker compose -f docker-compose-dev.yml --profile web-api up
+
+
+-- Borrar los datos de la base de datos (Volume)
+docker compose -f docker-compose-dev.yml down -v
+
+-- Eliminar todo lo generado por docker compose(Contenedore , Imagenes , Redes , Volumenes)
+docker compose -f docker-compose-dev.yml --profile web-api down --rmi all -v
+
+
+-- Backup de la base de datos(solo uno debe de realizar los cambios)
+docker exec -it db-veterinaria-dev pg_dump -U postgres -d veterinaria > ./db/backup/backup.sql
