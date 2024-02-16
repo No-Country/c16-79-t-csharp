@@ -6,8 +6,10 @@ services:
       - "5456:5432"
     environment:
       - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=veterinaria
     volumes:
       - data-db-dev:/var/lib/postgresql/data
+      - ./db/backup/:/docker-entrypoint-initdb.d/
     networks:
       - veterinaria-red-dev
   webapi-dev:
@@ -20,6 +22,8 @@ services:
       - veterinaria-red-dev
     volumes:
       - ./:/app
+    profiles:
+      - web-api
 volumes:
   data-db-dev:
 networks:

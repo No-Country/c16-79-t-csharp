@@ -1,6 +1,7 @@
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
+using Veterinaria.Infrastructure.Persistance.Context;
 using WebApi.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,7 +15,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddHealthChecks()
-    .AddCheck("self", () => HealthCheckResult.Healthy());
+    .AddCheck("self", () => HealthCheckResult.Healthy())
+    .AddDbContextCheck<VeterinariaDbContext>();
 
 var app = builder.Build();
 
