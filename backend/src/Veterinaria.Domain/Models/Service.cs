@@ -1,11 +1,11 @@
-namespace Veterinaria.Models;
+namespace Veterinaria.Domain.Models;
 
 public class   Service
 {
-     public long Id{ get ;set; }
-     public string? Tipo{ get ;set; }
-     public long description{ get ;set; }
-     public long price{ get ;set; }
+     public int Id{ get ;set; }
+     public string? Tipe { get ;set; }
+     public string? Description{ get ;set; }
+     public float Price{ get ;set; }
 
 
 }

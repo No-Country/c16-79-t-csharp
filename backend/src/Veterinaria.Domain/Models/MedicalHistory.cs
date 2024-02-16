@@ -1,14 +1,11 @@
+namespace Veterinaria.Domain.Models;
 
-namespace Veterinaria.Models;
-
-public class   MedicalHistory
+public class MedicalHistory
 {
-     public long Id{ get ;set; }
-     
+     public int Id{ get ;set; }
      public string? Diagnostic { get ;set; }
      public string? Medic { get ;set; }
-     public DateTime Time{ get ;set; }
-     public long PetId{ get ;set; }
-
-
+     public DateTime Time { get ;set; }
+     public int PetId { get ;set; }
+     public Pet Pet { get; set; } = null!;
 }

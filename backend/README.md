@@ -1,6 +1,6 @@
 # Inicio
 
-## Antes de iniciar los contenedore eliminar las imagenes anteriores con:
+## Antes de iniciar los contenedore eliminar las imagenes anteriores y volumenes creados con:
 `docker compose -f docker-compose-dev.yml down --rmi all -v`
 
 ## Ejecucion con docker compose en modo desarrollo
