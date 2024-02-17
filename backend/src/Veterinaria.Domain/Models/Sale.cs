@@ -5,7 +5,7 @@ namespace Veterinaria.Domain.Models
         public int Id { get; set; }
         public DateTime Date { get; set; }
         public int ClientId { get; set; }
-        public Client Client { get; set; }
-        public List<SaleDetail> SaleDetails { get; set; }
+        public ClientUser Client { get; set; }
+        public List<DetailSale> SaleDetails { get; set; }
     }
 }
