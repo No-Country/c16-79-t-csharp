@@ -34,7 +34,7 @@ public class MockService : IMockService
     {
         if (await _repository.FindByIdAsync(id) is not MockModel model)
         {
-            throw new ResourceNotFoundException<MockModel, int>(id);
+            throw ResourceNotFoundException.NotFoundById<MockModel, int>(id);
         }
         return model;
     }
