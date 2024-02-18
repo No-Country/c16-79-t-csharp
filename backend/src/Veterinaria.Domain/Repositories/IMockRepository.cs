@@ -4,5 +4,5 @@ namespace Veterinaria.Domain.Repositories;
 
 public interface IMockRepository : IBasicRepository<MockModel, int>
 {
-    Task MetodoPersonalizado(MockModel model);
+    Task MetodoPersonalizadoAsync(MockModel model);
 }

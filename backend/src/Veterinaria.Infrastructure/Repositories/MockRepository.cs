@@ -12,7 +12,7 @@ public class MockRepository : BasicRepository<MockModel, int>, IMockRepository
         _context = context;
     }
 
-    public Task MetodoPersonalizado(MockModel model)
+    public Task MetodoPersonalizadoAsync(MockModel model)
     {
         //TODO : implementacion de metodo personalizado.
         throw new NotImplementedException();
