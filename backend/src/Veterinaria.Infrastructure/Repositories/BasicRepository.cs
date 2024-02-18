@@ -11,7 +11,7 @@ public class BasicRepository<TModel, TypeId> : IBasicRepository<TModel, TypeId> 
     {
         _context = dbContext;
     }
-    virtual public async Task<TModel> Add(TModel model)
+    virtual public async Task<TModel> AddAsync(TModel model)
     {
         try
         {
@@ -25,7 +25,7 @@ public class BasicRepository<TModel, TypeId> : IBasicRepository<TModel, TypeId> 
         }
     }
 
-    virtual public async Task Delete(TModel model)
+    virtual public async Task DeleteAsync(TModel model)
     {
         try
         {
@@ -38,17 +38,17 @@ public class BasicRepository<TModel, TypeId> : IBasicRepository<TModel, TypeId> 
         };
     }
 
-    virtual public async Task<List<TModel>> GetAll()
+    virtual public async Task<List<TModel>> FindAllAsync()
     {
         return await _context.Set<TModel>().ToListAsync();
     }
 
-    virtual public async Task<TModel?> GetById(TypeId id)
+    virtual public async Task<TModel?> FindByIdAsync(TypeId id)
     {
         return await _context.Set<TModel>().FindAsync(id);
     }
 
-    virtual public async Task<TModel> Update(TModel model)
+    virtual public async Task<TModel> UpdateAsync(TModel model)
     {
         try
         {
