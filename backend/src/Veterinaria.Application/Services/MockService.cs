@@ -18,23 +18,32 @@ public class MockService : IMockService
         return savedModel;
     }
 
-    public Task DeleteAsync(int id)
+    public async Task DeleteAsync(int id)
     {
-        throw new NotImplementedException();
+        MockModel model = await GetByIdAsync(id);
+        await _repository.Delete(model);
     }
 
     public Task<List<MockModel>> GetAllAsync()
     {
-        throw new NotImplementedException();
+        return _repository.GetAll();
     }
 
-    public Task<MockModel> GetByIdAsync(int id)
+    public async Task<MockModel> GetByIdAsync(int id)
     {
-        throw new NotImplementedException();
+        if (await _repository.GetById(id) is not MockModel model)
+        {
+            //TODO: personalizar Exception
+            throw new Exception("Implentar error notfoud");
+        }
+        return model;
     }
 
-    public Task<MockModel> UpdateAsync(int id, string atributo1, int atributo2)
+    public async Task<MockModel> UpdateAsync(int id, string attributo1, int attributo2)
     {
-        throw new NotImplementedException();
+        MockModel model = await GetByIdAsync(id);
+        model.UpdateModel(attributo1, attributo2);
+        MockModel updatedModel = await _repository.Update(model);
+        return updatedModel;
     }
 }

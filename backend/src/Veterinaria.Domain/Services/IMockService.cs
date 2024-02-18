@@ -6,7 +6,7 @@ public interface IMockService
 {
     Task<MockModel> GetByIdAsync(int id);
     Task<List<MockModel>> GetAllAsync();
-    Task<MockModel> CreateAsync(string atributo1, int atributo2);
-    Task<MockModel> UpdateAsync(int id, string atributo1, int atributo2);
+    Task<MockModel> CreateAsync(string attributo1, int attributo2);
+    Task<MockModel> UpdateAsync(int id, string attributo1, int attributo2);
     Task DeleteAsync(int id);
 }
