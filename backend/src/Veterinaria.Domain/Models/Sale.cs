@@ -4,8 +4,9 @@ namespace Veterinaria.Domain.Models
     {
         public int Id { get; set; }
         public DateTime Date { get; set; }
-        public int ClientId { get; set; }
-        public Client Client { get; set; }
-        public List<SaleDetail> SaleDetails { get; set; }
+        public float Total { get; set; }
+        public int ClientUserId { get; set; }
+        public ClientUser ClientUser { get; set; } = null!;
+        public HashSet<DetailSale> SaleDetails { get; set; } = new HashSet<DetailSale>();
     }
 }
