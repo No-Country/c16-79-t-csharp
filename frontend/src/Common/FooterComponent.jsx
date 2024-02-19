@@ -1,6 +1,8 @@
 
 import { Footer } from 'flowbite-react';
 import { BsDribbble, BsFacebook, BsGithub, BsInstagram, BsTwitter } from 'react-icons/bs';
+import Mapa from '../Components/Mapa/Mapa'
+
 
 export const FooterComponent = () => {
   return (
@@ -12,33 +14,36 @@ export const FooterComponent = () => {
             <Footer.Brand
               href="#"
               src="/public/logo.png"
-              alt="Logo"
-              name="Huella feliz"
+              alt="Logo"              
             />
           </div>
-          <div className="grid grid-cols-2 gap-8 sm:mt-4 sm:grid-cols-3 sm:gap-6">
+          <div className="grid grid-cols-3 gap-4 sm:mt-2 sm:grid-cols-4 sm:gap-6 items-center">         
 
-           {/*  <div>
-              <Footer.Title title="about" />
+            <div>
+              
               <Footer.LinkGroup col>
-                <Footer.Link href="#">Flowbite</Footer.Link>
-                <Footer.Link href="#">Tailwind CSS</Footer.Link>
+                <Footer.Link href="#">Inicio</Footer.Link>
+                <Footer.Link href="#">Teinda</Footer.Link>
               </Footer.LinkGroup>
             </div>
             <div>
-              <Footer.Title title="Follow us" />
+              
               <Footer.LinkGroup col>
-                <Footer.Link href="#">Github</Footer.Link>
-                <Footer.Link href="#">Discord</Footer.Link>
+                <Footer.Link href="#">Quiero adoptar</Footer.Link>
+                <Footer.Link href="#">Agenda</Footer.Link>
               </Footer.LinkGroup>
             </div>
             <div>
-              <Footer.Title title="Legal" />
+              
               <Footer.LinkGroup col>
-                <Footer.Link href="#">Privacy Policy</Footer.Link>
-                <Footer.Link href="#">Terms &amp; Conditions</Footer.Link>
+                <Footer.Link href="#">Servicios</Footer.Link>
+                <Footer.Link href="#">Perdidos y Encontrados</Footer.Link>
+                <Footer.Link href="#">Quienes Somos</Footer.Link>
               </Footer.LinkGroup>
-            </div> */}
+            </div> 
+            <div>
+              <Mapa></Mapa>
+            </div>
           </div>
         </div>
         <Footer.Divider />
