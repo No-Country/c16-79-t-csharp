@@ -8,13 +8,13 @@ namespace Veterinaria.Domain.Models
 {
     public class Address
     {
-        public int Id { get; set; }
-        public string? City { get; set; }
-        public string? Province { get; set; }
-        public string? Neighborhood { get; set; }
-        public string? Street { get; set; }
-        public int Number { get; set; }
-        public string? ClientUserId { get; set; }
-        public ClientUser ClientUser { get; set; } = null!;
+        public int Id { get; init; }
+        public string? City { get; private set; }
+        public string? Province { get; private set; }
+        public string? Neighborhood { get; private set; }
+        public string? Street { get; private set; }
+        public int Number { get; private set; }
+        public int ClientUserId { get; private set; }
+        public ClientUser ClientUser { get; private set; } = null!;
     }
 }

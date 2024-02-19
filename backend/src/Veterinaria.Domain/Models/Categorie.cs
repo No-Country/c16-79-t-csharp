@@ -2,8 +2,8 @@ namespace Veterinaria.Domain.Models
 {
     public class Categorie
     {
-        public int Id { get; set; }
-        public string? Name { get; set; }
-        public HashSet<Categorie> Categorias { get; set; } = new HashSet<Categorie>();
+        public int Id { get; init; }
+        public string Name { get; private set; }
+        public HashSet<Product> Products { get; private set; } = new HashSet<Product>();
     }
 }

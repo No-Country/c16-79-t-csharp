@@ -8,16 +8,16 @@ namespace Veterinaria.Domain.Models
 {
     public class Pet
     {
-        public int Id { get; set; }
-        public string? Name { get; set; }
-        public string? Type { get; set; }
-        public string? Race { get; set; }
-        public DateOnly FechaNacimiento { get; set; }
+        public int Id { get; init; }
+        public string Name { get; set; }
+        public string Type { get; set; }
+        public string Race { get; set; }
+        public DateOnly Birthday { get; set; }
         public float Weight { get; set; }
         public string? Photo { get; set; }
-        public string? ClientUserId { get; set; }
+        public string ClientUserId { get; set; }
         public ClientUser ClientUser { get; set; } = null!;
-        public string? DateId { get; set; }
+        public string DateId { get; set; }
         public Date Date { get; set; } = null!;
         public HashSet<MedicalHistory> MedicalHistories { get; set; } = new HashSet<MedicalHistory>();
     }
