@@ -4,6 +4,9 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Veterinaria.Infrastructure.AuthModels;
 using Veterinaria.Infrastructure.Persistance.Context;
 using WebApi.DependencyInjection;
+using Microsoft.OpenApi.Models;
+using Microsoft.AspNetCore.Identity;
+using Npgsql.Replication;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,7 +20,30 @@ builder.Services.AddAuthorization();
 
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
+    {
+        Name = "Authorizarion",
+        Type = SecuritySchemeType.Http,
+        Scheme = "Bearer",
+        BearerFormat = "Token",
+        In = ParameterLocation.Header,
+        Description = "Token Authorization Header using Bearer Scheme"
+    });
+    options.AddSecurityRequirement(new OpenApiSecurityRequirement()
+    {
+        {
+            new OpenApiSecurityScheme{
+            Reference = new OpenApiReference{
+                Type = ReferenceType.SecurityScheme,
+                Id = "Bearer"
+            }
+        },
+        new string[]{}
+        }
+    });
+});
 
 builder.Services.AddHealthChecks()
     .AddCheck("self", () => HealthCheckResult.Healthy())
@@ -49,8 +75,13 @@ var summaries = new[]
     "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
 };
 
-app.MapGet("/weatherforecast", () =>
+app.MapGet("/weatherforecast", (HttpContext context) =>
 {
+    var claims = context.User.Claims;
+    foreach (var item in claims)
+    {
+        Console.WriteLine(item.ToString());
+    }
     var forecast = Enumerable.Range(1, 5).Select(index =>
         new WeatherForecast
         (
