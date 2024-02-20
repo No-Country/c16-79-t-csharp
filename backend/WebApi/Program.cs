@@ -1,6 +1,7 @@
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
+using Veterinaria.Infrastructure.AuthModels;
 using Veterinaria.Infrastructure.Persistance.Context;
 using WebApi.DependencyInjection;
 
@@ -11,6 +12,9 @@ var builder = WebApplication.CreateBuilder(args);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 
 builder.Services.AddDependencyInfrastructure(builder.Configuration);
+
+builder.Services.AddAuthorization();
+
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -59,11 +63,17 @@ app.MapGet("/weatherforecast", () =>
 .WithName("GetWeatherForecast")
 .WithOpenApi();
 
+app.MapIdentityApi<ApplicationUserAccount>();
+app.MapSwagger().RequireAuthorization();
+
 app.MapHealthChecks("/hc", new HealthCheckOptions()
 {
     Predicate = _ => true,
     ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
 });
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.Run();
 

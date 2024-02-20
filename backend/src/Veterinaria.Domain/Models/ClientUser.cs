@@ -15,5 +15,6 @@ namespace Veterinaria.Domain.Models
         public HashSet<Pet> Pets { get; private set; } = new HashSet<Pet>();
         public HashSet<Address> Addresses { get; private set; } = new HashSet<Address>();
         public HashSet<Sale> Sales { get; private set; } = new HashSet<Sale>();
+        public string UserAccountId { get; set; }
     }
 }

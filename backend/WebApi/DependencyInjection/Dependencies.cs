@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Veterinaria.Infrastructure.AuthModels;
 using Veterinaria.Infrastructure.Persistance.Context;
 
 namespace WebApi.DependencyInjection;
@@ -10,6 +11,8 @@ public static class Dependencies
         {
             option.UseNpgsql(configuration.GetConnectionString("DefaultConnection"));
         });
+        services.AddIdentityApiEndpoints<ApplicationUserAccount>()
+            .AddEntityFrameworkStores<VeterinariaDbContext>();
 
         return services;
     }
