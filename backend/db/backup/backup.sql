@@ -260,7 +260,8 @@ CREATE TABLE public."Dates" (
     "Id" integer NOT NULL,
     "Time" timestamp with time zone NOT NULL,
     "ServiceId" integer NOT NULL,
-    "PetId" integer NOT NULL
+    "PetId" integer NOT NULL,
+    "StateDate" integer DEFAULT 0 NOT NULL
 );
 
 
@@ -530,7 +531,9 @@ COPY public."AspNetUserTokens" ("UserId", "LoginProvider", "Name", "Value") FROM
 
 COPY public."AspNetUsers" ("Id", "UserName", "NormalizedUserName", "Email", "NormalizedEmail", "EmailConfirmed", "PasswordHash", "SecurityStamp", "ConcurrencyStamp", "PhoneNumber", "PhoneNumberConfirmed", "TwoFactorEnabled", "LockoutEnd", "LockoutEnabled", "AccessFailedCount") FROM stdin;
 6e28ffd0-a91a-4f2a-a2e2-12f27ed80cd7	admin@email.com	ADMIN@EMAIL.COM	admin@email.com	ADMIN@EMAIL.COM	f	AQAAAAIAAYagAAAAELuv+K7XzY4G+8oi2V/Dc/r2OJVkoIeUvwInJY2Kl4d5o/fOkXuCKWCAorvEOOrcVw==	HCXJYEXAE2NB4CWNNNB3V7D5E6GL27G2	308505d0-9ecf-47fc-9d8f-c2170f55f336	\N	f	f	\N	t	0
-76d0e979-940d-4dc9-82c7-2b0b87739091	hilares33v@gmail.com	HILARES33V@GMAIL.COM	hilares33v@gmail.com	HILARES33V@GMAIL.COM	f	AQAAAAIAAYagAAAAEPlIbHNVpFJBchMKd4n3bvwginp/lHLlUwJWRalitut0cunY1zTofAfbLLVAKiIsdA==	RQGTETCQHXBGB5VJP6UCQLIY7QJDZ5SE	a4376d73-727d-447d-af31-136a31b6e5da	\N	f	f	\N	t	0
+397fdc0f-b828-425b-aeec-5ec882b57439	user@email.com	USER@EMAIL.COM	user@email.com	USER@EMAIL.COM	f	AQAAAAIAAYagAAAAEGN8UD/F2dD1AFoii68NjhcpJN0f43zXWlMJxZJ40+6V3aX03Zg8bglxFEu1a6OUKQ==	WNEDUBBEXQQX5QOYDIXNWK5JBC2GTB3Q	f1fccaa2-7210-44aa-b24d-1c0878e9eebf	\N	f	f	\N	t	0
+76d0e979-940d-4dc9-82c7-2b0b87739091	hilares33v@gmail.com	HILARES33V@GMAIL.COM	hilares33v@gmail.com	HILARES33V@GMAIL.COM	f	AQAAAAIAAYagAAAAEPlIbHNVpFJBchMKd4n3bvwginp/lHLlUwJWRalitut0cunY1zTofAfbLLVAKiIsdA==	RQGTETCQHXBGB5VJP6UCQLIY7QJDZ5SE	21530aa0-6b68-418c-8663-9f637a2577f2	\N	f	f	\N	t	1
+a0559d60-61ea-4330-9b20-8a589410ee5a	antonio@email.com	ANTONIO@EMAIL.COM	antonio@email.com	ANTONIO@EMAIL.COM	f	AQAAAAIAAYagAAAAEMfQaT4XkXR+3xZaQEkn0pjgy3uqvjXn9+O5jqFn+MhqdYYVO+HW95czAMAbSS0VbQ==	STLX4XVLZXKIG3K5QT7DEUGEZTHN3ODV	537ca2e4-d6ea-4e9e-b29a-3a86008d4d9e	\N	f	f	\N	t	0
 \.
 
 
@@ -562,7 +565,7 @@ COPY public."ClientUsers" ("Id", "Name", "LastName", "UserAccountId") FROM stdin
 -- Data for Name: Dates; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public."Dates" ("Id", "Time", "ServiceId", "PetId") FROM stdin;
+COPY public."Dates" ("Id", "Time", "ServiceId", "PetId", "StateDate") FROM stdin;
 \.
 
 
@@ -620,6 +623,7 @@ COPY public."Services" ("Id", "Type", "Description", "Price") FROM stdin;
 
 COPY public."__EFMigrationsHistory" ("MigrationId", "ProductVersion") FROM stdin;
 20240220011056_InitialMigration	8.0.0
+20240220204846_AddDateState	8.0.0
 \.
 
 
