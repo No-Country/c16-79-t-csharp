@@ -7,6 +7,6 @@ namespace Veterinaria.Domain.Models
         public float Total { get; set; }
         public int ClientUserId { get; set; }
         public ClientUser ClientUser { get; set; } = null!;
-        public HashSet<DetailSale> SaleDetails { get; set; } = new HashSet<DetailSale>();
+        public HashSet<DetailSale> DetailSales { get; set; } = new HashSet<DetailSale>();
     }
 }

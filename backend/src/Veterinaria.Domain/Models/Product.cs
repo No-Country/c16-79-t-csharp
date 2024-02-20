@@ -9,5 +9,6 @@ namespace Veterinaria.Domain.Models
         public string? Description { get; set; }
         public string? Image { get; set; }
         public HashSet<Categorie> Categories { get; set; } = new HashSet<Categorie>();
+        public HashSet<DetailSale> DetailSales { get; set; } = new HashSet<DetailSale>();
     }
 }

@@ -17,8 +17,7 @@ namespace Veterinaria.Domain.Models
         public string? Photo { get; set; }
         public string ClientUserId { get; set; }
         public ClientUser ClientUser { get; set; } = null!;
-        public string DateId { get; set; }
-        public Date Date { get; set; } = null!;
+        public HashSet<Date> Dates { get; set; } = new HashSet<Date>();
         public HashSet<MedicalHistory> MedicalHistories { get; set; } = new HashSet<MedicalHistory>();
     }
 }
