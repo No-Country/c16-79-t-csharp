@@ -8,8 +8,8 @@ function App() {
   return (
     <>
       <NavBar />
+      <CarouselBanner/>
       <CarrouselMarcas/>
-      <CarouselBanner></CarouselBanner>
       <FooterComponent></FooterComponent>
     </>
   );

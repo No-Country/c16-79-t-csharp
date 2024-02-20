@@ -40,12 +40,8 @@ const CarrouselMarcas = () => {
   return (
     <div className="h-56 sm:h-64 xl:h-80 2xl:h-96">
       <Carousel onSlideChange={(index) => console.log("onSlideChange()", index)}>
-      {marcas.map((d)=>{
-        return (
-        <h1 key={d.title}> hola </h1>
-        )
-      })}
-        {/* {marcas.map((marca) => {
+    
+        {marcas.map((marca) => {
           return (
             <>
               <div id={marca.title} className="">
@@ -53,7 +49,7 @@ const CarrouselMarcas = () => {
               </div>
             </>
           );
-        })} */}
+        })}
       </Carousel>
     </div>
   );
