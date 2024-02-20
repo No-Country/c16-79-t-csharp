@@ -9,30 +9,26 @@ export const FooterComponent = () => {
     <>
            <Footer container>
       <div className="w-full">
-        <div className="grid w-full justify-between sm:flex sm:justify-between md:flex md:grid-cols-1">
+        <div className="grid w-full justify-around sm:flex  md:flex md:grid-cols-1">
           <div>
             <Footer.Brand
               href="#"
               src="/public/logo.png"
-              alt="Logo"              
+              alt="Logo"  
             />
           </div>
-          <div className="grid grid-cols-3 gap-4 sm:mt-2 sm:grid-cols-4 sm:gap-6 items-center">         
+          <div className="grid grid-cols-2 gap-4 sm:mt-2 lg:grid-cols-3 sm:gap-6 items-center">         
 
             <div>
               
               <Footer.LinkGroup col>
                 <Footer.Link href="#">Inicio</Footer.Link>
-                <Footer.Link href="#">Teinda</Footer.Link>
-              </Footer.LinkGroup>
-            </div>
-            <div>
-              
-              <Footer.LinkGroup col>
+                <Footer.Link href="#">Tienda</Footer.Link>
                 <Footer.Link href="#">Quiero adoptar</Footer.Link>
                 <Footer.Link href="#">Agenda</Footer.Link>
               </Footer.LinkGroup>
             </div>
+
             <div>
               
               <Footer.LinkGroup col>
