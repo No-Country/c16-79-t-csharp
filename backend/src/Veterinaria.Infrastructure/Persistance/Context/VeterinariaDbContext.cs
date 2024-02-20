@@ -26,8 +26,8 @@ public class VeterinariaDbContext : IdentityDbContext<ApplicationUserAccount>
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         base.OnConfiguring(optionsBuilder);
-        //TODO: arreglar :warning
-        //optionsBuilder.UseNpgsql("Host=localhost;Username=postgres;Port=5456;Password=password;Database=veterinaria");
+        //TODO: para migraciones
+        optionsBuilder.UseNpgsql("Host=localhost;Username=postgres;Port=5456;Password=password;Database=veterinaria");
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -38,6 +38,10 @@ public class VeterinariaDbContext : IdentityDbContext<ApplicationUserAccount>
             );
             e.Property(e => e.UserAccountId).IsRequired();
             e.HasIndex(e => e.UserAccountId).IsUnique();
+        });
+        modelBuilder.Entity<Date>(e =>
+        {
+            e.Property(e => e.StateDate).HasConversion<int>();
         });
         base.OnModelCreating(modelBuilder);
     }

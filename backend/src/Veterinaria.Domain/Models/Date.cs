@@ -8,5 +8,12 @@ public class Date
      public Service Service { get; set; } = null!;
      public int PetId { get ; set; }
      public Pet Pet { get; set; } = null!;
+     public DateState StateDate { get; set; }
+}
 
+public enum DateState
+{
+     Finished = 1,
+     Canceled = 2,
+     Crearted = 3
 }

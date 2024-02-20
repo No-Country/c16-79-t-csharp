@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Veterinaria.Infrastructure.Persistance.Context;
@@ -11,9 +12,11 @@ using Veterinaria.Infrastructure.Persistance.Context;
 namespace Veterinaria.Infrastructure.Persistance.Migrations
 {
     [DbContext(typeof(VeterinariaDbContext))]
-    partial class VeterinariaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240220204846_AddDateState")]
+    partial class AddDateState
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
