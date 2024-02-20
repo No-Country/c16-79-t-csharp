@@ -27,7 +27,7 @@ public class VeterinariaDbContext : IdentityDbContext<ApplicationUserAccount>
     {
         base.OnConfiguring(optionsBuilder);
         //TODO: para migraciones
-        optionsBuilder.UseNpgsql("Host=localhost;Username=postgres;Port=5456;Password=password;Database=veterinaria");
+        //optionsBuilder.UseNpgsql("Host=localhost;Username=postgres;Port=5456;Password=password;Database=veterinaria");
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -37,6 +37,7 @@ if (app.Environment.IsDevelopment())
         Console.WriteLine("-- Running inside Docker --");
     }
     Console.WriteLine($"-- Development Mode --");
+
     app.UseSwagger();
     app.UseSwaggerUI();
 }
@@ -61,10 +62,10 @@ app.MapGet("/weatherforecast", () =>
     return forecast;
 })
 .WithName("GetWeatherForecast")
-.WithOpenApi();
+.WithOpenApi().RequireAuthorization();
 
 app.MapIdentityApi<ApplicationUserAccount>();
-app.MapSwagger().RequireAuthorization();
+app.MapSwagger();
 
 app.MapHealthChecks("/hc", new HealthCheckOptions()
 {
