@@ -1,0 +1,66 @@
+[
+  {
+    "nombre": "Shampoo para perros",
+    "descripcion": "Limpieza e higiene para mascotas",
+    "precio": 15.99,
+    "stock": 10,
+    "categoria": "Higiene",
+    "imagen": "https://acdn.mitiendanube.com/stores/001/145/238/products/osspret-shampoo-tonalizador-blanco-x-250-cc1-4ae072b779337c77d515876089911997-1024-1024.webp"
+  },
+  {
+    "nombre": "Antipulgas y garrapatas",
+    "descripcion": "Protección contra parásitos externos",
+    "precio": 25.99,
+    "stock": 5,
+    "categoria": "Cuidado de la salud",
+    "imagen": "https://acdn.mitiendanube.com/stores/001/145/238/products/20a40-7c408903f56179129e17036219661011-480-0.webp"
+  },
+  {
+    "nombre": "Collar para gatos",
+    "descripcion": "Accesorio para identificación y seguridad",
+    "precio": 8.99,
+    "stock": 20,
+    "categoria": "Accesorios",
+    "imagen": "https://acdn.mitiendanube.com/stores/001/145/238/products/screenshot_51-36d138dcdef37d293e16522805674373-1024-1024.webp"
+  },
+  {
+    "nombre": "Alimento para perros",
+    "descripcion": "Nutrición balanceada para perros adultos",
+    "precio": 39.99,
+    "stock": 15,
+    "categoria": "Alimentos",
+    "imagen": "https://acdn.mitiendanube.com/stores/001/145/238/products/urinary-perro-21-3578016b3f083c6ddf16063303514948-1024-1024.webp"
+  },
+  {
+    "nombre": "Juguete masticable",
+    "descripcion": "Entretenimiento y cuidado dental",
+    "precio": 7.99,
+    "stock": 12,
+    "categoria": "Entretenimiento",
+    "imagen": "https://acdn.mitiendanube.com/stores/001/145/238/products/hueso-191-a33760b91897ca92ed15964736347146-1024-1024.webp"
+  },
+  {
+    "nombre": "Arena para gatos",
+    "descripcion": "Control de olores y absorción de líquidos",
+    "precio": 11.99,
+    "stock": 8,
+    "categoria": "Higiene",
+    "imagen": "https://acdn.mitiendanube.com/stores/001/145/238/products/bentonita-caeac5a703a25d0ee417074919186165-1024-1024.webp"
+  },
+  {
+    "nombre": "Cepillo para perros",
+    "descripcion": "Cuidado del pelaje y masaje",
+    "precio": 9.99,
+    "stock": 18,
+    "categoria": "Cuidado personal",
+    "imagen": "https://acdn.mitiendanube.com/stores/001/145/238/products/fobtallal1-af8ac2d43263c83bf316910918389342-1024-1024.webp"
+  },
+  {
+    "nombre": "Rascador para gatos",
+    "descripcion": "Actividad física y cuidado de uñas",
+    "precio": 19.99,
+    "stock": 6,
+    "categoria": "Accesorios",
+    "imagen": "https://acdn.mitiendanube.com/stores/001/145/238/products/racador-con-ra1-8eb31ae7de2341351d16568132651740-1024-1024.webp"
+  }
+]
