@@ -3,17 +3,20 @@
 
 import { Card } from 'flowbite-react';
 import data from '/src/json/data.json'
+import "../ProductosDestacados/cardCss.css"
 
 const ProductoDestacados = () => {
 
   return (
     <>
       <h1 className='text-center text-4xl'>Destacados</h1>
-      <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 justify-items-center w-4/4  gap-200-px">
+      {/* <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 justify-items-center w-4/4  gap-200-px"> */}
+      <div className="container mx-auto py-36 px-8 max-w-4xl">
+         <div className='grid sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-6'>
 
         {data.map((producto, index) => (
           <Card
-            className="mb-5 "
+            className="mb-5 cardProducto"
             key={index}
             imgAlt={producto.nombre}
             imgSrc={producto.imagen}
@@ -37,6 +40,7 @@ const ProductoDestacados = () => {
             </div>
           </Card>
         ))}
+      </div>
       </div>
     </>
 
