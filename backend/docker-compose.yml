@@ -1,0 +1,33 @@
+version: '3'
+services:
+  databases:
+    container_name: "${CONTAINER_DB_NAME}-prod"
+    image: postgres
+    ports:
+      - "5566:${DB_PORT_CONTAINER}"
+    environment:
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+    volumes:
+      - data-db-prod:/var/lib/postgresql/data
+      - ./db/backup/:/docker-entrypoint-initdb.d/
+    networks:
+      - veterinaria-red-prod
+  webapi:
+    container_name: webapi-prod
+    build: .
+    ports:
+      - "4600:80"
+    networks:
+      - veterinaria-red-prod
+    volumes:
+      - ./:/app
+    environment:
+      - ConnectionStrings__DefaultConnection=Host=${CONTAINER_DB_NAME}-prod;Username=postgres;Port=${DB_PORT_CONTAINER};Password=${DB_PASSWORD};Database=${DB_NAME}
+    env_file:
+      - .env
+volumes:
+  data-db-prod:
+networks:
+  veterinaria-red-prod:
+    driver: bridge
