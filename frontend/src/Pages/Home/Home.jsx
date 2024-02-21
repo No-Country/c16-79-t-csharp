@@ -1,18 +1,18 @@
+import { ProductoDestacados } from "../../Components/ProductosDestacados/ProductoDestacados"
+import { Ofertas } from "../../Components/Ofertas/Ofertas";
+import { CarouselBanner } from "../../Components/Carousel/CarouselBanner";
+import { GrillaMarcas } from "../../Components/GrillaMarcas/GrillaMarcas" 
+import { Testimonios } from "../../Components/Testimonios/Testimonios";
 
-import {Ofertas} from '../../Components/Ofertas/Ofertas' 
-import {CarouselBanner} from '../../Components/Carousel/CarouselBanner'
-/* import {ProductoDestacados} from '../../Components/ProductosDestacados/ProductoDestacados' */
-/* import {CarrouselMarcas} from '../../Components/CarrouselMarcas/CarrouselMarcas' */
-/* import {Testimonios} from '../../Components/Testimonios/Testimonios' */
-
-const Home = () => {
+export const Home = () => {
   return (
     <>
-    <Ofertas></Ofertas>
-    <CarouselBanner />
+      <Ofertas />
+      <CarouselBanner />
+      <ProductoDestacados />
+      <GrillaMarcas />
+      <Testimonios />
     </>
-  )
-}
-
-export default Home;
+  );
+};
 
