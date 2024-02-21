@@ -1,11 +1,11 @@
 version: '3'
 services:
   front:
-    container_name: front-services
+    container_name: front-service
     build: 
       context: ./frontend
     volumes:
-      - ./nginx/nginx.cong:/host/path/nginx.conf
+      - ./nginx/nginx.conf:/host/path/nginx.conf
     environment:
       - WEB_API_URI=http://localhost:5000
     ports:
