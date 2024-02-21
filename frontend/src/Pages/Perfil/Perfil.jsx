@@ -1,6 +1,7 @@
 import { Tabs } from 'flowbite-react';
 import { HiAdjustments, HiClipboardList, HiUserCircle } from 'react-icons/hi';
 import { MdDashboard } from 'react-icons/md';
+import { Turnos } from '../../Components/Turnos/Turnos';
 
 export const Perfil = () => {
     return (
@@ -19,7 +20,7 @@ export const Perfil = () => {
                 </Tabs.Item>
 
                 <Tabs.Item title="Turnos" icon={HiClipboardList}>
-                   
+                   <Turnos></Turnos>
                 </Tabs.Item>
 
                 {/* <Tabs.Item disabled title="Disabled">

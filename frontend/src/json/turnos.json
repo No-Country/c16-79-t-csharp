@@ -1,0 +1,42 @@
+[
+    {
+      "Fecha": "2022-01-01",
+      "Hora": "08:00",
+      "Servicio": "Baño y corte de pelo",
+      "Mascota": "Firulais",
+      "Estado": "pendiente",
+      "id": "1"
+    },
+    {
+      "Fecha": "2022-01-02",
+      "Hora": "10:30",
+      "Servicio": "Vacunación",
+      "Mascota": "Luna",
+      "Estado": "pendiente",
+      "id": "2"
+    },
+    {
+      "Fecha": "2022-01-03",
+      "Hora": "15:00",
+      "Servicio": "Desparasitación",
+      "Mascota": "Max",
+      "Estado": "cumplida",
+      "id": "3"
+    },
+    {
+      "Fecha": "2022-01-04",
+      "Hora": "09:15",
+      "Servicio": "Consulta médica",
+      "Mascota": "Bella",
+      "Estado": "pendiente",
+      "id": "4"
+    },
+    {
+      "Fecha": "2022-01-05",
+      "Hora": "14:45",
+      "Servicio": "Peluquería",
+      "Mascota": "Rocky",
+      "Estado": "cancelada",
+      "id": "5"
+    }
+  ]
