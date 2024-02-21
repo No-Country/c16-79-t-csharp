@@ -16,7 +16,6 @@ export const CarouselBanner = () => {
         <img src={fotoTres} alt="promo3" className='w-full object-contain '/>
         <img src={fotoCuatro} alt="promo4" className='w-full object-contain' />
       </Carousel>
-      {/* Prueba */}
     </div>
     </>
   ) 
