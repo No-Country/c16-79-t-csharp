@@ -1,6 +1,6 @@
 import { Carousel } from "flowbite-react";
 
-const GrillaMarcas = () => {
+export const GrillaMarcas = () => {
 
     const marcas = [
         {
@@ -55,4 +55,3 @@ const GrillaMarcas = () => {
   );
 };
 
-export default GrillaMarcas;

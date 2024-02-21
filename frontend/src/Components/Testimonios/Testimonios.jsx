@@ -1,16 +1,7 @@
-'use client';
-
-
-
 import { Carousel } from 'flowbite-react';
 import data from './data'
 
-
-function Testimonios ()  {
-
-
-  
-  
+export const Testimonios = () => {
   return (
     <>
        <div className="h-56 sm:h-64 xl:h-80 2xl:h-96">
@@ -57,8 +48,3 @@ function Testimonios ()  {
     </>
   );
 }
-
-
-
-
-export default Testimonios

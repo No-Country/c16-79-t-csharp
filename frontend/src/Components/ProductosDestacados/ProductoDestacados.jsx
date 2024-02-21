@@ -1,11 +1,8 @@
-
-'use client';
-
 import { Card } from 'flowbite-react';
 import data from '/src/json/data.json'
 import "../ProductosDestacados/card.css"
 
-const ProductoDestacados = () => {
+export const ProductoDestacados = () => {
 
   return (
     <>
@@ -19,7 +16,6 @@ const ProductoDestacados = () => {
               key={index}
               imgAlt={producto.nombre}
               imgSrc={producto.imagen}
-
             >
               <a href="#">
                 <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
@@ -27,7 +23,7 @@ const ProductoDestacados = () => {
                 </h5>
               </a>
               <p className="text-gray-700 dark:text-gray-300 h-14">{producto.descripcion}</p>
-              {/* <p className="text-gray-700 dark:text-gray-300">Categoría: {producto.categoria}</p> */}
+              {/* <p className="text-gray-700 dark:text-gray-300">Categoría: {producto.categoría}</p> */}
               {/* <p className="text-gray-700 dark:text-gray-300">Stock: {producto.stock}</p> */}
               <div className="flex flex-col items-center ">
                 <span className="text-3xl font-bold text-gray-900 dark:text-white">${producto.precio}</span>
@@ -42,12 +38,9 @@ const ProductoDestacados = () => {
           ))}
         </div>
       </div>
-      </div>
     </>
 
   )
 }
 
-
-export default ProductoDestacados
 
