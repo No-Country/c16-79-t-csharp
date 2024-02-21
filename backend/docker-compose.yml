@@ -17,11 +17,9 @@ services:
     container_name: webapi-prod
     build: .
     ports:
-      - "4600:80"
+      - "4600:8080"
     networks:
       - veterinaria-red-prod
-    volumes:
-      - ./:/app
     environment:
       - ConnectionStrings__DefaultConnection=Host=${CONTAINER_DB_NAME}-prod;Username=postgres;Port=${DB_PORT_CONTAINER};Password=${DB_PASSWORD};Database=${DB_NAME}
     env_file:

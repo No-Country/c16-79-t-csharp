@@ -9,20 +9,20 @@ COPY src/Veterinaria.Infrastructure/*.csproj src/Veterinaria.Infrastructure/
 COPY WebApi/*.csproj WebApi/
 COPY test test
 
-RUN dotnet resture
+RUN dotnet restore
 
 COPY . .
 
-RUN dotnet publish WebApi/WebApi.csproj -c Release -o out
+RUN dotnet publish WebApi/WebApi.csproj -c Release -o /out
+
 
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
 
 WORKDIR /app
 
-COPY --from=build /source/out .
+COPY --from=build /out/ ./
 
-EXPOSE 80
 EXPOSE 8080
 
-CMD [ "dotnet","WebApi.dll" ]
+ENTRYPOINT [ "dotnet","WebApi.dll" ]
 
