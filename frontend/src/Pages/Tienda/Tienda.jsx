@@ -1,9 +1,6 @@
-import React from 'react'
 
-const Tienda = () => {
+export const Tienda = () => {
   return (
     <div>Tienda</div>
   )
 }
-
-export default Tienda

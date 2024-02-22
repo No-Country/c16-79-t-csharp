@@ -4,11 +4,11 @@ import data from './data'
 export const Testimonios = () => {
   return (
     <>
-       <div className="h-56 sm:h-64 xl:h-80 2xl:h-96">
-      <Carousel>
+       <div className="w-3/4 m-auto mt-50 h-56 sm:h-64 xl:h-80 2xl:h-96 ">
+      <Carousel >
         {data.map((d)=> {
          return(
-         <div key={d.name} className="bg-white h-[450px] text-black rounded-xl">
+         <div key={d.name} className="bg-black h-[450px] text-white rounded-xl mt-20">
          <div className="h-56 rounded-t-xl bg-indigo-500 flex justify-center items-center ">
            <img src={d.img} alt="" className="h-44 w-44 rounded-full" />
          </div>

@@ -1,9 +1,6 @@
-import React from 'react'
 
-const QuieneSomos = () => {
+export const QuieneSomos = () => {
   return (
     <div>QuieneSomos</div>
   )
 }
-
-export default QuieneSomos

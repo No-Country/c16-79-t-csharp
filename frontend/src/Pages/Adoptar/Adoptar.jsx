@@ -1,9 +1,6 @@
-import React from 'react'
 
-const Adoptar = () => {
+export const Adoptar = () => {
   return (
     <div>Adoptar</div>
   )
 }
-
-export default Adoptar

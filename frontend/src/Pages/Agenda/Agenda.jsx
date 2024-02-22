@@ -1,9 +1,6 @@
-import React from 'react'
 
-const Agenda = () => {
+export const Agenda = () => {
   return (
     <div>Agenda</div>
   )
 }
-
-export default Agenda
