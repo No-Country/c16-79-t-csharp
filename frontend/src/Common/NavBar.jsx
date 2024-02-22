@@ -22,7 +22,7 @@ const NavBar = () => {
                             <span className="block text-sm">Bonnie Green</span>
                             <span className="block truncate text-sm font-medium">name@flowbite.com</span>
                         </Dropdown.Header>
-                        <Dropdown.Item><NavLink to="/perfil">Perfil</NavLink></Dropdown.Item>
+                        <NavLink to="/perfil"> <Dropdown.Item>Perfil</Dropdown.Item></NavLink>
                         <Dropdown.Item><NavLink to="/">Mi Carrito</NavLink></Dropdown.Item>
                         <Dropdown.Divider />
                         <Dropdown.Item>Cerrar sesión</Dropdown.Item>
