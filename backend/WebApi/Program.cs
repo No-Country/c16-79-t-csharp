@@ -5,8 +5,6 @@ using Veterinaria.Infrastructure.AuthModels;
 using Veterinaria.Infrastructure.Persistance.Context;
 using WebApi.DependencyInjection;
 using Microsoft.OpenApi.Models;
-using Microsoft.AspNetCore.Identity;
-using Npgsql.Replication;
 
 var builder = WebApplication.CreateBuilder(args);
 
