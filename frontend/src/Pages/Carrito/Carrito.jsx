@@ -1,9 +1,6 @@
-import React from 'react'
 
-const Carrito = () => {
+export const Carrito = () => {
   return (
     <div>Carrito</div>
   )
 }
-
-export default Carrito

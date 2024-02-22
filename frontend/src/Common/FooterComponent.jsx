@@ -13,7 +13,7 @@ export const FooterComponent = () => {
           <div>
             <Footer.Brand
               href="#"
-              src="/public/logo.png"
+              src="/logo.png"
               alt="Logo"  
             />
           </div>

@@ -1,9 +1,7 @@
-import React from 'react'
 
-const PerdidosEncontrados = () => {
+export const PerdidosEncontrados = () => {
     return (
         <div>Perdidos-Encontrados</div>
     )
 }
 
-export default PerdidosEncontrados
