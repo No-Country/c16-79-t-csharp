@@ -7,47 +7,17 @@ const data = [
     },
     {
       name: 'doge2',
-      img: './Original_Doge_meme.jpg',
+      img: 'https://www.hartz.com/wp-content/uploads/2022/04/small-dog-owners-1.jpg',
       review: 'Excelente veterinaria'
     },
     {
       name: 'doge3',
-      img: './Original_Doge_meme.jpg',
+      img: 'https://www.acmewhistles.co.uk/media/magefan_blog/training-working-dog-1.jpeg',
       review: 'Excelente veterinaria'
     },
     {
       name: 'doge4',
-      img: './Original_Doge_meme.jpg',
-      review: 'Excelente veterinaria'
-    },
-    {
-      name: 'doge5',
-      img: './Original_Doge_meme.jpg',
-      review: 'Excelente veterinaria'
-    },
-    {
-      name: 'doge6',
-      img: './Original_Doge_meme.jpg',
-      review: 'Excelente veterinaria'
-    },
-    {
-      name: 'doge7',
-      img: './Original_Doge_meme.jpg',
-      review: 'Excelente veterinaria'
-    },
-    {
-      name: 'doge8',
-      img: './Original_Doge_meme.jpg',
-      review: 'Excelente veterinaria'
-    },
-    {
-      name: 'doge9',
-      img: './Original_Doge_meme.jpg',
-      review: 'Excelente veterinaria'
-    },
-    {
-      name: 'doge10',
-      img: './Original_Doge_meme.jpg',
+      img: 'https://i2-prod.walesonline.co.uk/incoming/article25773518.ece/ALTERNATES/s810/0_the-world-cutes-934438.jpg',
       review: 'Excelente veterinaria'
     }
   ]
