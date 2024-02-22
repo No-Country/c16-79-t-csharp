@@ -1,6 +1,6 @@
 import { Tabs } from 'flowbite-react';
-import { HiAdjustments, HiClipboardList, HiUserCircle } from 'react-icons/hi';
-import { MdDashboard } from 'react-icons/md';
+import {  HiUserCircle, HiCalendar, HiFolderOpen  } from 'react-icons/hi';
+import { FaDog } from "react-icons/fa";
 import { Turnos } from '../../Components/Turnos/Turnos';
 
 export const Perfil = () => {
@@ -11,15 +11,15 @@ export const Perfil = () => {
                    
                 </Tabs.Item>
 
-                <Tabs.Item title="Mi mascotas" icon={MdDashboard}>
+                <Tabs.Item title="Mis mascotas" icon={FaDog}>
                  
                 </Tabs.Item>
 
-                <Tabs.Item title="Historial médico" icon={HiAdjustments}>
+                <Tabs.Item title="Historial médico" icon={HiFolderOpen }>
                    
                 </Tabs.Item>
 
-                <Tabs.Item title="Turnos" icon={HiClipboardList}>
+                <Tabs.Item title="Turnos" icon={HiCalendar}>
                    <Turnos></Turnos>
                 </Tabs.Item>
 

@@ -7,7 +7,7 @@ const NavBar = () => {
         <>
             <Navbar fluid rounded>
                 <Navbar.Brand href="#">
-                <NavLink to="/"><img src="public/logo.png" className="mr-12 h-12 sm:h-20" alt="Logo Huellas Felices" /></NavLink>
+                <NavLink to="/"><img src="/logo.png" className="mr-12 h-12 sm:h-20" alt="Logo Huellas Felices" /></NavLink>
                     <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">Huella Amiga</span>
                 </Navbar.Brand>
                 <div className="flex md:order-2">
