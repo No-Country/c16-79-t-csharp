@@ -1,6 +1,7 @@
 import { Tabs } from 'flowbite-react';
 import { HiAdjustments, HiClipboardList, HiUserCircle } from 'react-icons/hi';
 import { MdDashboard } from 'react-icons/md';
+import { HistorialMedico } from '../../Components/HistorialMedico/HistorialMedico';
 
 export const Perfil = () => {
     return (
@@ -15,7 +16,7 @@ export const Perfil = () => {
                 </Tabs.Item>
 
                 <Tabs.Item title="Historial médico" icon={HiAdjustments}>
-                   
+                   <HistorialMedico/>
                 </Tabs.Item>
 
                 <Tabs.Item title="Turnos" icon={HiClipboardList}>
