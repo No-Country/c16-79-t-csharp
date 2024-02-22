@@ -11,16 +11,11 @@ import Testimonios from "./Components/Testimonios/Testimonios";
 
 
 function App() {
-
   return (
     <>
       <NavBar />
-      <Ofertas />
-      <CarouselBanner />
-      <ProductoDestacados />
-      <CarrouselMarcas />
-      <Testimonios />
-      <FooterComponent></FooterComponent>
+      <Router/> 
+      <FooterComponent />
     </>
   );
 }

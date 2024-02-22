@@ -2,7 +2,7 @@ import { Tabs } from 'flowbite-react';
 import { HiAdjustments, HiClipboardList, HiUserCircle } from 'react-icons/hi';
 import { MdDashboard } from 'react-icons/md';
 
-const Perfil = () => {
+export const Perfil = () => {
     return (
         <div>
             <Tabs aria-label="Tabs with icons" style="underline">
@@ -29,5 +29,3 @@ const Perfil = () => {
         </div>
     )
 }
-
-export default Perfil
