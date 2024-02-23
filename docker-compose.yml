@@ -1,0 +1,26 @@
+version: '3'
+services:
+  front:
+    container_name: front-service
+    build: 
+      context: ./frontend
+    volumes:
+      - ./nginx/nginx.conf:/host/path/nginx.conf
+    environment:
+      - WEB_API_URI=http://localhost:5000
+    ports:
+      - "3500:80"
+  batabase:
+    container_name: database-service
+    image: postgres
+    volumes:
+      - c16-data-db:/var/lib/postgresql/data
+      #- ./backend/db/backup/:/docker-entrypoint-initdb.d/
+    ports:
+      - "5432"
+    environment:
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=veterinaria
+
+volumes:
+  c16-data-db:
