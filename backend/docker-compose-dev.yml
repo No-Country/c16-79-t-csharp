@@ -1,0 +1,27 @@
+version: '3'
+services:
+  db-dev:
+    image: postgres
+    ports:
+      - "5456:5432"
+    environment:
+      - POSTGRES_PASSWORD=password
+    volumes:
+      - data-db-dev:/var/lib/postgresql/data
+    networks:
+      - veterinaria-red-dev
+  webapi-dev:
+    build: 
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "5104:5102"
+    networks:
+      - veterinaria-red-dev
+    volumes:
+      - ./:/app
+volumes:
+  data-db-dev:
+networks:
+  veterinaria-red-dev:
+    driver: bridge
