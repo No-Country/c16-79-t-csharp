@@ -5,12 +5,12 @@ import { NavLink } from 'react-router-dom';
 const NavBar = () => {
     return (
         <>
-            <Navbar className='container xl mx-auto' fluid rounded>
+            <Navbar fluid rounded>
                 <Navbar.Brand href="#">
-                <NavLink to="/"><img src="/Huella_amiga-logoMain.png" className="mr-10 h-12 sm:h-20" alt="Logo Huellas Felices" /></NavLink>
-                    {/* <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">Huella Amiga</span> */}
+                <NavLink to="/"><img src="public/logo.png" className="mr-12 h-12 sm:h-20" alt="Logo Huellas Felices" /></NavLink>
+                    <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">Huella Amiga</span>
                 </Navbar.Brand>
-                <div className="flex md:order-2 ml-10">
+                <div className="flex md:order-2">
                     <Dropdown
                         arrowIcon={false}
                         inline
@@ -22,21 +22,21 @@ const NavBar = () => {
                             <span className="block text-sm">Bonnie Green</span>
                             <span className="block truncate text-sm font-medium">name@flowbite.com</span>
                         </Dropdown.Header>
-                        <NavLink to="/perfil"><Dropdown.Item>Perfil</Dropdown.Item></NavLink>
-                        <NavLink to="/"><Dropdown.Item>Mi Carrito</Dropdown.Item></NavLink>
+                        <NavLink to="/perfil"> <Dropdown.Item>Perfil</Dropdown.Item></NavLink>
+                        <Dropdown.Item><NavLink to="/">Mi Carrito</NavLink></Dropdown.Item>
                         <Dropdown.Divider />
                         <Dropdown.Item>Cerrar sesión</Dropdown.Item>
                     </Dropdown>
                     <Navbar.Toggle />
                 </div>
                 <Navbar.Collapse>
-                    <Navbar.Link className='text-base'><NavLink to="/">Inicio</NavLink></Navbar.Link>
-                    <Navbar.Link className='text-base'><NavLink to="/tienda">Tienda</NavLink></Navbar.Link>
-                    <Navbar.Link className='text-base'><NavLink to="/adoptar">Quiero Adoptar</NavLink></Navbar.Link>
-                    <Navbar.Link className='text-base'><NavLink to="/agenda">Agenda</NavLink></Navbar.Link>
-                    <Navbar.Link className='text-base'><NavLink to="/servicios">Servicios</NavLink></Navbar.Link>
-                    <Navbar.Link className='text-base'><NavLink to="perdidos-encontrados">Perdidos y Encontrados</NavLink></Navbar.Link>
-                    <Navbar.Link className='text-base'><NavLink to="/quienesSomos">Quienes Somos</NavLink></Navbar.Link>
+                    <Navbar.Link ><NavLink to="/">Inicio</NavLink></Navbar.Link>
+                    <Navbar.Link ><NavLink to="">Tienda</NavLink></Navbar.Link>
+                    <Navbar.Link ><NavLink to="">Quiero Adoptar</NavLink></Navbar.Link>
+                    <Navbar.Link ><NavLink to="">Agenda</NavLink></Navbar.Link>
+                    <Navbar.Link ><NavLink to="">Servicios</NavLink></Navbar.Link>
+                    <Navbar.Link ><NavLink to="">Perdidos y Encontrados</NavLink></Navbar.Link>
+                    <Navbar.Link ><NavLink to="">Quienes Somos</NavLink></Navbar.Link>
                 </Navbar.Collapse>
             </Navbar>
 
