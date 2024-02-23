@@ -8,8 +8,8 @@ namespace Veterinaria.Domain.Services
 
         Task<MedicalHistory> GetByIdAsync(int id);
         Task<List<MedicalHistory>> GetAllAsync();
-        Task<MedicalHistory> CreateAsync(string type, string description, float price);
-        Task<MedicalHistory> UpdateAsync(int id, string type, string description, float price);
+        Task<MedicalHistory> CreateAsync(string diagnostic, string medic, DateTime time, int petId);
+        Task<MedicalHistory> UpdateAsync(int id, string diagnostic, string medic, DateTime time, int petId);
         Task DeleteAsync(int id);
 
        // Task ExampleFunction();

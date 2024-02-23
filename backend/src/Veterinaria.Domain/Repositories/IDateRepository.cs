@@ -2,7 +2,7 @@
 
 namespace Veterinaria.Domain.Repositories;
 
-public interface IMedicalHistory: IBasicRepository<MedicalHistory, int>
+public interface IDateRepository : IBasicRepository<Date, int>
 {
-    Task MetodoPersonalizadoAsync(MedicalHistory model);
+    Task MetodoPersonalizadoAsync(Date model);
 }
