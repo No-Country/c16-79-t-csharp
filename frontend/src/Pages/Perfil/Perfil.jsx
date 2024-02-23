@@ -4,6 +4,7 @@ import { FaDog } from "react-icons/fa";
 import { Turnos } from '../../Components/Turnos/Turnos';
 import { HistorialMedico } from '../../Components/HistorialMedico/HistorialMedico'
 import { CargarMascota } from '../../Components/MisMascotas/CargarMascota';
+import { MisMascotas } from '../../Components/MisMascotas/MisMascotas';
 
 
 export const Perfil = () => {
@@ -15,6 +16,7 @@ export const Perfil = () => {
                 </Tabs.Item>
 
                 <Tabs.Item title="Mis mascotas" icon={FaDog}>
+                    <MisMascotas/>
                     <CargarMascota />
                 </Tabs.Item>
 
