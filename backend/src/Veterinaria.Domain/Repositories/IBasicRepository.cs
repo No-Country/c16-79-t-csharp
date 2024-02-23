@@ -10,4 +10,5 @@ public interface IBasicRepository<TModel, TypeId> where TModel : class
     Task<TModel> UpdateAsync(TModel model);
 
     Task DeleteAsync(TModel model);
+
 }
