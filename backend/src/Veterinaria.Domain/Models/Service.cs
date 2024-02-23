@@ -22,14 +22,14 @@ public class   Service
         Dates = dates;
 
     }
-    public static Service Create(string type, string description, float price, HashSet<Date> dates)
+    public static Service Create(string type, string description, float price)
     {
         return new Service()
         {
             Type = type,
             Description = description,
             Price = price,
-            Dates = dates
+           
         };
     }
 

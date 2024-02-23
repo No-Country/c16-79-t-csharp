@@ -6,10 +6,10 @@ using Veterinaria.Domain.Services;
 
 namespace Veterinaria.Application.Services;
 
-public class MockService : IDateServise
+public class DateService : IDateServise
 { 
     private readonly IDateRepository _repository;
-    public MockService(IDateRepository repository)
+    public DateService(IDateRepository repository)
     {
         _repository = repository;
     }

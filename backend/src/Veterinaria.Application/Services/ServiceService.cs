@@ -13,9 +13,9 @@ namespace Veterinaria.Application.Services;
         _repository = repository;
     }
 
-    public async Task<Service> CreateAsync( string type, string description, float price, HashSet<Date> dates)
+    public async Task<Service> CreateAsync( string type, string description, float price)
     {
-        Service model = Service.Create(type,description,price,dates);
+        Service model = Service.Create(type,description,price);
         Service savedModel = await _repository.AddAsync(model);
         return savedModel;
     }
