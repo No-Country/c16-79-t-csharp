@@ -27,6 +27,15 @@ namespace Veterinaria.Domain.Models
             return product;
         }
 
+        public void Update(string name, float price, int stock, string description, string image)
+        {
+            Name = name;
+            Price = price;
+            Stock = stock;
+            Description = description;
+            Image = image;
+        }
+
         public void UpdatePrice(float newPrice)
         {
             if (newPrice < 0)

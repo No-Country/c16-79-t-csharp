@@ -23,6 +23,13 @@ namespace Veterinaria.Domain.Models
             return detailSale;   
         }
 
+        public void Update(int quantity, int saleId, int productId)
+        {
+            Quantity = quantity;
+            SaleId = saleId;
+            ProductId = productId;
+        }
+
         public float CalculateSubTotal()
         {
             return Quantity * Product.Price;

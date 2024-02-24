@@ -13,7 +13,7 @@ public class SaleRepository : BasicRepository<Sale, int>, ISaleRepository
         _context = context;
     }
 
-    public Task<Sale> CreateAsync(Sale sale)
+    public Task<Sale> MetodoPersonalizado(Sale sale)
     {
         throw new NotImplementedException();
     }

@@ -13,7 +13,7 @@ namespace Veterinaria.Application.Services
             _productRepository = productRepository;
         }
 
-        public async Task<Product> GetByAsync(int id)
+        public async Task<Product> GetByIdAsync(int id)
         {
             if (await _productRepository.FindByIdAsync(id) is not Product product)
             {
@@ -22,19 +22,30 @@ namespace Veterinaria.Application.Services
             return product;
         }
 
-        public Task<List<Product>> GetAllAsync()
+        public async Task<List<Product>> GetAllAsync()
         {
-            return _productRepository.FindAllAsync();
+            return await _productRepository.FindAllAsync();
         }
 
-        public Task<Product> CreateAsync(string name, float price, int stock, string description, string image, HashSet<Categorie> categories, HashSet<DetailSale> detailSales)
+        public async Task<Product> CreateAsync(string name, float price, int stock, string description, string image)
         {
-            throw new NotImplementedException();
+            Product product = Product.CreateProduct(name, price, stock, description, image);
+            Product savedProduct = await _productRepository.AddAsync(product);
+            return savedProduct;
         }
 
-        public Task<Product> UpdatePriceAsync(int id, float newPrice)
+        public async Task<Product> UpdateAsync(int id, string name, float price, int stock, string description, string image)
         {
-            throw new NotImplementedException();
+            Product product = await GetByIdAsync(id);
+            product.Update(name, price, stock, description, image);
+            Product updatedProduct = await _productRepository.UpdateAsync(product);
+            return updatedProduct;
+        }
+
+        public async Task DeleteAsync(int id)
+        {
+            Product product = await GetByIdAsync(id);
+            await _productRepository.DeleteAsync(product);
         }
     }
 }

@@ -19,6 +19,13 @@ namespace Veterinaria.Domain.Models
             ClientUserId = clientUserId;
         }
 
+        public void Update(DateTime date, float total, int clientUserId)
+        {
+            Date = date;
+            Total = total;
+            ClientUserId = clientUserId;
+        }
+
 
         public static Sale MakeSale(DateTime date, float total, int clientUserId)
         {

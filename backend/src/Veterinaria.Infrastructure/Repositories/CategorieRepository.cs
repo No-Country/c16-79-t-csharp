@@ -5,15 +5,15 @@ using Veterinaria.Infrastructure.Repository;
 
 namespace Veterinaria.Infrastructure
 {
-    public class ProductRepository : BasicRepository<Product, int>, IProductRepository
+    public class CategorieRepository : BasicRepository<Categorie, int>, ICategorieRepository
     {
         private readonly VeterinariaDbContext _context;
-        public ProductRepository(VeterinariaDbContext context) : base(context)
+        public CategorieRepository(VeterinariaDbContext context) : base(context)
         {
             _context = context;
         }
 
-        public Task<Product> MetodoPerzonalizado(Product product)
+        public Task<Categorie> MetodoPerzonalizado(Categorie categorie)
         {
             throw new NotImplementedException();
         }
