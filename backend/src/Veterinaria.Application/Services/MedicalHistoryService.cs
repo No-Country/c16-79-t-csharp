@@ -6,19 +6,19 @@ using Veterinaria.Domain.Services;
 
 namespace Veterinaria.Application.Services;
 
-public class MedicalHistotyService : IMedicalHistoryService
+public class MedicalHistoryService : IMedicalHistoryService
 {
     private readonly IMedicalHistoryRepository _repository;
 
     // TODO: Agregar el servicio de los Pets
-    public MedicalHistotyService(IMedicalHistoryRepository repository)
+    public MedicalHistoryService(IMedicalHistoryRepository repository)
     {
         _repository = repository;
     }
 
     public async Task<MedicalHistory> CreateAsync(string diagnostic, string medic, DateTime time, int petId)
     {
-        MedicalHistory model = MedicalHistory.Create(diagnostic,medic,time,petId);
+        MedicalHistory model = MedicalHistory.Create(diagnostic, medic, time, petId);
         MedicalHistory savedModel = await _repository.AddAsync(model);
         return savedModel;
     }
@@ -46,7 +46,7 @@ public class MedicalHistotyService : IMedicalHistoryService
     public async Task<MedicalHistory> UpdateAsync(int id, string diagnostic, string medic, DateTime time, int petId)
     {
         MedicalHistory model = await GetByIdAsync(id);
-        model.UpdateModel( diagnostic,  medic,  time,  petId);
+        model.UpdateModel(diagnostic, medic, time, petId);
         MedicalHistory updatedModel = await _repository.UpdateAsync(model);
         return updatedModel;
     }

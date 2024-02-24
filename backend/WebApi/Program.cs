@@ -15,6 +15,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 
 builder.Services.AddDependencyInfrastructure(builder.Configuration);
+builder.Services.AddDependencyApplication(builder.Configuration);
+builder.Services.AddDependencyUtilities(builder.Configuration);
 
 builder.Services.AddAuthorization();
 

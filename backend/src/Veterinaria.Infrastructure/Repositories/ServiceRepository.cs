@@ -4,10 +4,10 @@ using Veterinaria.Infrastructure.Persistance.Context;
 using Veterinaria.Infrastructure.Repository;
 
 namespace Veterinaria.Infrastructure;
-public class MockRepository : BasicRepository<Service, int>, IServiceServiceRepository
+public class ServiceRepository : BasicRepository<Service, int>, IServiceRepository
 {
     private readonly VeterinariaDbContext _context;
-    public MockRepository(VeterinariaDbContext context) : base(context)
+    public ServiceRepository(VeterinariaDbContext context) : base(context)
     {
         _context = context;
     }

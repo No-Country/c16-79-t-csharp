@@ -7,15 +7,15 @@ using Veterinaria.Domain.Services;
 namespace Veterinaria.Application.Services;
 public class ServiceService : IServiceService
 {
-    private readonly IServiceServiceRepository _repository;
-    public ServiceService(IServiceServiceRepository repository)
+    private readonly IServiceRepository _repository;
+    public ServiceService(IServiceRepository repository)
     {
         _repository = repository;
     }
 
-    public async Task<Service> CreateAsync( string type, string description, float price)
+    public async Task<Service> CreateAsync(string type, string description, float price)
     {
-        Service model = Service.Create(type,description,price);
+        Service model = Service.Create(type, description, price);
         Service savedModel = await _repository.AddAsync(model);
         return savedModel;
     }
@@ -40,14 +40,14 @@ public class ServiceService : IServiceService
         return model;
     }
 
-    public  async Task<Service> UpdateAsync(int id, string type, string description, float price, HashSet<Date> dates)
+    public async Task<Service> UpdateAsync(int id, string type, string description, float price, HashSet<Date> dates)
     {
         Service model = await GetByIdAsync(id);
-        model.UpdateModel(type, description,price, dates);
+        model.UpdateModel(type, description, price, dates);
         Service updatedModel = await _repository.UpdateAsync(model);
         return updatedModel;
     }
 
-    
+
 }
 

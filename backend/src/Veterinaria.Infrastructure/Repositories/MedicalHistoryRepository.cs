@@ -4,10 +4,10 @@ using Veterinaria.Infrastructure.Persistance.Context;
 using Veterinaria.Infrastructure.Repository;
 
 namespace Veterinaria.Infrastructure;
-public class MedicaHistoryRepository : BasicRepository<MedicalHistory, int>, IMedicalHistoryRepository
+public class MedicalHistoryRepository : BasicRepository<MedicalHistory, int>, IMedicalHistoryRepository
 {
     private readonly VeterinariaDbContext _context;
-    public MedicaHistoryRepository (VeterinariaDbContext context) : base(context)
+    public MedicalHistoryRepository (VeterinariaDbContext context) : base(context)
     {
         _context = context;
     }

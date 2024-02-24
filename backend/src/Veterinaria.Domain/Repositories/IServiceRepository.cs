@@ -2,7 +2,7 @@
 
 namespace Veterinaria.Domain.Repositories;
 
-public interface IServiceServiceRepository : IBasicRepository<Service, int>
+public interface IServiceRepository : IBasicRepository<Service, int>
 {
     Task MetodoPersonalizadoAsync(Service model);
 }
