@@ -7,8 +7,6 @@ import { GiWeight } from "react-icons/gi";
 import { MdOutlinePets } from "react-icons/md";
 import EdicionDatos from './EdicionDatos';
 
-
-
 export const MisMascotas = () => {
 
     return (
@@ -16,7 +14,7 @@ export const MisMascotas = () => {
             {MascotasJson.map((d) => {
                 return (
                     <Card
-                     key={d.id}
+                    key={d.id}
                     className="max-w-sm"
                     imgAlt="Meaningful alt text for an image that is not purely decorative"
                     imgSrc={d.foto}
@@ -32,8 +30,8 @@ export const MisMascotas = () => {
         <ListGroup.Item icon={MdOutlinePets}>{d.raza}</ListGroup.Item>
       </ListGroup>
     </div>
+    
     <EdicionDatos idMascotas={d.id} />
-
                   </Card>  
                 )
             })}
