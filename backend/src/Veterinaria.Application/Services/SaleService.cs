@@ -27,10 +27,10 @@ namespace Veterinaria.Application.Services
             return _saleRepository.FindAllAsync();
         }
 
-        public Task<Sale> CreateAsync(DateTime date, float total, int clientUserId)
+        public Task<Sale> CreateAsync(DateTime date, float total, int clientUserId, HashSet<DetailSale> detailSales)
         {
             Sale sale = Sale.MakeSale(date, total, clientUserId);
-            return _saleRepository.CreateAsync(sale);   
+            return _saleRepository.CreateAsync(sale);
         }
     }
 }

@@ -27,7 +27,7 @@ namespace Veterinaria.Application.Services
             return _productRepository.FindAllAsync();
         }
 
-        public Task<Product> CreateAsync(string name, float price, int stock, string description, string image, HashSet<Categorie> categories, HashSet<DetailSale> detailSales)
+        public Task<Product> CreateAsync(string name, float price, int stock, string description, string image, HashSet<int> categorieIds)
         {
             throw new NotImplementedException();
         }

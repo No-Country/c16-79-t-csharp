@@ -10,17 +10,28 @@ namespace Veterinaria.Domain.Models
         public int ProductId { get; set; }
         public Product Product { get; set; } = null!;
 
-        private DetailSale(int quantity, int saleId, int productId)
+        public DetailSale() { }
+
+        public DetailSale(int id, int quantity, int saleId, Sale sale, int productId, Product product)
         {
+            Id = id;
             Quantity = quantity;
             SaleId = saleId;
+            Sale = sale;
             ProductId = productId;
+            Product = product;
         }
 
-        public static DetailSale CreateDetailSale(int quantity, int saleId, int productId)
+        public static DetailSale CreateDetailSale(int quantity, int saleId, int productId, Product product)
         {
-            var detailSale = new DetailSale(quantity, saleId, productId);
-            return detailSale;   
+            var detailSale = new DetailSale()
+            {
+                Quantity = quantity,
+                SaleId = saleId,
+                ProductId = productId,
+                Product = product
+            };
+            return detailSale;
         }
 
         public float CalculateSubTotal()
