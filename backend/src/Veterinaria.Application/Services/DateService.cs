@@ -7,20 +7,25 @@ using Veterinaria.Domain.Services;
 namespace Veterinaria.Application.Services;
 
 public class DateService : IDateServise
-{ 
+{
     private readonly IDateRepository _repository;
-    public DateService(IDateRepository repository)
+    private readonly IServiceService _servicesService;
+    // TODO: Agregar el servicio de Pets
+    public DateService(IDateRepository repository, IServiceService servicesService)
     {
         _repository = repository;
+        _servicesService = servicesService;
     }
     public Task ChangeState(int id, DateState state)
     {
         throw new NotImplementedException();
     }
 
-    public async Task<Date> CreateAsync(DateTime time, int  serviceId, int petId)
+    public async Task<Date> CreateAsync(DateTime time, int serviceId, int petId)
     {
-        Date model = Date.Create(time, serviceId,petId);
+        await _servicesService.GetByIdAsync(serviceId);
+        //TODO: agregar verificacion de existencia del Pet
+        Date model = Date.Create(time, serviceId, petId);
         Date savedModel = await _repository.AddAsync(model);
         return savedModel;
     }
@@ -45,10 +50,11 @@ public class DateService : IDateServise
         return model;
     }
 
-    public  async Task<Date> UpdateAsync(int id, DateTime time, int serviceId, int petId, DateState state)
+    public async Task<Date> UpdateAsync(int id, DateTime time, int serviceId, int petId, DateState state)
     {
+        await _servicesService.GetByIdAsync(serviceId);
         Date model = await GetByIdAsync(id);
-        model.UpdateModel( time,  serviceId,  petId,  state);
+        model.UpdateModel(time, serviceId, petId, state);
         Date updatedModel = await _repository.UpdateAsync(model);
         return updatedModel;
     }

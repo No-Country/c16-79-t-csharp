@@ -5,8 +5,8 @@ using Veterinaria.Domain.Repositories;
 using Veterinaria.Domain.Services;
 
 namespace Veterinaria.Application.Services;
-   public class ServiceService : IServiceService
-    {
+public class ServiceService : IServiceService
+{
     private readonly IServiceServiceRepository _repository;
     public ServiceService(IServiceServiceRepository repository)
     {

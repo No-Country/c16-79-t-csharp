@@ -9,6 +9,8 @@ namespace Veterinaria.Application.Services;
 public class MedicalHistotyService : IMedicalHistoryService
 {
     private readonly IMedicalHistoryRepository _repository;
+
+    // TODO: Agregar el servicio de los Pets
     public MedicalHistotyService(IMedicalHistoryRepository repository)
     {
         _repository = repository;

@@ -17,4 +17,6 @@ public class SaleRepository : BasicRepository<Sale, int>, ISaleRepository
     {
         throw new NotImplementedException();
     }
+
+    // TODO: Rescrivir el metodo AddAsync para la Transaccion
 }

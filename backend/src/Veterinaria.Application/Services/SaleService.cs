@@ -8,9 +8,11 @@ namespace Veterinaria.Application.Services
     public class SaleService : ISaleService
     {
         private readonly ISaleRepository _saleRepository;
-        public SaleService(ISaleRepository saleRepository)
+        private readonly IProductService _productService;
+        public SaleService(ISaleRepository saleRepository, IProductService productService)
         {
             _saleRepository = saleRepository;
+            _productService = productService;
         }
 
         public async Task<Sale> GetByAsync(int id)
@@ -29,6 +31,7 @@ namespace Veterinaria.Application.Services
 
         public Task<Sale> CreateAsync(DateTime date, float total, int clientUserId, HashSet<DetailSale> detailSales)
         {
+            // Todo: Verificaciones de productos 
             Sale sale = Sale.MakeSale(date, total, clientUserId);
             return _saleRepository.CreateAsync(sale);
         }
