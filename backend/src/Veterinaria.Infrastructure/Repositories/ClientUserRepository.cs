@@ -12,7 +12,7 @@ using Veterinaria.Infrastructure.Repository;
 
 namespace Veterinaria.Infrastructure.Repositories
 {
-    internal class ClientUserRepository : BasicRepository<ClientUser, string>, IClientUserRepository
+    public class ClientUserRepository : BasicRepository<ClientUser, string>, IClientUserRepository
     {
         private readonly VeterinariaDbContext _context;
         public ClientUserRepository(VeterinariaDbContext context) : base(context) 
@@ -22,7 +22,7 @@ namespace Veterinaria.Infrastructure.Repositories
 
         virtual public IQueryable<ClientUser> GetAllClientUser()
         {
-            var users = _context.Users.Include(u => u.Addresses)
+            var users = _context.ClientUsers.Include(u => u.Addresses)
                                       .Include(u => u.Pets)
         //                              .ThenInlcude(p => p.MedicalHistories)
                                       .ToList().AsQueryable();
@@ -30,7 +30,7 @@ namespace Veterinaria.Infrastructure.Repositories
         }
         virtual public async Task<ClientUser> GetClientUserById(Expression<Func<ClientUser, bool>> filtro = null)
         {
-            var user = await _context.Users.Include(u => u.Addresses)
+            var user = await _context.ClientUsers.Include(u => u.Addresses)
                                            .Include(u => u.Pets)
         //                                   .ThenInlcude(p => p.MedicalHistories)
                                            .FirstOrDefaultAsync(filtro);

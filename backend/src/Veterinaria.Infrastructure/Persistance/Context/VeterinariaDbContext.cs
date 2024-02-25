@@ -17,6 +17,7 @@ public class VeterinariaDbContext : IdentityDbContext<ApplicationUserAccount>
     public virtual DbSet<Product> Products { get; set; }
     public virtual DbSet<Sale> Sales { get; set; }
     public virtual DbSet<Service> Services { get; set; }
+    public virtual DbSet<ApplicationUserAccount> ApplicationUserAccounts { get; set; }
     public VeterinariaDbContext()
     { }
 

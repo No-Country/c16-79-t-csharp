@@ -2,43 +2,47 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Tokens;
+using Microsoft.IdentityModel.Tokens; //TODO: agregar el package
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using Veterinaria.Application.Authentication;
 using Veterinaria.Application.DTO;
 using Veterinaria.Domain.Models;
+using Veterinaria.Domain.Repositories;
+using Veterinaria.Infrastructure.AuthModels;
 using Veterinaria.Infrastructure.Persistance.Context;
 
-namespace Veterinaria.Infrastructure.Repositories
+namespace Veterinaria.Infrastructure.Authentication
 {
-    public class UserAccountRepository : IUserAccountRepository
+    public class AuthenticationUserAccountService : IAuthenticationUserAccountService
     {
         private readonly VeterinariaDbContext _context;
-        private readonly UserManager<ClientUser> _userManager;
+        private readonly UserManager<ApplicationUserAccount> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IMapper _mapper;
         private readonly string _secretKey;
-        public UserAccountRepository(VeterinariaDbContext context,
+        public AuthenticationUserAccountService(VeterinariaDbContext context,
                                     IConfiguration config,
-                                    UserManager<ClientUser> userManager,
+                                    UserManager<ApplicationUserAccount> userManager,
                                     RoleManager<IdentityRole> roleManager,
-                                    IMapper mapper) : base(context)
+                                    IMapper mapper)
         {
             _context = context;
             _userManager = userManager;
             _roleManager = roleManager;
             _mapper = mapper;
-            _secretKey = config.GetValue<string>("Settings:SecretKey");
+            _secretKey = config["Settings:SecretKey"] ?? throw new Exception("Not found Secret Key");
         }
 
         public async Task<bool> IsSingleUser(string email)
         {
-            var validation = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
+            var validation = await _context.ApplicationUserAccounts.FirstOrDefaultAsync(u => u.Email == email);
             if (validation is null)
             {
                 return true;
@@ -51,7 +55,7 @@ namespace Veterinaria.Infrastructure.Repositories
         //nulo y no tener problema con los claims.
         public async Task<UserAccountResponseRegisterDTO> Register(UserAccountRegisterDTO clientUserRegisterDTO)
         {
-            var newClientUser = new ClientUser()
+            var newClientUser = new ApplicationUserAccount()
             {
                 Email = clientUserRegisterDTO.Email,
                 NormalizedEmail = clientUserRegisterDTO.Email.ToUpper(),
@@ -68,17 +72,17 @@ namespace Veterinaria.Infrastructure.Repositories
                 }
                 var role = clientUserRegisterDTO.Role;
                 await _userManager.AddToRoleAsync(newClientUser, role);
-                var clientReturn = await _context.Users.FirstOrDefaultAsync(u => u.Email == clientUserRegisterDTO.Email);
+                var clientReturn = await _context.ApplicationUserAccounts.FirstOrDefaultAsync(u => u.Email == clientUserRegisterDTO.Email);
                 return _mapper.Map<UserAccountResponseRegisterDTO>(clientReturn);
             }
             return null;
         }
 
-        public async Task<UserAccountResponseLoginDTO> Login(UserAccountLoginDTO clientUserLoginDTO)
+        public async Task<UserAccountResponseLoginDTO> Login(UserAccountLoginDTO userAccountLoginDTO)
         {
-            var clientUserFound = await _context.Users.FirstOrDefaultAsync(
-                                            u => u.NormalizedEmail == clientUserLoginDTO.Email.ToUpper());
-            bool isValid = await _userManager.CheckPasswordAsync(clientUserFound, clientUserLoginDTO.Password);
+            var clientUserFound = await _context.ApplicationUserAccounts.FirstOrDefaultAsync(
+                                            u => u.NormalizedEmail == userAccountLoginDTO.Email.ToUpper());
+            bool isValid = await _userManager.CheckPasswordAsync(clientUserFound, userAccountLoginDTO.Password);
             if (clientUserFound is null || isValid is false)
             {
                 return new UserAccountResponseLoginDTO
@@ -100,9 +104,6 @@ namespace Veterinaria.Infrastructure.Repositories
                 Subject = new ClaimsIdentity(new Claim[]
                 {
                     new Claim(ClaimTypes.NameIdentifier, clientUserFound.Id.ToString()),
-                    //new Claim(ClaimTypes.Name, clientUserFound.UserName.ToString()),
-                    //new Claim(ClaimTypes.GivenName, clientUserFound.Name.ToString()),
-                    //new Claim(ClaimTypes.Surname, clientUserFound.LastName.ToString()),
                     new Claim(ClaimTypes.Email, clientUserFound.Email.ToString()),
                     new Claim(ClaimTypes.Role, roles.FirstOrDefault())
                 }),
@@ -110,13 +111,39 @@ namespace Veterinaria.Infrastructure.Repositories
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
 
-            var token = tokenHandler.CreateToken(tokenInformation);
+            var tokenCreated = tokenHandler.CreateToken(tokenInformation);
             var clientUserResponseLoginDTO = new UserAccountResponseLoginDTO()
             {
                 ClientUser = _mapper.Map<ClientUserDTO>(clientUserFound),
-                Token = tokenHandler.WriteToken(token)
+                Token = tokenHandler.WriteToken(tokenCreated)
             };
             return clientUserResponseLoginDTO;
         }
+
+
+        //public string TokenGenerator(IList<string> roles, ApplicationUserAccount userAccount)
+        //{
+        //    var tokenHandler = new JwtSecurityTokenHandler();
+        //    var key = Encoding.ASCII.GetBytes(_secretKey);
+
+        //    var tokenInformation = new SecurityTokenDescriptor
+        //    {
+        //        //Se deben fijar el mismo valor que para ValidAudience y ValidIssuer puestos en program.cs
+        //        //Issuer = ,
+        //        //Audience = ,
+        //        Subject = new ClaimsIdentity(new Claim[]
+        //        {
+        //            new Claim(ClaimTypes.NameIdentifier, userAccount.Id.ToString()),
+        //            new Claim(ClaimTypes.Email, userAccount.Email.ToString()),
+        //            new Claim(ClaimTypes.Role, roles.FirstOrDefault())
+        //        }),
+        //        Expires = DateTime.UtcNow.AddDays(1),
+        //        SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+        //    };
+
+        //    var tokenCreated = tokenHandler.CreateToken(tokenInformation);
+        //    var token = tokenHandler.WriteToken(tokenCreated);
+        //    return token;
+        //}
     }
 }

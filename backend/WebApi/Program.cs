@@ -7,14 +7,26 @@ using WebApi.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Identity;
 using Npgsql.Replication;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Veterinaria.Domain.Models;
+using Veterinaria.Domain.Repositories;
+using Veterinaria.Application.Authentication;
+using Veterinaria.Infrastructure.Repositories;
+using Veterinaria.Infrastructure.Authentication;
+using WebApi.Utilities;
 
 var builder = WebApplication.CreateBuilder(args);
 
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddControllers();
 
 builder.Services.AddDependencyInfrastructure(builder.Configuration);
+builder.Services.AddDependencyApplication(builder.Configuration);
+builder.Services.AddDependencyUtilities(builder.Configuration);
 
 builder.Services.AddAuthorization();
 
@@ -38,16 +50,47 @@ builder.Services.AddSwaggerGen(options =>
             Reference = new OpenApiReference{
                 Type = ReferenceType.SecurityScheme,
                 Id = "Bearer"
-            }
+            },
+            Scheme = "oauth2",
+            Name = "Bearer",
+            In = ParameterLocation.Header
         },
-        new string[]{}
+        new List<string>()
         }
     });
 });
 
+
+var clave = builder.Configuration.GetValue<string>("Settings:SecretKey");
+builder.Services
+    .AddAuthentication(x =>
+    {
+        x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+        x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+        x.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+    })
+    .AddJwtBearer(x =>
+    {
+        //x.RequireHttpsMetadata = false;
+        //x.SaveToken = true;
+        x.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(clave)),
+            //Se deben cambiar a true una vez que fije los valores de ValidAudience y ValidIssuer
+            ValidateIssuer = false,
+            ValidateAudience = false
+            //ValidAudience,
+            //ValidIssuer
+        };
+    });
+
+
+
 builder.Services.AddHealthChecks()
     .AddCheck("self", () => HealthCheckResult.Healthy())
     .AddDbContextCheck<VeterinariaDbContext>();
+
 
 var app = builder.Build();
 
@@ -70,32 +113,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
-
-app.MapGet("/weatherforecast", (HttpContext context) =>
-{
-    var claims = context.User.Claims;
-    foreach (var item in claims)
-    {
-        Console.WriteLine(item.ToString());
-    }
-    var forecast = Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast")
-.WithOpenApi().RequireAuthorization();
-
-app.MapIdentityApi<ApplicationUserAccount>();
+//app.MapIdentityApi<ApplicationUserAccount>();
 app.MapSwagger();
 
 app.MapHealthChecks("/hc", new HealthCheckOptions()
@@ -107,9 +125,7 @@ app.MapHealthChecks("/hc", new HealthCheckOptions()
 app.UseAuthentication();
 app.UseAuthorization();
 
+app.MapControllers();
+
 app.Run();
 
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}

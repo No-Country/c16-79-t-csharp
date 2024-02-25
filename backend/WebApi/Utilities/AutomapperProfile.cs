@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Veterinaria.Application.DTO;
 using Veterinaria.Domain.Models;
+using Veterinaria.Infrastructure.AuthModels;
 
 namespace WebApi.Utilities
 {
@@ -20,7 +21,9 @@ namespace WebApi.Utilities
             CreateMap<Address, AddressDTO>().ForPath(d => d.ClientUserName, opt => opt.MapFrom(o => o.ClientUser.Name));
 
 
-            CreateMap<UserAccount, UserAccountResponseRegisterDTO>();
+            CreateMap<ApplicationUserAccount, UserAccountResponseRegisterDTO>();
+            CreateMap<UserAccount,ClientUser>().ForMember(d => d.UserAccountId, opt => opt.MapFrom(o => o.Id));
+            CreateMap<ApplicationUserAccount, ClientUserDTO>().ForMember(d => d.Id, opt => opt.MapFrom(o => o.Id));
             CreateMap<ClientUser, ClientUserDTO>().ForMember(d => d.Addresses, opt => opt.MapFrom(o => o.Addresses))
                                                   .ForMember(d => d.Pets, opt => opt.MapFrom(o => o.Pets));
             CreateMap<ClientUserDataUpdateDTO, ClientUser>().ForMember(d => d.Id, o => o.Ignore());
