@@ -21,7 +21,7 @@ public class BasicRepository<TModel, TypeId> : IBasicRepository<TModel, TypeId> 
         }
         catch (Exception ex)
         {
-            throw new DBSaveChangesException($"Resource could not be saved: {nameof(TModel)} ", ex);
+            throw new DBSaveChangesException($"Resource could not be saved: {typeof(TModel).Name} ", ex);
         }
     }
 
@@ -34,7 +34,7 @@ public class BasicRepository<TModel, TypeId> : IBasicRepository<TModel, TypeId> 
         }
         catch (Exception ex)
         {
-            throw new DBSaveChangesException($"Resource could not be removed: {nameof(TModel)} ", ex);
+            throw new DBSaveChangesException($"Resource could not be removed: {typeof(TModel).Name} ", ex);
         };
     }
 
@@ -58,7 +58,7 @@ public class BasicRepository<TModel, TypeId> : IBasicRepository<TModel, TypeId> 
         }
         catch (Exception ex)
         {
-            throw new DBSaveChangesException($"Resource could not be updated: {nameof(TModel)} ", ex);
+            throw new DBSaveChangesException($"Resource could not be updated: {typeof(TModel).Name} ", ex);
         }
     }
 }
