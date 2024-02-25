@@ -530,10 +530,7 @@ COPY public."AspNetUserTokens" ("UserId", "LoginProvider", "Name", "Value") FROM
 --
 
 COPY public."AspNetUsers" ("Id", "UserName", "NormalizedUserName", "Email", "NormalizedEmail", "EmailConfirmed", "PasswordHash", "SecurityStamp", "ConcurrencyStamp", "PhoneNumber", "PhoneNumberConfirmed", "TwoFactorEnabled", "LockoutEnd", "LockoutEnabled", "AccessFailedCount") FROM stdin;
-6e28ffd0-a91a-4f2a-a2e2-12f27ed80cd7	admin@email.com	ADMIN@EMAIL.COM	admin@email.com	ADMIN@EMAIL.COM	f	AQAAAAIAAYagAAAAELuv+K7XzY4G+8oi2V/Dc/r2OJVkoIeUvwInJY2Kl4d5o/fOkXuCKWCAorvEOOrcVw==	HCXJYEXAE2NB4CWNNNB3V7D5E6GL27G2	308505d0-9ecf-47fc-9d8f-c2170f55f336	\N	f	f	\N	t	0
-397fdc0f-b828-425b-aeec-5ec882b57439	user@email.com	USER@EMAIL.COM	user@email.com	USER@EMAIL.COM	f	AQAAAAIAAYagAAAAEGN8UD/F2dD1AFoii68NjhcpJN0f43zXWlMJxZJ40+6V3aX03Zg8bglxFEu1a6OUKQ==	WNEDUBBEXQQX5QOYDIXNWK5JBC2GTB3Q	f1fccaa2-7210-44aa-b24d-1c0878e9eebf	\N	f	f	\N	t	0
-76d0e979-940d-4dc9-82c7-2b0b87739091	hilares33v@gmail.com	HILARES33V@GMAIL.COM	hilares33v@gmail.com	HILARES33V@GMAIL.COM	f	AQAAAAIAAYagAAAAEPlIbHNVpFJBchMKd4n3bvwginp/lHLlUwJWRalitut0cunY1zTofAfbLLVAKiIsdA==	RQGTETCQHXBGB5VJP6UCQLIY7QJDZ5SE	21530aa0-6b68-418c-8663-9f637a2577f2	\N	f	f	\N	t	1
-a0559d60-61ea-4330-9b20-8a589410ee5a	antonio@email.com	ANTONIO@EMAIL.COM	antonio@email.com	ANTONIO@EMAIL.COM	f	AQAAAAIAAYagAAAAEMfQaT4XkXR+3xZaQEkn0pjgy3uqvjXn9+O5jqFn+MhqdYYVO+HW95czAMAbSS0VbQ==	STLX4XVLZXKIG3K5QT7DEUGEZTHN3ODV	537ca2e4-d6ea-4e9e-b29a-3a86008d4d9e	\N	f	f	\N	t	0
+a0559d60-61ea-4330-9b20-8a589410ee5a	antonio@email.com	ANTONIO@EMAIL.COM	antonio@email.com	ANTONIO@EMAIL.COM	f	AQAAAAIAAYagAAAAEMfQaT4XkXR+3xZaQEkn0pjgy3uqvjXn9+O5jqFn+MhqdYYVO+HW95czAMAbSS0VbQ==	STLX4XVLZXKIG3K5QT7DEUGEZTHN3ODV	f5e3f370-b53d-4fb8-972d-f3030dad78aa	\N	f	f	\N	t	0
 \.
 
 
@@ -550,6 +547,12 @@ COPY public."CategorieProduct" ("CategoriesId", "ProductsId") FROM stdin;
 --
 
 COPY public."Categories" ("Id", "Name") FROM stdin;
+1	Higiene
+2	Alimentos
+3	Accesorios
+4	Entretenimiento
+5	Gatos
+6	Perros
 \.
 
 
@@ -598,6 +601,10 @@ COPY public."Pets" ("Id", "Name", "Type", "Race", "Birthday", "Weight", "Photo",
 --
 
 COPY public."Products" ("Id", "Name", "Price", "Stock", "Description", "Image") FROM stdin;
+1	Shampoo para perros	15.99	23	Limpieza e higiene para mascotas	https://acdn.mitiendanube.com/stores/001/145/238/products/osspret-shampoo-tonalizador-blanco-x-250-cc1-4ae072b779337c77d515876089911997-1024-1024.webp
+2	Collar para gatos	8.99	15	Accesorio para identificación y seguridad	https://acdn.mitiendanube.com/stores/001/145/238/products/screenshot_51-36d138dcdef37d293e16522805674373-1024-1024.webp
+3	Antipulgas y garrapatas	25.99	7	Protección contra parásitos externos	https://acdn.mitiendanube.com/stores/001/145/238/products/20a40-7c408903f56179129e17036219661011-480-0.webp
+4	Alimento para perros	39.94	11	Nutrición balanceada para perros adultos	https://acdn.mitiendanube.com/stores/001/145/238/products/urinary-perro-21-3578016b3f083c6ddf16063303514948-1024-1024.webp
 \.
 
 
@@ -652,7 +659,7 @@ SELECT pg_catalog.setval('public."AspNetUserClaims_Id_seq"', 1, false);
 -- Name: Categories_Id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public."Categories_Id_seq"', 1, false);
+SELECT pg_catalog.setval('public."Categories_Id_seq"', 6, true);
 
 
 --
@@ -694,7 +701,7 @@ SELECT pg_catalog.setval('public."Pets_Id_seq"', 1, false);
 -- Name: Products_Id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public."Products_Id_seq"', 1, false);
+SELECT pg_catalog.setval('public."Products_Id_seq"', 4, true);
 
 
 --

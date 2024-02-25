@@ -26,6 +26,7 @@ public static class Dependencies
         services.AddScoped<IProductRepository, ProductRepository>();
         services.AddScoped<ISaleRepository, SaleRepository>();
         services.AddScoped<IServiceRepository, ServiceRepository>();
+        services.AddScoped<ICategorieRepository, CategorieRepository>();
 
         return services;
     }
@@ -43,6 +44,7 @@ public static class Dependencies
         services.AddScoped<IProductService, ProductService>();
         services.AddScoped<ISaleService, SaleService>();
         services.AddScoped<IServiceService, ServiceService>();
+        services.AddScoped<ICategorieService, CategorieService>();
         return services;
     }
 
