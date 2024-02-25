@@ -21,7 +21,7 @@ public class CategoriesController : ControllerBase
 
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<CategorieDto>>> GetAll()
+    public async Task<ActionResult<ResponseSucceded<IEnumerable<CategorieDto>>>> GetAll()
     {
         List<Categorie> catetegories = await _categorieService.GetAllAsync();
 
@@ -34,7 +34,7 @@ public class CategoriesController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<CategorieDto>> GetById(int id)
+    public async Task<ActionResult<ResponseSucceded<CategorieDto>>> GetById(int id)
     {
         Categorie categorie = await _categorieService.GetByIdAsync(id);
 
@@ -45,20 +45,26 @@ public class CategoriesController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] CategorieCreateDto createDto)
     {
-        Categorie categorie = await _categorieService.CreateAsync(createDto.name);
+        Categorie categorie = await _categorieService.CreateAsync(createDto.Name);
         return Created();
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> Update(long id)
+    public async Task<IActionResult> Update(long id, [FromBody] CategorieDto updateDto)
     {
-        throw new NotImplementedException();
+        if (id != updateDto.Id)
+        {
+            return BadRequest();// TODO: considerar un CustomException
+        }
+        await _categorieService.UpdateAsync(updateDto.Id, updateDto.Name);
+        return NoContent();
     }
 
     [HttpDelete("{id}")]
-    public async Task<IActionResult> Delete(long id)
+    public async Task<IActionResult> Delete(int id)
     {
-        throw new NotImplementedException();
+        await _categorieService.DeleteAsync(id);
+        return NoContent();
     }
 }
 
