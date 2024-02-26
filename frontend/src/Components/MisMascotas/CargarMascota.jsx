@@ -78,7 +78,6 @@ export const CargarMascota = () => {
                     <TextInput id="peso" type="number" min="0" sizing="md" />
                 </div>
 
-
                 <div>
                     <div className="mb-2 block">
                         <Label htmlFor="file-upload" value="Upload file" />
