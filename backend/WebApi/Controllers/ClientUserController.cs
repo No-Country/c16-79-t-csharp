@@ -11,11 +11,11 @@ namespace WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ClientUserController : ControllerBase
+    public class ClientUsersController : ControllerBase
     {
         private readonly IClientUserRepository _clientUserRepository;
         private readonly IMapper _mapper;
-        public ClientUserController(IClientUserRepository clientUserRepository, IMapper mapper)
+        public ClientUsersController(IClientUserRepository clientUserRepository, IMapper mapper)
         {
             _clientUserRepository = clientUserRepository;
             _mapper = mapper;
@@ -64,15 +64,15 @@ namespace WebApi.Controllers
             var clientUserDTO = _mapper.Map<ClientUserDTO>(clientUserUpdated);
             return Ok(clientUserDTO);
         }
-        
+
         [Authorize(Roles = "Admin, Cliente")]
         [HttpPatch("PersonalDataUpdate")]
         public async Task<ActionResult<ClientUserDTO>> PersonalDataUpdate([FromBody] ClientUserDataUpdateDTO clientUserDataUpdateDTO)
         {
             ClaimsPrincipal claims = this.User;
             var idUser = claims.FindFirst(u => u.Type == ClaimTypes.NameIdentifier)?.Value;
-            var clientUser = await _clientUserRepository.GetClientUserById(u => u.UserAccountId ==  idUser);
-            _mapper.Map(clientUserDataUpdateDTO,clientUser);
+            var clientUser = await _clientUserRepository.GetClientUserById(u => u.UserAccountId == idUser);
+            _mapper.Map(clientUserDataUpdateDTO, clientUser);
             var clientUserUpdated = await _clientUserRepository.UpdateAsync(clientUser);
             var clientUserDTO = _mapper.Map<ClientUserDTO>(clientUserUpdated);
             return Ok(clientUserDTO);

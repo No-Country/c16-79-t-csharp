@@ -13,13 +13,13 @@ namespace WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PetController : ControllerBase //TODO: convertier en un nombre plural
+    public class PetsController : ControllerBase
     {
         private readonly IPetRepository _petRepository;
         private readonly IClientUserRepository _clientUserRepository;
         private readonly IMapper _mapper;
 
-        public PetController(IPetRepository petRepository, IClientUserRepository clientUserRepository, IMapper mapper)
+        public PetsController(IPetRepository petRepository, IClientUserRepository clientUserRepository, IMapper mapper)
         {
             _petRepository = petRepository;
             _clientUserRepository = clientUserRepository;
@@ -29,9 +29,9 @@ namespace WebApi.Controllers
 
         //[Authorize(Roles = "Admin")]
         [HttpGet("GetAllWithData")]
-        public ActionResult<IEnumerable<PetDTO>> GetAllWithData()
+        public async Task<ActionResult<IEnumerable<PetDTO>>> GetAllWithData()
         {
-            var pets = _petRepository.GetAllWithData();
+            var pets = await _petRepository.GetAllWithData();
             if (pets is null)
             {
                 return NotFound();

@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Veterinaria.Application.CustomeException;
 using Veterinaria.Domain.Repositories;
 
-namespace Veterinaria.Infrastructure.Repository;
+namespace Veterinaria.Infrastructure.Repositories;
 
 public class BasicRepository<TModel, TypeId> : IBasicRepository<TModel, TypeId> where TModel : class
 {
