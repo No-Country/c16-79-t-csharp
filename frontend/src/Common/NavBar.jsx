@@ -35,7 +35,7 @@ const NavBar = () => {
                     <Navbar.Link ><NavLink to="">Tienda</NavLink></Navbar.Link>
                     <Navbar.Link ><NavLink to="">Quiero Adoptar</NavLink></Navbar.Link>
                     <Navbar.Link ><NavLink to="">Agenda</NavLink></Navbar.Link>
-                    <Navbar.Link ><NavLink to="">Servicios</NavLink></Navbar.Link>
+                    <Navbar.Link ><NavLink to="/servicios">Servicios</NavLink></Navbar.Link>
                     <Navbar.Link ><NavLink to="">Perdidos y Encontrados</NavLink></Navbar.Link>
                     <Navbar.Link ><NavLink to="">Quienes Somos</NavLink></Navbar.Link>
                 </Navbar.Collapse>
