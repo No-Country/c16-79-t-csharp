@@ -2,9 +2,11 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 using Veterinaria.Application.DTO;
 using Veterinaria.Domain.Models;
 using Veterinaria.Domain.Repositories;
+using Veterinaria.Infrastructure.Repositories;
 
 namespace WebApi.Controllers
 {
@@ -13,11 +15,13 @@ namespace WebApi.Controllers
     public class PetController : ControllerBase
     {
         private readonly IPetRepository _petRepository;
+        private readonly IClientUserRepository _clientUserRepository;
         private readonly IMapper _mapper;
 
-        public PetController(IPetRepository petRepository, IMapper mapper)
+        public PetController(IPetRepository petRepository, IClientUserRepository clientUserRepository, IMapper mapper)
         {
             _petRepository = petRepository;
+            _clientUserRepository = clientUserRepository;
             _mapper = mapper;
         }
 
@@ -54,7 +58,19 @@ namespace WebApi.Controllers
         [HttpPost]
         public async Task<ActionResult<PetDTO>> Insert([FromBody] PetCreationDTO petCreationDTO)
         {
-            var pet = _mapper.Map<Pet>(petCreationDTO);
+            ClaimsPrincipal claims = this.User;
+            var idUser = claims.FindFirst(u => u.Type == ClaimTypes.NameIdentifier)?.Value;
+            var clientUser = await _clientUserRepository.GetClientUserById(u => u.UserAccountId == idUser);
+            var pet = new Pet
+            {
+                Name = petCreationDTO.Name,
+                Type = petCreationDTO.Type,
+                Race = petCreationDTO.Race,
+                Birthday = DateOnly.ParseExact(petCreationDTO.Birthday, "dd/MM/yyyy"),
+                Weight = petCreationDTO.Weight,
+                Photo = petCreationDTO.Photo,
+                ClientUserId = clientUser.Id
+            };
             await _petRepository.AddAsync(pet);
             var petDTO = _mapper.Map<PetDTO>(pet);
             return Ok(petDTO);
@@ -79,7 +95,7 @@ namespace WebApi.Controllers
 
         //[Authorize(Roles = "Admin, Cliente")]
         [HttpDelete("{id}")]
-        public async Task<ActionResult> Eliminar([FromBody] int id)
+        public async Task<ActionResult> Eliminar([FromRoute] int id)
         {
             var pet = await _petRepository.FindByIdAsync(id);
             if (pet is null)
@@ -87,11 +103,6 @@ namespace WebApi.Controllers
                 return NotFound();
             }
             await _petRepository.DeleteAsync(pet);
-            //var result = await _petRepository.DeleteAsync(pet);
-            //if (!result)
-            //{
-            //    return BadRequest();
-            //}
             return NoContent();
         }
     }

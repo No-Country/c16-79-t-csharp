@@ -1,7 +1,6 @@
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
-using Veterinaria.Infrastructure.AuthModels;
 using Veterinaria.Infrastructure.Persistance.Context;
 using WebApi.DependencyInjection;
 using Microsoft.OpenApi.Models;
@@ -113,7 +112,6 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-//app.MapIdentityApi<ApplicationUserAccount>();
 app.MapSwagger();
 
 app.MapHealthChecks("/hc", new HealthCheckOptions()

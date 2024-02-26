@@ -15,7 +15,7 @@ using Veterinaria.Application.Authentication;
 using Veterinaria.Application.DTO;
 using Veterinaria.Domain.Models;
 using Veterinaria.Domain.Repositories;
-using Veterinaria.Infrastructure.AuthModels;
+using Veterinaria.Infrastructure.Authentication;
 using Veterinaria.Infrastructure.Persistance.Context;
 
 namespace Veterinaria.Infrastructure.Authentication

@@ -14,6 +14,5 @@ namespace Veterinaria.Application.DTO
         public string? Birthday { get; set; }
         public float Weight { get; set; }
         public string? Photo { get; set; }
-        public string ClientUserId { get; set; }
     }
 }

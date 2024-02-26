@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Veterinaria.Domain.Models;
 
-namespace Veterinaria.Infrastructure.AuthModels;
+namespace Veterinaria.Infrastructure.Authentication;
 
 public class ApplicationUserAccount : IdentityUser, UserAccount
 {

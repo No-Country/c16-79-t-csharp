@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Veterinaria.Domain.Models;
 using Veterinaria.Domain.Repositories;
-using Veterinaria.Infrastructure.AuthModels;
 using Veterinaria.Infrastructure.Persistance.Context;
 using Veterinaria.Infrastructure.Repositories;
 using Veterinaria.Infrastructure.Authentication;
@@ -42,7 +41,6 @@ public static class Dependencies
 
     public static IServiceCollection AddDependencyUtilities(this IServiceCollection services, IConfiguration configuration)
     {
-        //services.AddAutoMapper(typeof()); // agregar Automapper
         services.AddAutoMapper(typeof(AutomapperProfile));
         return services;
     }
