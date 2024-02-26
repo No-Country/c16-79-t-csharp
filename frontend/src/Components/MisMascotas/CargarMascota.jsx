@@ -15,15 +15,21 @@ import {
 import { uploadFile } from "../../Helpers/CargarImagen"
 import { useState } from "react"
 
-export const CargarMascota = () => {
-
+export const CargarMascota = ({ nombre, raza, tipo, edad, peso, foto }) => {
+    // console.log("nombre", nombre)
     const [file, setFile] = useState(null)
     const [url, setUrl] = useState(null)
-    // console.log("url", url)
 
     const handleSubmit = async (e) => {
         e.preventDefault()
         try {
+            const validExtensions = ["jpg", "jpeg", "png", "gif"];
+            const fileExtension = file.name.split('.').pop().toLowerCase();
+            // console.log("fileExten", fileExtension)
+            if (!validExtensions.includes(fileExtension)) {
+                alert("Solo se permiten archivos de imagen.");
+                return;
+            }
             const result = await uploadFile(file)
             setUrl(result)
             console.log(result)
@@ -40,27 +46,29 @@ export const CargarMascota = () => {
                     <div className="mb-2 block">
                         <Label htmlFor="nombre" value="Nombre de tu mascota" />
                     </div>
-                    <TextInput id="nombre" type="text" sizing="md" />
+                    <TextInput id="nombre" type="text" sizing="md" defaultValue={nombre} />
                 </div>
 
-
-                <div className="max-w-md">
-                    <div className="mb-2 block">
-                        <Label htmlFor="tipo" value="Selecciona tipo de mascota" />
-                    </div>
-                    <Select id="tipo" required>
-                        <option>Perro</option>
-                        <option>Gato</option>
-                        {/* <option>France</option> */}
-                        {/* <option>Germany</option> */}
-                    </Select>
-                </div>
+                {
+                    tipo ? null :
+                        <div className="max-w-md">
+                            <div className="mb-2 block">
+                                <Label htmlFor="tipo" value="Selecciona tipo de mascota" />
+                            </div>
+                            <Select id="tipo" required>
+                                <option>Perro</option>
+                                <option>Gato</option>
+                                {/* <option>France</option> */}
+                                {/* <option>Germany</option> */}
+                            </Select>
+                        </div>
+                }
 
                 <div>
                     <div className="mb-2 block">
                         <Label htmlFor="raza" value="Raza" />
                     </div>
-                    <TextInput id="raza" type="text" sizing="md" />
+                    <TextInput id="raza" type="text" sizing="md" defaultValue={raza} />
                 </div>
 
 
@@ -68,14 +76,14 @@ export const CargarMascota = () => {
                     <div className="mb-2 block">
                         <Label htmlFor="edad" value="Edad" />
                     </div>
-                    <TextInput id="edad" type="number" min="0" max="30" sizing="md" />
+                    <TextInput id="edad" type="number" min="0" max="30" sizing="md" defaultValue={edad} />
                 </div>
 
                 <div>
                     <div className="mb-2 block">
                         <Label htmlFor="peso" value="Peso" />
                     </div>
-                    <TextInput id="peso" type="number" min="0" sizing="md" />
+                    <TextInput id="peso" type="number" min="0" sizing="md" defaultValue={peso} />
                 </div>
 
 
