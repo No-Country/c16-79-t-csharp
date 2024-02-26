@@ -97,7 +97,7 @@ const NavBar = () => {
             <NavLink to="">Perdidos y Encontrados</NavLink>
           </Navbar.Link>
           <Navbar.Link>
-            <NavLink to="">Quienes Somos</NavLink>
+            <NavLink to="/quienessomos">Quienes Somos</NavLink>
           </Navbar.Link>
         </Navbar.Collapse>
       </Navbar>
