@@ -10,7 +10,7 @@ using Veterinaria.Infrastructure.Authentication;
 using Veterinaria.Application.Authentication;
 using WebApi.Utilities;
 using Veterinaria.Infrastructure.Repository;
-using Veterinaria.Infrastructure.AuthModels;
+//using Veterinaria.Infrastructure.AuthModels;
 
 namespace WebApi.DependencyInjection;
 public static class Dependencies
