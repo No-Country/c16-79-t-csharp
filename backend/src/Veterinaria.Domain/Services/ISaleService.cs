@@ -1,6 +1,6 @@
 using Veterinaria.Domain.Models;
 
-namespace  Veterinaria.Domain.Services
+namespace Veterinaria.Domain.Services
 {
     public interface ISaleService
     {

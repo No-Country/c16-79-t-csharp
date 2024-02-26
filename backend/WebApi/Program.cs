@@ -5,8 +5,6 @@ using Veterinaria.Infrastructure.AuthModels;
 using Veterinaria.Infrastructure.Persistance.Context;
 using WebApi.DependencyInjection;
 using Microsoft.OpenApi.Models;
-using Microsoft.AspNetCore.Identity;
-using Npgsql.Replication;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,7 +12,11 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 
+builder.Services.AddControllers();
+
 builder.Services.AddDependencyInfrastructure(builder.Configuration);
+builder.Services.AddDependencyApplication(builder.Configuration);
+builder.Services.AddDependencyUtilities(builder.Configuration);
 
 builder.Services.AddAuthorization();
 
@@ -49,7 +51,21 @@ builder.Services.AddHealthChecks()
     .AddCheck("self", () => HealthCheckResult.Healthy())
     .AddDbContextCheck<VeterinariaDbContext>();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: "CorsPolicy", builder =>
+    {
+        builder.AllowAnyOrigin();
+        builder.AllowAnyMethod();
+        builder.AllowAnyHeader();
+    });
+});
+
+builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+
 var app = builder.Build();
+
+app.UseExceptionHandler(_ => { });
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -104,8 +120,12 @@ app.MapHealthChecks("/hc", new HealthCheckOptions()
     ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
 });
 
+app.MapControllers();
+
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseCors("CorsPolicy");
 
 app.Run();
 

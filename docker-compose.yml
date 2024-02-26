@@ -1,0 +1,36 @@
+version: '3'
+services:
+  front:
+    container_name: front-service
+    build: 
+      context: ./frontend
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+    environment:
+      - WEB_API_URI=http://backend-service:8080
+    ports:
+      - "3500:80"
+  batabase:
+    container_name: database-service
+    image: postgres
+    volumes:
+      #- c16-data-db:/var/lib/postgresql/data
+      - ./backend/db/backup/:/docker-entrypoint-initdb.d/
+    ports:
+      - "5432"
+    environment:
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=veterinaria
+  backend:
+    container_name: backend-service
+    build: 
+      context: ./backend
+    ports:
+      - "8080"
+    environment:
+      - ConnectionStrings__DefaultConnection=Host=database-service;Username=postgres;Port=5432;Password=password;Database=veterinaria
+    # env_file:
+    #   - .env
+
+volumes:
+  c16-data-db:

@@ -1,3 +1,5 @@
+using System;
+
 namespace Veterinaria.Domain.Models;
 
 public class Date
@@ -9,6 +11,38 @@ public class Date
      public int PetId { get ; set; }
      public Pet Pet { get; set; } = null!;
      public DateState StateDate { get; set; }
+    
+    private Date() { }
+
+    public Date(int id, DateTime time, int serviceId, int petId)
+    {
+        Id = id;
+        Time = time;
+        ServiceId = serviceId;
+        PetId = petId;
+        StateDate = DateState.Crearted;
+    }
+    
+    public static Date Create(DateTime time, int serviceId, int petId)
+    {
+        return new Date()
+        {
+            Time = time,
+            ServiceId = serviceId,
+            PetId = petId,
+            StateDate = DateState.Crearted
+        };
+    }
+
+    public void UpdateModel(DateTime time, int serviceId, int petId, DateState state)
+    {
+        Time = time;
+        ServiceId = serviceId;
+        PetId = petId;
+        StateDate = state;
+    }
+    
+
 }
 
 public enum DateState

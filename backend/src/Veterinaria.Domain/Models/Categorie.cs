@@ -27,4 +27,5 @@ namespace Veterinaria.Domain.Models
             Name = newName;
         }
     }
+
 }
