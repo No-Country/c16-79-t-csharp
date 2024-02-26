@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Veterinaria.Application.CustomeException;
+using System.Security.Claims;
 using Veterinaria.Application.DTO;
 using Veterinaria.Domain.Models;
 using Veterinaria.Domain.Repositories;
@@ -14,11 +15,14 @@ namespace WebApi.Controllers
     public class AddressController : ControllerBase //TODO: convertier en un nombre plural
     {
         private readonly IAddressRepository _addressRepository;
+        private readonly IClientUserRepository _clientUserRepository;
         private readonly IMapper _mapper;
 
-        public AddressController(IAddressRepository addressRepository, IMapper mapper)
+        public AddressController(IAddressRepository addressRepository,
+                                 IClientUserRepository clientUserRepository, IMapper mapper)
         {
             _addressRepository = addressRepository;
+            _clientUserRepository = clientUserRepository;
             _mapper = mapper;
         }
 
@@ -51,7 +55,18 @@ namespace WebApi.Controllers
         [HttpPost]
         public async Task<ActionResult<AddressDTO>> Insert([FromBody] AddressCreationDTO addressCreationDTO)
         {
-            var address = _mapper.Map<Address>(addressCreationDTO);
+            ClaimsPrincipal claims = this.User;
+            var idUser = claims.FindFirst(u => u.Type == ClaimTypes.NameIdentifier)?.Value;
+            var clientUser = await _clientUserRepository.GetClientUserById(u => u.UserAccountId == idUser);
+            var address = new Address
+            {
+                City = addressCreationDTO.City,
+                Province = addressCreationDTO.Province,
+                Neighborhood = addressCreationDTO.Neighborhood,
+                Street = addressCreationDTO.Street,
+                Number = addressCreationDTO.Number,
+                ClientUserId = clientUser.Id
+            };
             await _addressRepository.AddAsync(address);
             var addressDTO = _mapper.Map<AddressDTO>(address);
             return Ok(addressDTO);
@@ -76,7 +91,7 @@ namespace WebApi.Controllers
 
         //[Authorize(Roles = "Admin, Cliente")]
         [HttpDelete("{id}")]
-        public async Task<ActionResult> Eliminar(int id)
+        public async Task<ActionResult> Eliminar([FromRoute] int id)
         {
             var address = await _addressRepository.FindByIdAsync(id);
             if (address is null)

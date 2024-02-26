@@ -58,7 +58,6 @@ public static class Dependencies
 
     public static IServiceCollection AddDependencyUtilities(this IServiceCollection services, IConfiguration configuration)
     {
-        //services.AddAutoMapper(typeof()); // agregar Automapper
         services.AddAutoMapper(typeof(AutomapperProfile));
         return services;
     }

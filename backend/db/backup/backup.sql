@@ -232,6 +232,8 @@ CREATE TABLE public."ClientUsers" (
     "Id" integer NOT NULL,
     "Name" text NOT NULL,
     "LastName" text NOT NULL,
+    "UserName" text NOT NULL,
+    "PhoneNumber" text NOT NULL,
     "UserAccountId" text NOT NULL
 );
 
@@ -1128,4 +1130,3 @@ ALTER TABLE ONLY public."Sales"
 --
 -- PostgreSQL database dump complete
 --
-

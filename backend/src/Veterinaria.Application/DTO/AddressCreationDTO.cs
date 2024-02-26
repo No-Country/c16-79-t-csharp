@@ -13,6 +13,5 @@ namespace Veterinaria.Application.DTO
         public string? Neighborhood { get; set; }
         public string? Street { get; set; }
         public int Number { get; set; }
-        public string? ClientUserId { get; set; }
     }
 }

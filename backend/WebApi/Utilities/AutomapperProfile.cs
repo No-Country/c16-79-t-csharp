@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Veterinaria.Application.DTO;
 using Veterinaria.Domain.Models;
-using Veterinaria.Infrastructure.AuthModels;
+using Veterinaria.Infrastructure.Authentication;
 
 namespace WebApi.Utilities
 {
@@ -9,7 +9,7 @@ namespace WebApi.Utilities
     {
         public AutomapperProfile()
         {
-            CreateMap<PetCreationDTO, Pet>().ForMember(d => d.Birthday, opt => opt.MapFrom(o => DateOnly.Parse(o.Birthday)))
+            CreateMap<PetCreationDTO, Pet>().ForMember(d => d.Birthday, opt => opt.MapFrom(o => DateOnly.ParseExact(o.Birthday, "dd/MM/yyyy")))
                                             .ForMember(d => d.Id, o => o.Ignore())
                                             .ForMember(d => d.ClientUser, o => o.Ignore());
             CreateMap<Pet, PetDTO>().ForPath(d => d.ClientUserName, opt => opt.MapFrom(o => o.ClientUser.Name))
@@ -22,8 +22,8 @@ namespace WebApi.Utilities
 
 
             CreateMap<ApplicationUserAccount, UserAccountResponseRegisterDTO>();
-            CreateMap<UserAccount,ClientUser>().ForMember(d => d.UserAccountId, opt => opt.MapFrom(o => o.Id));
-            CreateMap<ApplicationUserAccount, ClientUserDTO>().ForMember(d => d.Id, opt => opt.MapFrom(o => o.Id));
+            CreateMap<ApplicationUserAccount, ClientUser>().ForMember(d => d.UserAccountId, opt => opt.MapFrom(o => o.Id));
+            CreateMap<ApplicationUserAccount, ClientUserDTO>().ForMember(d => d.UserAccountId, opt => opt.MapFrom(o => o.Id));
             CreateMap<ClientUser, ClientUserDTO>().ForMember(d => d.Addresses, opt => opt.MapFrom(o => o.Addresses))
                                                   .ForMember(d => d.Pets, opt => opt.MapFrom(o => o.Pets));
             CreateMap<ClientUserDataUpdateDTO, ClientUser>().ForMember(d => d.Id, o => o.Ignore());

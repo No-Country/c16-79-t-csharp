@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Veterinaria.Domain.Models;
-using Veterinaria.Infrastructure.AuthModels;
+using Veterinaria.Infrastructure.Authentication;
 
 namespace Veterinaria.Infrastructure.Persistance.Context;
 
