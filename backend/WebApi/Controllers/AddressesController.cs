@@ -28,7 +28,8 @@ namespace WebApi.Controllers
 
 
         //[Authorize(Roles = "Admin")]
-        [HttpGet("GetAllWithData")]
+        // [HttpGet("GetAllWithData")]
+        [HttpGet]
         public async Task<ActionResult<IEnumerable<AddressDTO>>> GetAllWithData()
         {
             List<Address> addresses = await _addressRepository.GetAllWithData();
@@ -38,7 +39,8 @@ namespace WebApi.Controllers
 
 
         //[Authorize(Roles = "Admin, Cliente")]
-        [HttpGet("GetByIdWithData/{id}")]
+        // [HttpGet("GetByIdWithData/{id}")]
+        [HttpGet("{id}")]
         public async Task<ActionResult<AddressDTO>> GetByIdWithData(int id)
         {
             var address = await _addressRepository.GetByIdWithData(p => p.Id == id);

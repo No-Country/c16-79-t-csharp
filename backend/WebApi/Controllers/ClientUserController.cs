@@ -33,7 +33,7 @@ namespace WebApi.Controllers
 
 
         [Authorize(Roles = "Admin")]
-        [HttpGet("GetUsuario/{id}")]
+        [HttpGet("GetByUserAccount/{id}")]
         public async Task<ActionResult<ClientUserDTO>> GetById(string id)
         {
             var clientUser = await _clientUserRepository.GetClientUserByIdWithData(u => u.UserAccountId == id);
@@ -47,7 +47,7 @@ namespace WebApi.Controllers
 
 
         [Authorize(Roles = "Admin, Cliente")]
-        [HttpPost("AddPersonalData")]
+        [HttpPost]
         public async Task<ActionResult<ClientUserDTO>> AddPersonalData([FromBody] ClientUserDataUpdateDTO clientUserDataAddDTO)
         {
             ClaimsPrincipal claims = this.User;
@@ -66,7 +66,7 @@ namespace WebApi.Controllers
         }
 
         [Authorize(Roles = "Admin, Cliente")]
-        [HttpPatch("PersonalDataUpdate")]
+        [HttpPatch("update")]
         public async Task<ActionResult<ClientUserDTO>> PersonalDataUpdate([FromBody] ClientUserDataUpdateDTO clientUserDataUpdateDTO)
         {
             ClaimsPrincipal claims = this.User;
