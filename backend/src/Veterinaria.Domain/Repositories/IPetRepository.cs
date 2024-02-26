@@ -10,7 +10,7 @@ namespace Veterinaria.Domain.Repositories
 {
     public interface IPetRepository : IBasicRepository<Pet, int>
     {
-        public IQueryable<Pet> GetAllWithData();
+        public Task<List<Pet>> GetAllWithData();
         public Task<Pet> GetByIdWithData(Expression<Func<Pet, bool>> filtro = null);
     }
 }

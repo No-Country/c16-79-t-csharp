@@ -12,7 +12,7 @@ namespace WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UserAccountController : ControllerBase
+    public class UserAccountController : ControllerBase //TODO: posible nombre AuthController
     {
         private readonly IAuthenticationUserAccountService _authenticationService;
         private readonly IMapper _mapper;
@@ -23,7 +23,7 @@ namespace WebApi.Controllers
         }
 
 
-        [HttpPost("registro")]
+        [HttpPost("registro")] // FIXME: si el rol no existe, el usurio se registra igual
         public async Task<IActionResult> Register([FromBody] UserAccountRegisterDTO clientUserRegiserDTO)
         {
             var validEmail = await _authenticationService.IsSingleUser(clientUserRegiserDTO.Email);
@@ -35,7 +35,7 @@ namespace WebApi.Controllers
             var clientUser = await _authenticationService.Register(clientUserRegiserDTO);
             if (clientUser is null)
             {
-                return BadRequest("Error: no se pudo registrar el usuario");
+                return Conflict("Error: no se pudo registrar el usuario");
             }
             return Ok(clientUser);
         }
@@ -47,7 +47,7 @@ namespace WebApi.Controllers
             var loginResponse = await _authenticationService.Login(userAccountLoginDTO);
             if (loginResponse.ClientUser is null || string.IsNullOrEmpty(loginResponse.Token))
             {
-                return BadRequest("Nombre de usuario o contraseña incorrectos");
+                return Unauthorized("Nombre de usuario o contraseña incorrectos");
             }
             return Ok(loginResponse);
         }

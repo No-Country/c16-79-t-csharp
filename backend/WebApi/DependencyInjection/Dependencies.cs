@@ -4,14 +4,13 @@ using Veterinaria.Application.Services;
 using Veterinaria.Domain.Repositories;
 using Veterinaria.Domain.Services;
 using Veterinaria.Infrastructure;
-//using Veterinaria.Infrastructure.AuthModels;
 using Veterinaria.Infrastructure.Persistance.Context;
 using Veterinaria.Infrastructure.Repositories;
 using Veterinaria.Infrastructure.Authentication;
 using Veterinaria.Application.Authentication;
 using WebApi.Utilities;
 using Veterinaria.Infrastructure.Repository;
-using Veterinaria.Infrastructure.Repository;
+using Veterinaria.Infrastructure.AuthModels;
 
 namespace WebApi.DependencyInjection;
 public static class Dependencies
@@ -23,8 +22,7 @@ public static class Dependencies
             option.UseNpgsql(configuration.GetConnectionString("DefaultConnection"));
         });
 
-        //services.AddIdentityApiEndpoints<ApplicationUserAccount>()
-        //    .AddEntityFrameworkStores<VeterinariaDbContext>();
+        services.AddIdentity<ApplicationUserAccount, IdentityRole>().AddEntityFrameworkStores<VeterinariaDbContext>();
 
         services.AddTransient(typeof(IBasicRepository<,>), typeof(BasicRepository<,>));
 
@@ -34,7 +32,6 @@ public static class Dependencies
         services.AddScoped<ISaleRepository, SaleRepository>();
         services.AddScoped<IServiceRepository, ServiceRepository>();
         services.AddScoped<ICategorieRepository, CategorieRepository>();
-        services.AddIdentity<ApplicationUserAccount, IdentityRole>().AddEntityFrameworkStores<VeterinariaDbContext>();
         services.AddScoped<IPetRepository, PetRepository>();
         services.AddScoped<IClientUserRepository, ClientUserRepository>();
         services.AddScoped<IAuthenticationUserAccountService, AuthenticationUserAccountService>();
@@ -43,11 +40,6 @@ public static class Dependencies
         return services;
     }
 
-    // public static IServiceCollection AddDependencyUtilities(this IServiceCollection services, IConfiguration configuration)
-    // {
-    //     //services.AddAutoMapper(typeof()); // agregar Automapper
-    //     return services;
-    // }
 
     public static IServiceCollection AddDependencyApplication(this IServiceCollection services, IConfiguration configuration)
     {
@@ -70,22 +62,5 @@ public static class Dependencies
         services.AddAutoMapper(typeof(AutomapperProfile));
         return services;
     }
-
-    // public static IServiceCollection AddDependencyApplication(this IServiceCollection services, IConfiguration configuration)
-    // {
-    //     //services.AddScoped<IDateServise, DateService>();
-    //     //services.AddScoped<IMedicalHistoryService, MedicalHistoryService>();
-    //     //services.AddScoped<IProductService, ProductService>();
-    //     //services.AddScoped<ISaleService, SaleService>();
-    //     //services.AddScoped<IServiceService, ServiceService>();
-    //     //services.AddScoped<ICategorieService, CategorieService>();
-    //     services.AddScoped<IPetRepository, PetRepository>();
-    //     services.AddScoped<IClientUserRepository, ClientUserRepository>();
-    //     services.AddScoped<IAuthenticationUserAccountService, AuthenticationUserAccountService>();
-    //     services.AddScoped<IAddressRepository, AddressRepository>();
-    //     return services;
-    // }
-
-
 
 }

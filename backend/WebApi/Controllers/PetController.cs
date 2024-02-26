@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Veterinaria.Application.CustomeException;
 using Veterinaria.Application.DTO;
 using Veterinaria.Domain.Models;
 using Veterinaria.Domain.Repositories;
@@ -10,10 +11,10 @@ namespace WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PetController : ControllerBase
+    public class PetController : ControllerBase //TODO: convertier en un nombre plural
     {
         private readonly IPetRepository _petRepository;
-        private readonly IMapper _mapper;
+        private readonly IMapper _mapper;// FIXME: error en el mapeo de pets
 
         public PetController(IPetRepository petRepository, IMapper mapper)
         {
@@ -43,7 +44,7 @@ namespace WebApi.Controllers
             var pet = await _petRepository.GetByIdWithData(p => p.Id == id);
             if (pet is null)
             {
-                return NotFound();
+                throw ResourceNotFoundException.NotFoundById<Pet, int>(id);
             }
             var petDTO = _mapper.Map<PetDTO>(pet);
             return Ok(petDTO);
@@ -68,7 +69,7 @@ namespace WebApi.Controllers
             var pet = await _petRepository.FindByIdAsync(id);
             if (pet is null)
             {
-                return NotFound();
+                throw ResourceNotFoundException.NotFoundById<Pet, int>(id);
             }
             _mapper.Map(petCreationDTO, pet);
             var result = await _petRepository.UpdateAsync(pet);
@@ -79,12 +80,12 @@ namespace WebApi.Controllers
 
         //[Authorize(Roles = "Admin, Cliente")]
         [HttpDelete("{id}")]
-        public async Task<ActionResult> Eliminar([FromBody] int id)
+        public async Task<IActionResult> Eliminar([FromBody] int id)
         {
             var pet = await _petRepository.FindByIdAsync(id);
             if (pet is null)
             {
-                return NotFound();
+                throw ResourceNotFoundException.NotFoundById<Pet, int>(id);
             }
             await _petRepository.DeleteAsync(pet);
             //var result = await _petRepository.DeleteAsync(pet);

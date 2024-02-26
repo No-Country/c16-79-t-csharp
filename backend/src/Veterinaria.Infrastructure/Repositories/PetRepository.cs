@@ -20,13 +20,13 @@ namespace Veterinaria.Infrastructure.Repositories
             _context = context;
         }
 
-        virtual public IQueryable<Pet> GetAllWithData()
+        virtual public async Task<List<Pet>> GetAllWithData()
         {
-            var pets = _context.Pets.Include(c => c.ClientUser).ToList().AsQueryable();
+            var pets = await _context.Pets.Include(c => c.ClientUser).ToListAsync();
             return pets;
         }
 
-        virtual public async Task<Pet> GetByIdWithData(Expression<Func<Pet, bool>> filtro = null)
+        virtual public async Task<Pet> GetByIdWithData(Expression<Func<Pet, bool>> filtro = null!)
         {
             var pet = await _context.Pets.Include(c => c.ClientUser).FirstOrDefaultAsync(filtro);
             return pet;

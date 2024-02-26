@@ -28,7 +28,7 @@ namespace Veterinaria.Infrastructure.Repositories
                                       .ToList().AsQueryable();
             return users;
         }
-        virtual public async Task<ClientUser> GetClientUserById(Expression<Func<ClientUser, bool>> filtro = null)
+        virtual public async Task<ClientUser> GetClientUserById(Expression<Func<ClientUser, bool>> filtro = null!)
         {
             var user = await _context.ClientUsers.Include(u => u.Addresses)
                                            .Include(u => u.Pets)

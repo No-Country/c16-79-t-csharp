@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Veterinaria.Application.CustomeException;
 using Veterinaria.Application.DTO;
 using Veterinaria.Domain.Models;
 using Veterinaria.Domain.Repositories;
@@ -10,7 +11,7 @@ namespace WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AddressController : ControllerBase
+    public class AddressController : ControllerBase //TODO: convertier en un nombre plural
     {
         private readonly IAddressRepository _addressRepository;
         private readonly IMapper _mapper;
@@ -24,13 +25,9 @@ namespace WebApi.Controllers
 
         //[Authorize(Roles = "Admin")]
         [HttpGet("GetAllWithData")]
-        public ActionResult<IEnumerable<AddressDTO>> GetAllWithData()
+        public async Task<ActionResult<IEnumerable<AddressDTO>>> GetAllWithData()
         {
-            var addresses = _addressRepository.GetAllWithData();
-            if (addresses is null)
-            {
-                return NotFound();
-            }
+            List<Address> addresses = await _addressRepository.GetAllWithData();
             var addressesDTO = _mapper.Map<IEnumerable<AddressDTO>>(addresses);
             return Ok(addressesDTO);
         }
@@ -38,12 +35,12 @@ namespace WebApi.Controllers
 
         //[Authorize(Roles = "Admin, Cliente")]
         [HttpGet("GetByIdWithData/{id}")]
-        public ActionResult<AddressDTO> GetByIdWithData(int id)
+        public async Task<ActionResult<AddressDTO>> GetByIdWithData(int id)
         {
-            var address = _addressRepository.GetByIdWithData(p => p.Id == id);
+            var address = await _addressRepository.GetByIdWithData(p => p.Id == id);
             if (address is null)
             {
-                return NotFound();
+                throw ResourceNotFoundException.NotFoundById<Address, int>(id);
             }
             var addressDTO = _mapper.Map<AddressDTO>(address);
             return Ok(addressDTO);
@@ -68,7 +65,7 @@ namespace WebApi.Controllers
             var address = await _addressRepository.FindByIdAsync(id);
             if (address is null)
             {
-                return NotFound();
+                throw ResourceNotFoundException.NotFoundById<Address, int>(id);
             }
             _mapper.Map(addressCreationDTO, address);
             var result = await _addressRepository.UpdateAsync(address);
@@ -79,19 +76,15 @@ namespace WebApi.Controllers
 
         //[Authorize(Roles = "Admin, Cliente")]
         [HttpDelete("{id}")]
-        public async Task<ActionResult> Eliminar([FromBody] int id)
+        public async Task<ActionResult> Eliminar(int id)
         {
             var address = await _addressRepository.FindByIdAsync(id);
             if (address is null)
             {
-                return NotFound();
+                throw ResourceNotFoundException.NotFoundById<Address, int>(id);
             }
             await _addressRepository.DeleteAsync(address);
-            //var result = await _addressRepository.DeleteAsync(address);
-            //if (!result)
-            //{
-            //    return BadRequest();
-            //}
+
             return NoContent();
         }
     }
