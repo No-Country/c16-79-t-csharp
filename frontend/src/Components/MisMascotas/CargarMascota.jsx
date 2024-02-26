@@ -17,8 +17,13 @@ import { useState } from "react"
 
 export const CargarMascota = ({ nombre, raza, tipo, edad, peso, foto }) => {
     // console.log("nombre", nombre)
+export const CargarMascota = ({nombre, raza, tipo, edad, peso}) => {
+
+    /* le paso por props los datos si encontro mascota en la bd sino el form queda en blanco para cargar nueva mascota */
+
     const [file, setFile] = useState(null)
     const [url, setUrl] = useState(null)
+     console.log("url", url)
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -47,6 +52,8 @@ export const CargarMascota = ({ nombre, raza, tipo, edad, peso, foto }) => {
                         <Label htmlFor="nombre" value="Nombre de tu mascota" />
                     </div>
                     <TextInput id="nombre" type="text" sizing="md" defaultValue={nombre} />
+                    {/* se pone temporalmente default value, para que sea editable se tiene que cambiar a value */}
+                    <TextInput id="nombre" type="text" sizing="md" defaultValue={nombre}/>
                 </div>
 
                 {
@@ -63,12 +70,26 @@ export const CargarMascota = ({ nombre, raza, tipo, edad, peso, foto }) => {
                             </Select>
                         </div>
                 }
+        {/* Agrego condicional para que este campo solo aparezca en el form cuando no hay mascota cargada, si hay mascota cargada tiene tipo y si tiene tipo no trae el campo */}
+                {tipo ? null :                 <div className="max-w-md">
+                    <div className="mb-2 block">
+                        <Label htmlFor="tipo" value="Selecciona tipo de mascota" />
+                    </div>
+                    <Select id="tipo" required>
+                        <option>Perro</option>
+                        <option>Gato</option>
+                        {/* <option>France</option> */}
+                        {/* <option>Germany</option> */}
+                    </Select>
+                </div>}
+
 
                 <div>
                     <div className="mb-2 block">
                         <Label htmlFor="raza" value="Raza" />
                     </div>
                     <TextInput id="raza" type="text" sizing="md" defaultValue={raza} />
+                    <TextInput id="raza" type="text" sizing="md" defaultValue={raza}/>
                 </div>
 
 
@@ -77,12 +98,14 @@ export const CargarMascota = ({ nombre, raza, tipo, edad, peso, foto }) => {
                         <Label htmlFor="edad" value="Edad" />
                     </div>
                     <TextInput id="edad" type="number" min="0" max="30" sizing="md" defaultValue={edad} />
+                    <TextInput id="edad" type="number" min="0" max="30" sizing="md" defaultValue={edad} />
                 </div>
 
                 <div>
                     <div className="mb-2 block">
                         <Label htmlFor="peso" value="Peso" />
                     </div>
+                    <TextInput id="peso" type="number" min="0" sizing="md" defaultValue={peso} />
                     <TextInput id="peso" type="number" min="0" sizing="md" defaultValue={peso} />
                 </div>
 
