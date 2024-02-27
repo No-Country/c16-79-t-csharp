@@ -30,7 +30,7 @@ export const TestimonioPrueba = () => {
                     className="object-cover w-12 h-12 rounded-full"
                   />
                   <div className="flex flex-col gap-2 w-full">
-                    <h3 className="text-lg font-bold text-slate-700 leading-7 whitespace-normal">
+                    <h3 className=" text-sm font-medium text-slate-700 leading-1 whitespace-normal">
                       {blog.title}
                     </h3>
                     <div className="flex gap-4">
