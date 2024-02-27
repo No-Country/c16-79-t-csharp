@@ -23,7 +23,7 @@ namespace WebApi.Controllers
         }
 
 
-        [HttpPost("registro")] // FIXME: si el rol no existe, el usurio se registra igual
+        [HttpPost("registro")]
         public async Task<IActionResult> Register([FromBody] UserAccountRegisterDTO clientUserRegiserDTO)
         {
             var validEmail = await _authenticationService.IsSingleUser(clientUserRegiserDTO.Email);
@@ -35,7 +35,7 @@ namespace WebApi.Controllers
             var clientUser = await _authenticationService.Register(clientUserRegiserDTO);
             if (clientUser is null)
             {
-                return Conflict("Error: no se pudo registrar el usuario");
+                return Conflict("No se pudo registrar el usuario");
             }
             return Ok(clientUser);
         }

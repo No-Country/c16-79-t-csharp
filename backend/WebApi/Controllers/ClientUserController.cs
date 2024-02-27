@@ -24,16 +24,16 @@ namespace WebApi.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpGet]
-        public ActionResult<IEnumerable<ClientUserDTO>> GetAll()
+        public async Task<ActionResult<IEnumerable<ClientUserDTO>>> GetAll()
         {
-            var usuarios = _clientUserRepository.GetAllClientUserWithData();
+            var usuarios = await _clientUserRepository.GetAllClientUserWithData();
             var usuariosDTO = _mapper.Map<IEnumerable<ClientUserDTO>>(usuarios);
             return Ok(usuariosDTO);
         }
 
 
         [Authorize(Roles = "Admin")]
-        [HttpGet("GetByUserAccount/{id}")]
+        [HttpGet("by-useraccount/{id}")] // TODO: construir un endpoint para acceder con el id en el Token
         public async Task<ActionResult<ClientUserDTO>> GetById(string id)
         {
             var clientUser = await _clientUserRepository.GetClientUserByIdWithData(u => u.UserAccountId == id);

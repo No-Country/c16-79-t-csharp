@@ -14,6 +14,7 @@ public class GlobalExceptionHandler : IExceptionHandler
         {
             ResourceNotFoundException => ((int)HttpStatusCode.NotFound, exception.Message),
             DBSaveChangesException => ((int)HttpStatusCode.InternalServerError, exception.Message),
+            ConflictException=>((int)HttpStatusCode.Conflict,exception.Message),
             _ => ((int)HttpStatusCode.InternalServerError, "Something went wrong")
         };
 
