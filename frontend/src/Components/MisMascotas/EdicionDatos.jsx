@@ -11,8 +11,8 @@ const EdicionDatos = ({idMascotas}) => {
     const mascotaEncontrada = editarMascotas(idMascotas);
 
   return (
-    <div>
-      <Button onClick={() => setOpenModal(true)}>Toggle modal</Button>
+    <div className='flex justify-center'>
+      <Button onClick={() => setOpenModal(true)}>Editar</Button>
       <Modal show={openModal} onClose={() => setOpenModal(false)}>
         <Modal.Header>Editar Mascotas</Modal.Header>
         <Modal.Body>

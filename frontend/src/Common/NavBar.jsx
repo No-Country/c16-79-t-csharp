@@ -1,38 +1,36 @@
-import { Dropdown, Navbar, Button } from "flowbite-react";
-import { NavLink } from "react-router-dom";
+import { Button, Dropdown, Navbar } from "flowbite-react";
+import { NavLink } from "react-router-dom"; 
 
 const NavBar = () => {
-    
-
-
+  
   return (
     <>
       <Navbar fluid rounded>
         <Navbar.Brand href="#">
           <NavLink to="/">
             <img
-              src="/logo.png"
+              src="/Huella_amiga-removebg-preview.png"
               className="mr-12 h-12 sm:h-20"
               alt="Logo Huellas Felices"
             />
           </NavLink>
-          <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
-            Huella Amiga
-          </span>
         </Navbar.Brand>
         <div className="flex md:order-2">
           <div>
             <Button.Group>
-              <NavLink to={"/loginRegistro"}>
+              <NavLink to={"/login"}>
                 <Button
                   color="gray"
-                  value="registro"
                 >
                   Iniciar Sesión
                 </Button>
               </NavLink>
-              <NavLink to={"/loginRegistro"}>
-                <Button color="gray">Registrarse</Button>
+              <NavLink to={"/registro"}>
+                <Button
+                  color="gray"
+                >
+                  Registrarse
+                </Button>
               </NavLink>
             </Button.Group>
           </div>
@@ -72,32 +70,34 @@ const NavBar = () => {
               <NavLink to="/">Mi Carrito</NavLink>
             </Dropdown.Item>
             <Dropdown.Divider />
-            {/* ternario logueado ? cerrar sesion : Registrarse y login */}
+            <Dropdown.Item>Iniciar sesión</Dropdown.Item>
             <Dropdown.Item>Cerrar sesión</Dropdown.Item>
+            <Dropdown.Item>Registrarse</Dropdown.Item>
           </Dropdown>
+
           <Navbar.Toggle />
         </div>
         <Navbar.Collapse>
           <Navbar.Link>
-            <NavLink to="/">Inicio</NavLink>
+            <NavLink to="/" className="text-base">Inicio</NavLink>
           </Navbar.Link>
           <Navbar.Link>
-            <NavLink to="">Tienda</NavLink>
+            <NavLink to="" className="text-base">Tienda</NavLink>
           </Navbar.Link>
           <Navbar.Link>
-            <NavLink to="">Quiero Adoptar</NavLink>
+            <NavLink to="" className="text-base">Quiero Adoptar</NavLink>
           </Navbar.Link>
           <Navbar.Link>
-            <NavLink to="">Agenda</NavLink>
+            <NavLink to="" className="text-base">Agenda</NavLink>
           </Navbar.Link>
           <Navbar.Link>
-            <NavLink to="">Servicios</NavLink>
+            <NavLink to="/servicios" className="text-base">Servicios</NavLink>
           </Navbar.Link>
           <Navbar.Link>
-            <NavLink to="">Perdidos y Encontrados</NavLink>
+            <NavLink to="" className="text-base">Perdidos y Encontrados</NavLink>
           </Navbar.Link>
           <Navbar.Link>
-            <NavLink to="/quienessomos">Quienes Somos</NavLink>
+            <NavLink to="/quienessomos" className="text-base">Quienes Somos</NavLink>
           </Navbar.Link>
         </Navbar.Collapse>
       </Navbar>

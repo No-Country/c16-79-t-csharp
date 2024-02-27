@@ -13,14 +13,13 @@ export const FooterComponent = () => {
           <div>
             <Footer.Brand
               href="#"
-              src="/logo.png"
-              alt="Logo"  
+              src="/Huella_amiga-removebg-preview.png"
+              alt="Logo" 
             />
           </div>
           <div className="grid grid-cols-2 gap-4 sm:mt-2 lg:grid-cols-3 sm:gap-6 items-center">         
 
             <div>
-              
               <Footer.LinkGroup col>
                 <Footer.Link href="#">Inicio</Footer.Link>
                 <Footer.Link href="#">Tienda</Footer.Link>
@@ -28,9 +27,7 @@ export const FooterComponent = () => {
                 <Footer.Link href="#">Agenda</Footer.Link>
               </Footer.LinkGroup>
             </div>
-
             <div>
-              
               <Footer.LinkGroup col>
                 <Footer.Link href="#">Servicios</Footer.Link>
                 <Footer.Link href="#">Perdidos y Encontrados</Footer.Link>
