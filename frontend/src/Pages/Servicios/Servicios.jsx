@@ -1,9 +1,10 @@
 import { ListadoServicios } from "../../Components/Servicios/ListadoServicios";
+import './Servicios.css'
 
 export const Servicios = () => {
   return (
     <>
-      <h1>¡Bienvenido al Sanatorio Veterinario Huella Amiga!</h1>
+      <h1 className="py-5 mb-4 text-2xl font-extrabold leading-none tracking-tight text-center text-gray-500 md:text-5xl lg:text-4xl dark:text-white">¡Bienvenido al Sanatorio Veterinario Huella Amiga!</h1>
 
       <div id="contenedorHeaderServicios">
         {" "}
