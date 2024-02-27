@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using Veterinaria.Application.DTO;
+using Veterinaria.Application.Dtos.Wrappers;
 using Veterinaria.Domain.Models;
 using Veterinaria.Domain.Repositories;
 
@@ -31,18 +32,33 @@ namespace WebApi.Controllers
             return Ok(usuariosDTO);
         }
 
+        // INFO: por momento nos concentramod en el clientuser
+        // [Authorize(Roles = "Admin")]
+        // [HttpGet("by-useraccount/{id}")]
+        // public async Task<ActionResult<ClientUserDTO>> GetById(string id)
+        // {
+        //     var clientUser = await _clientUserRepository.GetClientUserByIdWithData(u => u.UserAccountId == id);
+        //     if (clientUser is null)
+        //     {
+        //         return NotFound();
+        //     }
+        //     var clientUserDataDTO = _mapper.Map<ClientUserDTO>(clientUser);
+        //     return Ok(clientUserDataDTO);
+        // }
 
-        [Authorize(Roles = "Admin")]
-        [HttpGet("by-useraccount/{id}")] // TODO: construir un endpoint para acceder con el id en el Token
-        public async Task<ActionResult<ClientUserDTO>> GetById(string id)
+        [Authorize(Roles = "Cliente")]
+        [HttpGet("my-clientuser")]
+        public async Task<ActionResult<ResponseSucceded<ClientUserDTO>>> GetClientUser()
         {
-            var clientUser = await _clientUserRepository.GetClientUserByIdWithData(u => u.UserAccountId == id);
+            ClaimsPrincipal claims = this.User;
+            var idUser = claims.FindFirst(u => u.Type == ClaimTypes.NameIdentifier)?.Value;
+            var clientUser = await _clientUserRepository.GetClientUserByIdWithData(u => u.UserAccountId == idUser);
             if (clientUser is null)
             {
                 return NotFound();
             }
             var clientUserDataDTO = _mapper.Map<ClientUserDTO>(clientUser);
-            return Ok(clientUserDataDTO);
+            return Ok(clientUserDataDTO); ;
         }
 
 

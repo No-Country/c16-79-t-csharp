@@ -10,9 +10,9 @@ using Veterinaria.Domain.Repositories;
 
 namespace WebApi.Controllers
 {
-    [Route("api/[controller]")] // TODO: Usar el ResponseSucceeded 
+    [Route("api/[controller]")] 
     [ApiController]
-    public class AddressesController : ControllerBase //TODO: convertier en un nombre plural
+    public class AddressesController : ControllerBase 
     {
         private readonly IAddressRepository _addressRepository;
         private readonly IClientUserRepository _clientUserRepository;
