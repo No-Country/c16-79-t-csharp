@@ -7,12 +7,14 @@ using System.Security.Claims;
 using Veterinaria.Application.DTO;
 using Veterinaria.Domain.Models;
 using Veterinaria.Domain.Repositories;
+using Veterinaria.Application.Dtos.Wrappers;
+using System.Net;
 
 namespace WebApi.Controllers
 {
-    [Route("api/[controller]")] 
+    [Route("api/[controller]")]
     [ApiController]
-    public class AddressesController : ControllerBase 
+    public class AddressesController : ControllerBase
     {
         private readonly IAddressRepository _addressRepository;
         private readonly IClientUserRepository _clientUserRepository;
@@ -30,11 +32,11 @@ namespace WebApi.Controllers
         //[Authorize(Roles = "Admin")]
         // [HttpGet("GetAllWithData")]
         [HttpGet] // INFO: solo el Admin
-        public async Task<ActionResult<IEnumerable<AddressDTO>>> GetAllWithData()
+        public async Task<ActionResult<ResponseSucceded<IEnumerable<AddressDTO>>>> GetAllWithData()
         {
             List<Address> addresses = await _addressRepository.GetAllWithData();
             var addressesDTO = _mapper.Map<IEnumerable<AddressDTO>>(addresses);
-            return Ok(addressesDTO);
+            return Ok(new ResponseSucceded<IEnumerable<AddressDTO>>((int)HttpStatusCode.OK, addressesDTO));
         }
         //TODO: Crear un endPoint (my-addresses)
 
@@ -42,18 +44,18 @@ namespace WebApi.Controllers
         //[Authorize(Roles = "Admin, Cliente")]
         //[HttpGet("GetByIdWithData/{id}")]
         [HttpGet("{id}")] // INFO: Parar Admin o Cliente
-        public async Task<ActionResult<AddressDTO>> GetByIdWithData(int id)
+        public async Task<ActionResult<ResponseSucceded<AddressDTO>>> GetByIdWithData(int id)
         {
             var address = await _addressRepository.GetByIdWithData(p => p.Id == id) ?? throw ResourceNotFoundException.NotFoundById<Address, int>(id);
 
             var addressDTO = _mapper.Map<AddressDTO>(address);
-            return Ok(addressDTO);
+            return Ok(new ResponseSucceded<AddressDTO>((int)HttpStatusCode.OK, addressDTO));
         }
 
 
         //[Authorize(Roles = "Cliente")]
         [HttpPost] // INFO: Parar Admin o Cliente
-        public async Task<ActionResult<AddressDTO>> Insert([FromBody] AddressCreationDTO addressCreationDTO)
+        public async Task<ActionResult<ResponseSucceded<AddressDTO>>> Insert([FromBody] AddressCreationDTO addressCreationDTO)
         {
             ClaimsPrincipal claims = this.User;
             var idUser = claims.FindFirst(u => u.Type == ClaimTypes.NameIdentifier)?.Value;
@@ -69,13 +71,13 @@ namespace WebApi.Controllers
             };
             await _addressRepository.AddAsync(address);
             var addressDTO = _mapper.Map<AddressDTO>(address);
-            return Ok(addressDTO);
+            return Ok(new ResponseSucceded<AddressDTO>((int)HttpStatusCode.OK, addressDTO));
         }
 
 
         //[Authorize(Roles = "Cliente")]
         [HttpPut("{id}")]// INFO: Parar Admin o Cliente
-        public async Task<ActionResult<AddressDTO>> Actualizar([FromRoute] int id, [FromBody] AddressCreationDTO addressCreationDTO)
+        public async Task<ActionResult<ResponseSucceded<AddressDTO>>> Actualizar([FromRoute] int id, [FromBody] AddressCreationDTO addressCreationDTO)
         {
             var address = await _addressRepository.FindByIdAsync(id);
             if (address is null)
@@ -85,7 +87,7 @@ namespace WebApi.Controllers
             _mapper.Map(addressCreationDTO, address);
             var result = await _addressRepository.UpdateAsync(address);
             var addressDTO = _mapper.Map<AddressDTO>(result);
-            return Ok(addressDTO);
+            return Ok(new ResponseSucceded<AddressDTO>((int)HttpStatusCode.OK, addressDTO));
         }
 
 
