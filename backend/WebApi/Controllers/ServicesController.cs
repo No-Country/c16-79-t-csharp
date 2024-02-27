@@ -27,8 +27,8 @@ namespace WebApi.Controllers
             List<Service> services = await _ServiceService.GetAllAsync();
 
             //TODO: Usar AutoMapper cuando este configurado?
-            IEnumerable<Service> servicesDtos =
-                (IEnumerable<Service>)services.Select(c => new ServiceDto(c.Id, c.Type, c.Description, c.Price, c.Dates));
+            IEnumerable<ServiceDto> servicesDtos =
+               services.Select(c => new ServiceDto(c.Id, c.Type, c.Description, c.Price, c.Dates));
 
             return Ok(
                 new ResponseSucceded<IEnumerable<ServiceDto>>((int)HttpStatusCode.OK, (IEnumerable<ServiceDto>)servicesDtos)

@@ -25,8 +25,8 @@ namespace WebApi.Controllers
             List<Date> Dates = await _DateService.GetAllAsync();
 
             //TODO: Usar AutoMapper cuando este configurado?
-            IEnumerable<Date> datesDtos =
-                (IEnumerable<Date>)Dates.Select(c => new DateDto(c.Id,c.Time,c.ServiceId,c.PetId,c.StateDate ));
+            IEnumerable<DateDto> datesDtos =
+                Dates.Select(c => new DateDto(c.Id,c.Time,c.ServiceId,c.PetId,c.StateDate ));
 
             return Ok(
                 new ResponseSucceded<IEnumerable<DateDto>>((int)HttpStatusCode.OK, (IEnumerable<DateDto>)datesDtos)

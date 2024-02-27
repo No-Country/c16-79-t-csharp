@@ -26,12 +26,12 @@ namespace WebApi.Controllers
             List<MedicalHistory> Dates = await _MHService.GetAllAsync();
 
             //TODO: Usar AutoMapper cuando este configurado?
-            IEnumerable<MedicalHistory> datesDtos =
-                (IEnumerable<MedicalHistory>)Dates.Select(
+            IEnumerable<MedicalHistoriesDto> datesDtos =
+               Dates.Select(
                     c => new MedicalHistoriesDto(c.Id,c.Diagnostic,c.Medic,c.Time,c.PetId,c.Pet));
             //REVER: PET
             return Ok(
-                new ResponseSucceded<IEnumerable<DateDto>>((int)HttpStatusCode.OK, (IEnumerable<DateDto>)datesDtos)
+                new ResponseSucceded<IEnumerable<MedicalHistory>>((int)HttpStatusCode.OK, (IEnumerable<MedicalHistory>)datesDtos)
             );
         }
 
