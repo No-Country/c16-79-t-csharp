@@ -40,26 +40,26 @@ export const ListadoServicios = () => {
               <Table.Cell>               {" "}
                 <h6>Adoptar una Mascota o Registrarse como Adoptante</h6>
                 <p>
-                ¿Estás buscando un nuevo amigo peludo? Explora nuestras opciones de adopción o regístrate como adoptante para ayudar a una mascota necesitada a encontrar un hogar amoroso.
+                  ¿Estás buscando un nuevo amigo peludo? Explora nuestras opciones de adopción o regístrate como adoptante para ayudar a una mascota necesitada a encontrar un hogar amoroso.
                 </p>{" "}</Table.Cell>
               <Table.Cell>
                 <img id="perros" src="perros.jpg" alt="imagen de perros" />
               </Table.Cell>
               <Table.Cell>
-              {" "}
+                {" "}
                 <h6>Seguimiento de Resultados de Estudios</h6>
                 <p>
-                Accede a los resultados de los estudios realizados a tu mascota y mantente informado sobre su estado de salud.
+                  Accede a los resultados de los estudios realizados a tu mascota y mantente informado sobre su estado de salud.
                 </p>{" "}
               </Table.Cell>
             </Table.Row>
             <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
               <Table.Cell></Table.Cell>
               <Table.Cell>
-              {" "}
+                {" "}
                 <h6>Mascotas Perdidas y Encontradas</h6>
                 <p>
-                En caso de que tu mascota se haya perdido o encuentres una mascota perdida, utiliza nuestra sección dedicada para ayudar a reunir a las mascotas con sus familias.
+                  En caso de que tu mascota se haya perdido o encuentres una mascota perdida, utiliza nuestra sección dedicada para ayudar a reunir a las mascotas con sus familias.
                 </p>{" "}
               </Table.Cell>
               <Table.Cell></Table.Cell>
