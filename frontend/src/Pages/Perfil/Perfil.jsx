@@ -28,10 +28,6 @@ export const Perfil = () => {
                 <Tabs.Item title="Turnos" icon={HiCalendar}>
                     <Turnos></Turnos>
                 </Tabs.Item>
-
-                {/* <Tabs.Item disabled title="Disabled">
-                 
-                </Tabs.Item> */}
             </Tabs>
         </div>
     )
