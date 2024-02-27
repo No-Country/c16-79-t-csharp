@@ -1,10 +1,8 @@
-import { Dropdown, Navbar, Button } from "flowbite-react";
-import { NavLink } from "react-router-dom";
+import { Button, Dropdown, Navbar } from "flowbite-react";
+import { NavLink } from "react-router-dom"; 
 
 const NavBar = () => {
-    
-
-
+  
   return (
     <>
       <Navbar fluid rounded>
@@ -23,16 +21,19 @@ const NavBar = () => {
         <div className="flex md:order-2">
           <div>
             <Button.Group>
-              <NavLink to={"/loginRegistro"}>
+              <NavLink to={"/login"}>
                 <Button
                   color="gray"
-                  value="registro"
                 >
                   Iniciar Sesión
                 </Button>
               </NavLink>
-              <NavLink to={"/loginRegistro"}>
-                <Button color="gray">Registrarse</Button>
+              <NavLink to={"/registro"}>
+                <Button
+                  color="gray"
+                >
+                  Registrarse
+                </Button>
               </NavLink>
             </Button.Group>
           </div>
@@ -72,9 +73,12 @@ const NavBar = () => {
               <NavLink to="/">Mi Carrito</NavLink>
             </Dropdown.Item>
             <Dropdown.Divider />
-            {/* ternario logueado ? cerrar sesion : Registrarse y login */}
+            {/* ternario logueado ? cerrar sesión : Registrarse y login */}
+            <Dropdown.Item>Iniciar sesión</Dropdown.Item>
             <Dropdown.Item>Cerrar sesión</Dropdown.Item>
+            <Dropdown.Item>Registrarse</Dropdown.Item>
           </Dropdown>
+
           <Navbar.Toggle />
         </div>
         <Navbar.Collapse>
