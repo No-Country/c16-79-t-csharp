@@ -1,4 +1,5 @@
 "use client";
+import './ListadoServicios.css'
 
 import { Table } from "flowbite-react";
 export const ListadoServicios = () => {
