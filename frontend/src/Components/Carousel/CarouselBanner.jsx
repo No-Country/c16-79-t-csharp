@@ -9,7 +9,7 @@ import fotoCuatro from '../Carousel/4.jpg'
 export const CarouselBanner = () => {
   return (
     <>
-    <div className="h-24 sm:h-32 xl:h-40 2xl:h-48">
+    <div className="h-56 sm:h-42">
       <Carousel pauseOnHover>
         <img src={fotoUno} alt="promo1" className="w-full object-contain " />
         <img src={fotoDos} alt="promo2" className="w-full object-contain " />
