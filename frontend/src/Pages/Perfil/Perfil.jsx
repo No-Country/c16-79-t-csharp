@@ -5,7 +5,7 @@ import { Turnos } from '../../Components/Turnos/Turnos';
 import { HistorialMedico } from '../../Components/HistorialMedico/HistorialMedico'
 import { CargarMascota } from '../../Components/MisMascotas/CargarMascota';
 import { MisMascotas } from '../../Components/MisMascotas/MisMascotas';
-
+import DatosUsuario from '../../Components/DatosUsuario/DatosUsuario';
 
 export const Perfil = () => {
 
@@ -14,9 +14,8 @@ export const Perfil = () => {
         <div>
             <Tabs aria-label="Tabs with icons" style="underline">
                 <Tabs.Item active title="Datos de usuario" icon={HiUserCircle}>
-
+                <DatosUsuario/>
                 </Tabs.Item>
-
                 <Tabs.Item title="Mis mascotas" icon={FaDog}>
                     <MisMascotas/>
                     <CargarMascota />
