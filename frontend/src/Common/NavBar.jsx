@@ -70,7 +70,6 @@ const NavBar = () => {
               <NavLink to="/">Mi Carrito</NavLink>
             </Dropdown.Item>
             <Dropdown.Divider />
-            {/* ternario logueado ? cerrar sesión : Registrarse y login */}
             <Dropdown.Item>Iniciar sesión</Dropdown.Item>
             <Dropdown.Item>Cerrar sesión</Dropdown.Item>
             <Dropdown.Item>Registrarse</Dropdown.Item>
