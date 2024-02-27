@@ -15,14 +15,14 @@ import {
 import { uploadFile } from "../../Helpers/CargarImagen"
 import { useState } from "react"
 
-    // console.log("nombre", nombre)
-export const CargarMascota = ({nombre, raza, tipo, edad, peso}) => {
+// console.log("nombre", nombre)
+export const CargarMascota = ({ nombre, raza, tipo, edad, peso }) => {
 
     /* le paso por props los datos si encontro mascota en la bd sino el form queda en blanco para cargar nueva mascota */
 
     const [file, setFile] = useState(null)
     const [url, setUrl] = useState(null)
-     console.log("url", url)
+    console.log("url", url)
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -50,14 +50,14 @@ export const CargarMascota = ({nombre, raza, tipo, edad, peso}) => {
                     <div className="mb-2 block">
                         <Label htmlFor="nombre" value="Nombre de tu mascota" />
                     </div>
-            
+
                     {/* se pone temporalmente default value, para que sea editable se tiene que cambiar a value */}
-                    <TextInput id="nombre" type="text" sizing="md" defaultValue={nombre}/>
+                    <TextInput id="nombre" type="text" sizing="md" defaultValue={nombre} />
                 </div>
 
-           
-        {/* Agrego condicional para que este campo solo aparezca en el form cuando no hay mascota cargada, si hay mascota cargada tiene tipo y si tiene tipo no trae el campo */}
-                {tipo ? null :                 <div className="max-w-md">
+
+                {/* Agrego condicional para que este campo solo aparezca en el form cuando no hay mascota cargada, si hay mascota cargada tiene tipo y si tiene tipo no trae el campo */}
+                {tipo ? null : <div className="max-w-md">
                     <div className="mb-2 block">
                         <Label htmlFor="tipo" value="Selecciona tipo de mascota" />
                     </div>
@@ -74,7 +74,7 @@ export const CargarMascota = ({nombre, raza, tipo, edad, peso}) => {
                     <div className="mb-2 block">
                         <Label htmlFor="raza" value="Raza" />
                     </div>
-                    <TextInput id="raza" type="text" sizing="md" defaultValue={raza}/>
+                    <TextInput id="raza" type="text" sizing="md" defaultValue={raza} />
                 </div>
 
 
