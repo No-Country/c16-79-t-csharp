@@ -28,10 +28,10 @@ namespace WebApi.Controllers
 
             //TODO: Usar AutoMapper cuando este configurado?
             IEnumerable<ServiceDto> servicesDtos =
-               services.Select(c => new ServiceDto(c.Id, c.Type, c.Description, c.Price, c.Dates));
+               services.Select(c => new ServiceDto(c.Id, c.Type, c.Description, c.Price));
 
             return Ok(
-                new ResponseSucceded<IEnumerable<ServiceDto>>((int)HttpStatusCode.OK, (IEnumerable<ServiceDto>)servicesDtos)
+                new ResponseSucceded<IEnumerable<ServiceDto>>((int)HttpStatusCode.OK, servicesDtos)
             );
         }
 
@@ -42,20 +42,21 @@ namespace WebApi.Controllers
 
             //TODO: usar AutoMapper
             return Ok(new ResponseSucceded<ServiceDto>((int)HttpStatusCode.OK,
-                new ServiceDto(services.Id,services.Type,services.Description,services.Price,services.Dates)));
+                new ServiceDto(services.Id,services.Type,services.Description,services.Price)));
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] ServiceDto createDto)
+        public async Task<IActionResult> Create([FromBody] ServiceCreateDto createDto)
         {
-            Service service = await _ServiceService.CreateAsync(createDto.Description,createDto.Description,createDto.Price);
+            Service service = await _ServiceService.CreateAsync(createDto.Type,createDto.Description,createDto.Price);
             return Created();
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, [FromBody] ServiceDto updateDto)
         {
-            await _ServiceService.UpdateAsync(id, updateDto.Type,updateDto.Description,updateDto.Price,updateDto.Dates);
+            // TODO: Corregir interface y Implementacion del servico con respecto a los HashSet<Date>()
+            await _ServiceService.UpdateAsync(id, updateDto.Type,updateDto.Description,updateDto.Price,new HashSet<Date>());
             return NoContent();
         }
 

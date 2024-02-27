@@ -4,6 +4,5 @@ namespace Veterinaria.Application.Dtos;
 public record ServiceCreateDto(
     string Type,
     string Description,
-    float Price,
-    HashSet<Date> Dates
+    float Price
 );

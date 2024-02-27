@@ -21,28 +21,28 @@ namespace WebApi.Controllers
 
 
         [HttpGet]
-        public async Task<ActionResult<ResponseSucceded<IEnumerable<DateDto>>>> GetAll()
+        public async Task<ActionResult<ResponseSucceded<IEnumerable<MedicalHistoriesDto>>>> GetAll()
         {
             List<MedicalHistory> Dates = await _MHService.GetAllAsync();
 
             //TODO: Usar AutoMapper cuando este configurado?
             IEnumerable<MedicalHistoriesDto> datesDtos =
                Dates.Select(
-                    c => new MedicalHistoriesDto(c.Id,c.Diagnostic,c.Medic,c.Time,c.PetId,c.Pet));
+                    c => new MedicalHistoriesDto(c.Id, c.Diagnostic, c.Medic, c.Time, c.PetId));
             //REVER: PET
             return Ok(
-                new ResponseSucceded<IEnumerable<MedicalHistory>>((int)HttpStatusCode.OK, (IEnumerable<MedicalHistory>)datesDtos)
+                new ResponseSucceded<IEnumerable<MedicalHistoriesDto>>((int)HttpStatusCode.OK, datesDtos)
             );
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<ResponseSucceded<DateDto>>> GetById(int id)
+        public async Task<ActionResult<ResponseSucceded<MedicalHistoriesDto>>> GetById(int id)
         {
             MedicalHistory mHistory = await _MHService.GetByIdAsync(id);
 
             //TODO: usar AutoMapper
             return Ok(new ResponseSucceded<MedicalHistoriesDto>((int)HttpStatusCode.OK,
-                new MedicalHistoriesDto(mHistory.Id, mHistory.Diagnostic,mHistory.Medic,mHistory.Time,mHistory.PetId,mHistory.Pet)));
+                new MedicalHistoriesDto(mHistory.Id, mHistory.Diagnostic, mHistory.Medic, mHistory.Time, mHistory.PetId)));
             //ver service y pet  
         }
 
@@ -56,7 +56,7 @@ namespace WebApi.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, [FromBody] MedicalHistoriesDto updateDto)
         {
-            await _MHService.UpdateAsync(id, updateDto.Diagnostic,updateDto.Medic,updateDto.Time,updateDto.PetId );
+            await _MHService.UpdateAsync(id, updateDto.Diagnostic, updateDto.Medic, updateDto.Time, updateDto.PetId);
             return NoContent();
         }
 

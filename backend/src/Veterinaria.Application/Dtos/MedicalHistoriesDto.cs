@@ -7,6 +7,5 @@ public record MedicalHistoriesDto(
     string? Diagnostic,
     string? Medic,
     DateTime Time,
-    int PetId,
-    Pet Pet
+    int PetId
 );
