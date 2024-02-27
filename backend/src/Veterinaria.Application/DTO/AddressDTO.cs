@@ -4,17 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Veterinaria.Domain.Models
+namespace Veterinaria.Application.DTO
 {
-    public class Address
+    public class AddressDTO
     {
-        public int Id { get; init; }
+        public int Id { get; set; }
         public string? City { get; set; }
         public string? Province { get; set; }
-        public string? Neighborhood { get;  set; }
+        public string? Neighborhood { get; set; }
         public string? Street { get; set; }
         public int Number { get; set; }
-        public int ClientUserId { get; set; }
-        public ClientUser ClientUser { get; set; } = null!;
+        public string ClientUserName { get; set; }
     }
 }

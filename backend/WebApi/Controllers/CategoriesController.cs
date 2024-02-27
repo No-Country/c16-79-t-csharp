@@ -50,13 +50,9 @@ public class CategoriesController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> Update(long id, [FromBody] CategorieDto updateDto)
+    public async Task<IActionResult> Update(int id, [FromBody] CategorieCreateDto updateDto)
     {
-        if (id != updateDto.Id)
-        {
-            return BadRequest();// TODO: considerar un CustomException
-        }
-        await _categorieService.UpdateAsync(updateDto.Id, updateDto.Name);
+        await _categorieService.UpdateAsync(id, updateDto.Name);
         return NoContent();
     }
 

@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <PackageReference Include="AspNetCore.HealthChecks.UI.Client" Version="8.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.2" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.0" />
     <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore" Version="8.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
@@ -18,11 +19,6 @@
     <ProjectReference Include="..\src\Veterinaria.Application\Veterinaria.Application.csproj" />
     <ProjectReference Include="..\src\Veterinaria.Domain\Veterinaria.Domain.csproj" />
     <ProjectReference Include="..\src\Veterinaria.Infrastructure\Veterinaria.Infrastructure.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Controllers\" />
-    <Folder Include="Utilities\" />
   </ItemGroup>
 
 </Project>
