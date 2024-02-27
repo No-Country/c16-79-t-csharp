@@ -88,7 +88,7 @@ const NavBar = () => {
             <NavLink to="" className="text-base">Quiero Adoptar</NavLink>
           </Navbar.Link>
           <Navbar.Link>
-            <NavLink to="" className="text-base">Agenda</NavLink>
+            <NavLink to="/agenda" className="text-base">Agenda</NavLink>
           </Navbar.Link>
           <Navbar.Link>
             <NavLink to="/servicios" className="text-base">Servicios</NavLink>
