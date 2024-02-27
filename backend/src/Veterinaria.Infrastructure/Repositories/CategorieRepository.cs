@@ -1,8 +1,7 @@
 using Veterinaria.Domain.Models;
 using Veterinaria.Domain.Repositories;
 using Veterinaria.Infrastructure.Persistance.Context;
-
-namespace Veterinaria.Infrastructure.Repositories;
+using Veterinaria.Infrastructure.Repositories;
 
 namespace Veterinaria.Infrastructure
 {

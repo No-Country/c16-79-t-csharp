@@ -45,10 +45,11 @@ namespace Veterinaria.Application.Services
             return updatedSale;
         }
 
-        public async Task DeleteAsync(int id)
+        public async Task<Sale> DeleteAsync(int id)
         {
             Sale sale = await GetByIdAsync(id);
             await _saleRepository.DeleteAsync(sale);
+            return sale;
         }
     }
 }

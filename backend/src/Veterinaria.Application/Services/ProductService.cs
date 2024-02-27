@@ -31,6 +31,7 @@ namespace Veterinaria.Application.Services
         {
             Product product = Product.CreateProduct(name, price, stock, description, image);
             Product savedProduct = await _productRepository.AddAsync(product);
+            Console.WriteLine(savedProduct.Id.ToString(), savedProduct.Name);
             return savedProduct;
         }
 

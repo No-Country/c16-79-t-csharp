@@ -32,5 +32,10 @@ namespace Veterinaria.Domain.Models
             var sale = new Sale(date, total, clientUserId);
             return sale;
         }
+
+        public int CalculateAmount()
+        {
+            return DetailSales.Sum(ds => ds.Quantity);
+        }
     }
 }

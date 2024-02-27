@@ -8,6 +8,6 @@ namespace Veterinaria.Domain.Services
         Task<List<DetailSale>> GetAllAsync();
         Task<DetailSale> CreateAsync(int saleId, int productId, int quantity);
         Task<DetailSale> UpdateAsync(int id, int saleId, int productId, int quantity);
-        Task DeleteAsync(int id);
+        Task<DetailSale> DeleteAsync(int id);
     }
 }
