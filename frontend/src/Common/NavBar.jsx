@@ -9,14 +9,11 @@ const NavBar = () => {
         <Navbar.Brand href="#">
           <NavLink to="/">
             <img
-              src="/logo.png"
+              src="/Huella_amiga-removebg-preview.png"
               className="mr-12 h-12 sm:h-20"
               alt="Logo Huellas Felices"
             />
           </NavLink>
-          <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
-            Huella Amiga
-          </span>
         </Navbar.Brand>
         <div className="flex md:order-2">
           <div>
@@ -83,25 +80,25 @@ const NavBar = () => {
         </div>
         <Navbar.Collapse>
           <Navbar.Link>
-            <NavLink to="/">Inicio</NavLink>
+            <NavLink to="/" className="text-base">Inicio</NavLink>
           </Navbar.Link>
           <Navbar.Link>
-            <NavLink to="">Tienda</NavLink>
+            <NavLink to="" className="text-base">Tienda</NavLink>
           </Navbar.Link>
           <Navbar.Link>
-            <NavLink to="">Quiero Adoptar</NavLink>
+            <NavLink to="" className="text-base">Quiero Adoptar</NavLink>
           </Navbar.Link>
           <Navbar.Link>
-            <NavLink to="">Agenda</NavLink>
+            <NavLink to="" className="text-base">Agenda</NavLink>
           </Navbar.Link>
           <Navbar.Link>
-            <NavLink to="">Servicios</NavLink>
+            <NavLink to="" className="text-base">Servicios</NavLink>
           </Navbar.Link>
           <Navbar.Link>
-            <NavLink to="">Perdidos y Encontrados</NavLink>
+            <NavLink to="" className="text-base">Perdidos y Encontrados</NavLink>
           </Navbar.Link>
           <Navbar.Link>
-            <NavLink to="">Quienes Somos</NavLink>
+            <NavLink to="" className="text-base">Quienes Somos</NavLink>
           </Navbar.Link>
         </Navbar.Collapse>
       </Navbar>
