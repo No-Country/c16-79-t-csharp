@@ -65,7 +65,8 @@ namespace Veterinaria.Infrastructure.Authentication
             var createResult = await _userManager.CreateAsync(newClientUser, clientUserRegisterDTO.Password);
             if (!createResult.Succeeded)
             {
-                throw new ConflictException("No se pudo crear la cuenta");
+                var errors = createResult.Errors;
+                throw new BadException("Could not create account", errors.Select(e => e.Description).ToList());
             }
 
             var roleExist = await _roleManager.RoleExistsAsync("Admin");
@@ -88,7 +89,7 @@ namespace Veterinaria.Infrastructure.Authentication
             bool isValid = await _userManager.CheckPasswordAsync(clientUserFound, userAccountLoginDTO.Password);
             if (clientUserFound is null || isValid is false)
             {
-                throw new UnauthorizedException("The password or email is bad");
+                throw new UnauthorizedException("Email or password incorrect");
             }
 
             var roles = await _userManager.GetRolesAsync(clientUserFound);
