@@ -1,6 +1,10 @@
 
+import { SeleccioneSuMascota } from "../../Components/SeleccioneSuMacosta/SeleccioneSuMascota"
+
 export const Agenda = () => {
   return (
-    <div>Agenda</div>
+    <div>
+      <SeleccioneSuMascota />
+    </div>
   )
 }
