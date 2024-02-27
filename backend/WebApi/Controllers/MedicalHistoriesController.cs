@@ -5,6 +5,8 @@ using Veterinaria.Application.Dtos.Wrappers;
 using Veterinaria.Application.Dtos;
 using Veterinaria.Domain.Services;
 using Veterinaria.Domain.Models;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace WebApi.Controllers
 {
@@ -65,6 +67,23 @@ namespace WebApi.Controllers
         {
             await _MHService.DeleteAsync(id);
             return NoContent();
+        }
+        [Authorize(Roles = "Cliente")]
+        [HttpGet("MyPets")]
+        public async Task<ActionResult<ResponseSucceded<IEnumerable<DateDto>>>> GetAllMyPets()
+        {
+            List<MedicalHistory> MHistory = await _MHService.GetAllAsync();
+
+            //
+            ClaimsPrincipal claims = this.User;
+            var idUser = claims.FindFirst(u => u.Type == ClaimTypes.NameIdentifier)?.Value;
+            //TODO: Usar AutoMapper cuando este configurado?
+            IEnumerable<MedicalHistoriesDto> MHDto =
+               MHistory.Select(
+                    c => new MedicalHistoriesDto(c.Id, c.Diagnostic, c.Medic, c.Time, c.PetId));
+            return Ok(
+                new ResponseSucceded<IEnumerable<MedicalHistory>>((int)HttpStatusCode.OK, (IEnumerable<MedicalHistory>)MHDto)
+            );
         }
     }
 }
