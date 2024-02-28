@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Veterinaria.Application.CustomeException;
 using System.Security.Claims;
 using Veterinaria.Application.DTO;
 using Veterinaria.Domain.Models;
@@ -27,10 +28,11 @@ namespace WebApi.Controllers
 
 
         //[Authorize(Roles = "Admin")]
-        [HttpGet("GetAllWithData")]
-        public ActionResult<IEnumerable<PetDTO>> GetAllWithData()
+        // [HttpGet("GetAllWithData")]
+        [HttpGet]// INFO: solo Admin
+        public async Task<ActionResult<IEnumerable<PetDTO>>> GetAllWithData()
         {
-            var pets = _petRepository.GetAllWithData();
+            var pets = await _petRepository.GetAllWithData();
             if (pets is null)
             {
                 return NotFound();
@@ -38,16 +40,17 @@ namespace WebApi.Controllers
             var petsDTO = _mapper.Map<IEnumerable<PetDTO>>(pets);
             return Ok(petsDTO);
         }
+        // TODO: construir GET api/pets/my-pets , solo los pets de un usuario
 
 
         //[Authorize(Roles = "Admin, Cliente")]
-        [HttpGet("GetByIdWithData/{id}")]
+        [HttpGet("{id}")] // 
         public async Task<ActionResult<PetDTO>> GetByIdWithData(int id)
         {
             var pet = await _petRepository.GetByIdWithData(p => p.Id == id);
             if (pet is null)
             {
-                return NotFound();
+                throw ResourceNotFoundException.NotFoundById<Pet, int>(id);
             }
             var petDTO = _mapper.Map<PetDTO>(pet);
             return Ok(petDTO);
@@ -84,7 +87,7 @@ namespace WebApi.Controllers
             var pet = await _petRepository.FindByIdAsync(id);
             if (pet is null)
             {
-                return NotFound();
+                throw ResourceNotFoundException.NotFoundById<Pet, int>(id);
             }
             _mapper.Map(petCreationDTO, pet);
             var result = await _petRepository.UpdateAsync(pet);
@@ -100,7 +103,7 @@ namespace WebApi.Controllers
             var pet = await _petRepository.FindByIdAsync(id);
             if (pet is null)
             {
-                return NotFound();
+                throw ResourceNotFoundException.NotFoundById<Pet, int>(id);
             }
             await _petRepository.DeleteAsync(pet);
             return NoContent();

@@ -10,7 +10,7 @@ namespace Veterinaria.Domain.Repositories
 {
     public interface IAddressRepository : IBasicRepository<Address, int>
     {
-        public IQueryable<Address> GetAllWithData();
+        public Task<List<Address>> GetAllWithData();
         public Task<Address> GetByIdWithData(Expression<Func<Address, bool>> filtro = null);
     }
 }

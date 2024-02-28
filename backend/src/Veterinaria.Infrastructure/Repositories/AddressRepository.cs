@@ -11,7 +11,7 @@ using Veterinaria.Infrastructure.Persistance.Context;
 
 namespace Veterinaria.Infrastructure.Repositories
 {
-    public class AddressRepository: BasicRepository<Address, int>, IAddressRepository
+    public class AddressRepository : BasicRepository<Address, int>, IAddressRepository
     {
         private readonly VeterinariaDbContext _context;
 
@@ -19,13 +19,13 @@ namespace Veterinaria.Infrastructure.Repositories
         {
             _context = context;
         }
-        virtual public IQueryable<Address> GetAllWithData()
+        virtual public async Task<List<Address>> GetAllWithData()
         {
-            var addresses = _context.Addresses.Include(c => c.ClientUser).ToList().AsQueryable();
+            var addresses = await _context.Addresses.Include(c => c.ClientUser).ToListAsync();
             return addresses;
         }
 
-        virtual public async Task<Address> GetByIdWithData(Expression<Func<Address, bool>> filtro = null)
+        virtual public async Task<Address> GetByIdWithData(Expression<Func<Address, bool>> filtro = null!)
         {
             var address = await _context.Addresses.Include(a => a.ClientUser).FirstOrDefaultAsync(filtro);
             return address;

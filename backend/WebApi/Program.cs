@@ -4,8 +4,6 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Veterinaria.Infrastructure.Persistance.Context;
 using WebApi.DependencyInjection;
 using Microsoft.OpenApi.Models;
-using Microsoft.AspNetCore.Identity;
-using Npgsql.Replication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -21,6 +19,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
 builder.Services.AddControllers();
 
 builder.Services.AddDependencyInfrastructure(builder.Configuration);
@@ -28,7 +27,6 @@ builder.Services.AddDependencyUtilities(builder.Configuration);
 builder.Services.AddDependencyApplication(builder.Configuration);
 
 builder.Services.AddAuthorization();
-
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
@@ -133,12 +131,12 @@ app.MapHealthChecks("/hc", new HealthCheckOptions()
     ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
 });
 
-app.UseCors("CorsPolicy");
+app.MapControllers();
 
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapControllers();
+app.UseCors("CorsPolicy");
 
 app.Run();
 

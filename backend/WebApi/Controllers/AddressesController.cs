@@ -2,10 +2,13 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Veterinaria.Application.CustomeException;
 using System.Security.Claims;
 using Veterinaria.Application.DTO;
 using Veterinaria.Domain.Models;
 using Veterinaria.Domain.Repositories;
+using Veterinaria.Application.Dtos.Wrappers;
+using System.Net;
 
 namespace WebApi.Controllers
 {
@@ -17,8 +20,8 @@ namespace WebApi.Controllers
         private readonly IClientUserRepository _clientUserRepository;
         private readonly IMapper _mapper;
 
-        public AddressesController(IAddressRepository addressRepository, 
-                                 IClientUserRepository clientUserRepository, IMapper mapper)
+        public AddressesController(IAddressRepository addressRepository,
+                                IClientUserRepository clientUserRepository, IMapper mapper)
         {
             _addressRepository = addressRepository;
             _clientUserRepository = clientUserRepository;
@@ -27,36 +30,32 @@ namespace WebApi.Controllers
 
 
         //[Authorize(Roles = "Admin")]
-        [HttpGet("GetAllWithData")]
-        public ActionResult<IEnumerable<AddressDTO>> GetAllWithData()
+        // [HttpGet("GetAllWithData")]
+        [HttpGet] // INFO: solo el Admin
+        public async Task<ActionResult<ResponseSucceded<IEnumerable<AddressDTO>>>> GetAllWithData()
         {
-            var addresses = _addressRepository.GetAllWithData();
-            if (addresses is null)
-            {
-                return NotFound();
-            }
+            List<Address> addresses = await _addressRepository.GetAllWithData();
             var addressesDTO = _mapper.Map<IEnumerable<AddressDTO>>(addresses);
-            return Ok(addressesDTO);
+            return Ok(new ResponseSucceded<IEnumerable<AddressDTO>>((int)HttpStatusCode.OK, addressesDTO));
         }
+        //TODO: Crear un endPoint (my-addresses)
 
 
         //[Authorize(Roles = "Admin, Cliente")]
-        [HttpGet("GetByIdWithData/{id}")]
-        public ActionResult<AddressDTO> GetByIdWithData(int id)
+        //[HttpGet("GetByIdWithData/{id}")]
+        [HttpGet("{id}")] // INFO: Parar Admin o Cliente
+        public async Task<ActionResult<ResponseSucceded<AddressDTO>>> GetByIdWithData(int id)
         {
-            var address = _addressRepository.GetByIdWithData(p => p.Id == id);
-            if (address is null)
-            {
-                return NotFound();
-            }
+            var address = await _addressRepository.GetByIdWithData(p => p.Id == id) ?? throw ResourceNotFoundException.NotFoundById<Address, int>(id);
+
             var addressDTO = _mapper.Map<AddressDTO>(address);
-            return Ok(addressDTO);
+            return Ok(new ResponseSucceded<AddressDTO>((int)HttpStatusCode.OK, addressDTO));
         }
 
 
         //[Authorize(Roles = "Cliente")]
-        [HttpPost]
-        public async Task<ActionResult<AddressDTO>> Insert([FromBody] AddressCreationDTO addressCreationDTO)
+        [HttpPost] // INFO: Parar Admin o Cliente
+        public async Task<ActionResult<ResponseSucceded<AddressDTO>>> Insert([FromBody] AddressCreationDTO addressCreationDTO)
         {
             ClaimsPrincipal claims = this.User;
             var idUser = claims.FindFirst(u => u.Type == ClaimTypes.NameIdentifier)?.Value;
@@ -72,23 +71,23 @@ namespace WebApi.Controllers
             };
             await _addressRepository.AddAsync(address);
             var addressDTO = _mapper.Map<AddressDTO>(address);
-            return Ok(addressDTO);
+            return Ok(new ResponseSucceded<AddressDTO>((int)HttpStatusCode.OK, addressDTO));
         }
 
 
         //[Authorize(Roles = "Cliente")]
-        [HttpPut("{id}")]
-        public async Task<ActionResult<AddressDTO>> Actualizar([FromRoute] int id, [FromBody] AddressCreationDTO addressCreationDTO)
+        [HttpPut("{id}")]// INFO: Parar Admin o Cliente
+        public async Task<ActionResult<ResponseSucceded<AddressDTO>>> Actualizar([FromRoute] int id, [FromBody] AddressCreationDTO addressCreationDTO)
         {
             var address = await _addressRepository.FindByIdAsync(id);
             if (address is null)
             {
-                return NotFound();
+                throw ResourceNotFoundException.NotFoundById<Address, int>(id);
             }
             _mapper.Map(addressCreationDTO, address);
             var result = await _addressRepository.UpdateAsync(address);
             var addressDTO = _mapper.Map<AddressDTO>(result);
-            return Ok(addressDTO);
+            return Ok(new ResponseSucceded<AddressDTO>((int)HttpStatusCode.OK, addressDTO));
         }
 
 
@@ -99,9 +98,10 @@ namespace WebApi.Controllers
             var address = await _addressRepository.FindByIdAsync(id);
             if (address is null)
             {
-                return NotFound();
+                throw ResourceNotFoundException.NotFoundById<Address, int>(id);
             }
             await _addressRepository.DeleteAsync(address);
+
             return NoContent();
         }
     }

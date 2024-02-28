@@ -20,7 +20,7 @@ public class CategoriesController : ControllerBase
     }
 
 
-    [HttpGet]
+    [HttpGet] // INFO: Sin autorizacion
     public async Task<ActionResult<ResponseSucceded<IEnumerable<CategorieDto>>>> GetAll()
     {
         List<Categorie> catetegories = await _categorieService.GetAllAsync();
@@ -33,7 +33,7 @@ public class CategoriesController : ControllerBase
         );
     }
 
-    [HttpGet("{id}")]
+    [HttpGet("{id}")] // INFO: Sin autorizacion
     public async Task<ActionResult<ResponseSucceded<CategorieDto>>> GetById(int id)
     {
         Categorie categorie = await _categorieService.GetByIdAsync(id);
@@ -42,25 +42,21 @@ public class CategoriesController : ControllerBase
         return Ok(new ResponseSucceded<CategorieDto>((int)HttpStatusCode.OK, new CategorieDto(categorie.Id, categorie.Name)));
     }
 
-    [HttpPost]
+    [HttpPost] // INFO: Solo Admin
     public async Task<IActionResult> Create([FromBody] CategorieCreateDto createDto)
     {
         Categorie categorie = await _categorieService.CreateAsync(createDto.Name);
         return Created();
     }
 
-    [HttpPut("{id}")]
-    public async Task<IActionResult> Update(long id, [FromBody] CategorieDto updateDto)
+    [HttpPut("{id}")] // INFO: Solo Admin
+    public async Task<IActionResult> Update(int id, [FromBody] CategorieCreateDto updateDto)
     {
-        if (id != updateDto.Id)
-        {
-            return BadRequest();// TODO: considerar un CustomException
-        }
-        await _categorieService.UpdateAsync(updateDto.Id, updateDto.Name);
+        await _categorieService.UpdateAsync(id, updateDto.Name);
         return NoContent();
     }
 
-    [HttpDelete("{id}")]
+    [HttpDelete("{id}")] // INFO: Solo Admin
     public async Task<IActionResult> Delete(int id)
     {
         await _categorieService.DeleteAsync(id);

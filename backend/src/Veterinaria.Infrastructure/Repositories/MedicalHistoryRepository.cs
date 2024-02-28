@@ -6,16 +6,16 @@ namespace Veterinaria.Infrastructure.Repositories;
 public class MedicalHistoryRepository : BasicRepository<MedicalHistory, int>, IMedicalHistoryRepository
 {
     private readonly VeterinariaDbContext _context;
-    public MedicalHistoryRepository (VeterinariaDbContext context) : base(context)
+    public MedicalHistoryRepository(VeterinariaDbContext context) : base(context)
     {
         _context = context;
     }
-    
+
     public Task MetodoPersonalizadoAsync(MedicalHistory model)
     {
         //TODO : implementacion de metodo personalizado.
         throw new NotImplementedException();
     }
-    
+
 }
 
