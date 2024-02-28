@@ -1,10 +1,6 @@
 # Inicio
 
-## Antes de iniciar los contenedore eliminar las imagenes anteriores con:
-`docker compose -f docker-compose-dev.yml down --rmi all -v`
-
-## Ejecucion con docker compose en modo desarrollo
-`docker compose -f docker-compose-dev.yml up`
+## Los comandos en el archivo: lock.txt
 
 ## Probar Web Api
 `http://localhost:5104/hc`
