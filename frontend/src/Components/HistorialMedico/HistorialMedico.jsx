@@ -3,7 +3,7 @@ import { Accordion } from 'flowbite-react';
 export const HistorialMedico = () => {
   return (
     <>
-    <Accordion>
+    <Accordion className='container w-4/5 mx-auto mt-10 mb-10'>
       <Accordion.Panel>
         <Accordion.Title>Vacunas</Accordion.Title>
         <Accordion.Content>

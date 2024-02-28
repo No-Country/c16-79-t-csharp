@@ -1,6 +1,7 @@
+import { SelecFechaHoraTurno } from "../../Components/SelecFechaHoraTurno/SelecFechaHoraTurno"
 
 export const Agenda = () => {
   return (
-    <div>Agenda</div>
+    <SelecFechaHoraTurno/>
   )
 }

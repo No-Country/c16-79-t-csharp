@@ -14,14 +14,14 @@ export const Ofertas = () => {
               <MdPercent className="h-4 w-4" />
             </span>
             <span className="[&_p]:inline">
-              OBETENGA UN <strong>25%</strong> DE DESCUENTO EN NUESTRA&nbsp;
-              <a
+              Esta semana <strong>25%</strong> de <strong>DESCUENTO</strong> en todas <strong>NUESTRAS SUCURSALES</strong>&nbsp;
+              {/* <a
                 href="https://flowbite.com"
                 className="ml-0 flex items-center text-sm font-medium text-cyan-600 hover:underline dark:text-cyan-500 md:ml-1 md:inline-flex"
               >
                 TIENDA
                 <HiArrowRight className="ml-2" />
-              </a>
+              </a> */}
             </span>
           </p>
         </div>

@@ -17,7 +17,7 @@ const NavBar = () => {
         </Navbar.Brand>
         <div className="flex md:order-2">
           <div>
-            <Button.Group>
+            <Button.Group className=" mr-2">
               <NavLink to={"/login"}>
                 <Button
                   color="gray"
@@ -25,7 +25,7 @@ const NavBar = () => {
                   Iniciar Sesión
                 </Button>
               </NavLink>
-              <NavLink to={"/registro"}>
+              <NavLink to={"/registro"} className=" ml-2">
                 <Button
                   color="gray"
                 >
@@ -67,7 +67,7 @@ const NavBar = () => {
               <Dropdown.Item>Perfil</Dropdown.Item>
             </NavLink>
             <Dropdown.Item>
-              <NavLink to="/">Mi Carrito</NavLink>
+              <NavLink to="/">Catalogo</NavLink>
             </Dropdown.Item>
             <Dropdown.Divider />
             <Dropdown.Item>Iniciar sesión</Dropdown.Item>
@@ -81,21 +81,21 @@ const NavBar = () => {
           <Navbar.Link>
             <NavLink to="/" className="text-base">Inicio</NavLink>
           </Navbar.Link>
-          <Navbar.Link>
+          {/* <Navbar.Link>
             <NavLink to="" className="text-base">Tienda</NavLink>
-          </Navbar.Link>
-          <Navbar.Link>
+          </Navbar.Link> */}
+          {/* <Navbar.Link>
             <NavLink to="" className="text-base">Quiero Adoptar</NavLink>
-          </Navbar.Link>
+          </Navbar.Link> */}
           <Navbar.Link>
-            <NavLink to="" className="text-base">Agenda</NavLink>
+            <NavLink to="/agenda" className="text-base">Agenda</NavLink>
           </Navbar.Link>
           <Navbar.Link>
             <NavLink to="/servicios" className="text-base">Servicios</NavLink>
           </Navbar.Link>
-          <Navbar.Link>
+          {/* <Navbar.Link>
             <NavLink to="" className="text-base">Perdidos y Encontrados</NavLink>
-          </Navbar.Link>
+          </Navbar.Link> */}
           <Navbar.Link>
             <NavLink to="/quienessomos" className="text-base">Quienes Somos</NavLink>
           </Navbar.Link>

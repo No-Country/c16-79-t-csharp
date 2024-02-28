@@ -2,7 +2,7 @@ import { ProductoDestacados } from "../../Components/ProductosDestacados/Product
 import { Ofertas } from "../../Components/Ofertas/Ofertas";
 import { CarouselBanner } from "../../Components/Carousel/CarouselBanner";
 import { GrillaMarcas } from "../../Components/GrillaMarcas/GrillaMarcas";  
-import { TestimonioPrueba } from "../../Components/Testimonios/TestimonioPrueba";
+import { Testimonios } from "../../Components/Testimonios/Testimonios";
 
 export const Home = () => {
   return (
@@ -12,7 +12,7 @@ export const Home = () => {
       <ProductoDestacados />
       <GrillaMarcas />
       <div className="2xl:container 2xl:mx-auto 2xl:px-0 py-3 px-10">
-        <TestimonioPrueba />
+        <Testimonios />
       </div>
     </>
   );

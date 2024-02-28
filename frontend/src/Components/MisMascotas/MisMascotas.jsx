@@ -10,7 +10,7 @@ import "./misMascotas.css";
 
 export const MisMascotas = () => {
   return (
-    <div className="container max-w-7xl flex justify-center gap-10 ">
+    <div className="container max-w-7xl flex justify-center gap-10 mt-10 mb-10">
       {MascotasJson.map((d) => {
         return (
           <Card

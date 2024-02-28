@@ -1,7 +1,7 @@
 
 import { blogs } from "./data/blogs.js";
 
-export const TestimonioPrueba = () => {
+export const Testimonios = () => {
   const carouselBlogs = [...blogs, ...blogs];
 
   return (
