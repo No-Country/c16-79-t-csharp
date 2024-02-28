@@ -28,7 +28,8 @@ namespace WebApi.Controllers
 
 
         //[Authorize(Roles = "Admin")]
-        [HttpGet("GetAllWithData")]
+        // [HttpGet("GetAllWithData")]
+        [HttpGet]// INFO: solo Admin
         public async Task<ActionResult<IEnumerable<PetDTO>>> GetAllWithData()
         {
             var pets = await _petRepository.GetAllWithData();
@@ -39,10 +40,11 @@ namespace WebApi.Controllers
             var petsDTO = _mapper.Map<IEnumerable<PetDTO>>(pets);
             return Ok(petsDTO);
         }
+        // TODO: construir GET api/pets/my-pets , solo los pets de un usuario
 
 
         //[Authorize(Roles = "Admin, Cliente")]
-        [HttpGet("GetByIdWithData/{id}")]
+        [HttpGet("{id}")] // 
         public async Task<ActionResult<PetDTO>> GetByIdWithData(int id)
         {
             var pet = await _petRepository.GetByIdWithData(p => p.Id == id);

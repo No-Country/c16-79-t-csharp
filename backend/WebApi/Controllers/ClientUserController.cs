@@ -2,8 +2,10 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 using System.Security.Claims;
 using Veterinaria.Application.DTO;
+using Veterinaria.Application.Dtos.Wrappers;
 using Veterinaria.Domain.Models;
 using Veterinaria.Domain.Repositories;
 
@@ -24,31 +26,46 @@ namespace WebApi.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpGet]
-        public ActionResult<IEnumerable<ClientUserDTO>> GetAll()
+        public async Task<ActionResult<ResponseSucceded<IEnumerable<ClientUserDTO>>>> GetAll()
         {
-            var usuarios = _clientUserRepository.GetAllClientUserWithData();
+            var usuarios = await _clientUserRepository.GetAllClientUserWithData();
             var usuariosDTO = _mapper.Map<IEnumerable<ClientUserDTO>>(usuarios);
-            return Ok(usuariosDTO);
+            return Ok(new ResponseSucceded<IEnumerable<ClientUserDTO>>((int)HttpStatusCode.OK, usuariosDTO));
         }
 
+        // INFO: por momento nos concentramod en el clientuser
+        // [Authorize(Roles = "Admin")]
+        // [HttpGet("by-useraccount/{id}")]
+        // public async Task<ActionResult<ClientUserDTO>> GetById(string id)
+        // {
+        //     var clientUser = await _clientUserRepository.GetClientUserByIdWithData(u => u.UserAccountId == id);
+        //     if (clientUser is null)
+        //     {
+        //         return NotFound();
+        //     }
+        //     var clientUserDataDTO = _mapper.Map<ClientUserDTO>(clientUser);
+        //     return Ok(clientUserDataDTO);
+        // }
 
-        [Authorize(Roles = "Admin")]
-        [HttpGet("GetUsuario/{id}")]
-        public async Task<ActionResult<ClientUserDTO>> GetById(string id)
+        [Authorize(Roles = "Cliente")]
+        [HttpGet("my-clientuser")]
+        public async Task<ActionResult<ResponseSucceded<ClientUserDTO>>> GetClientUser()
         {
-            var clientUser = await _clientUserRepository.GetClientUserByIdWithData(u => u.UserAccountId == id);
+            ClaimsPrincipal claims = this.User;
+            var idUser = claims.FindFirst(u => u.Type == ClaimTypes.NameIdentifier)?.Value;
+            var clientUser = await _clientUserRepository.GetClientUserByIdWithData(u => u.UserAccountId == idUser);
             if (clientUser is null)
             {
                 return NotFound();
             }
             var clientUserDataDTO = _mapper.Map<ClientUserDTO>(clientUser);
-            return Ok(clientUserDataDTO);
+            return Ok(new ResponseSucceded<ClientUserDTO>((int)HttpStatusCode.OK, clientUserDataDTO));
         }
 
 
         [Authorize(Roles = "Admin, Cliente")]
-        [HttpPost("AddPersonalData")]
-        public async Task<ActionResult<ClientUserDTO>> AddPersonalData([FromBody] ClientUserDataUpdateDTO clientUserDataAddDTO)
+        [HttpPost]
+        public async Task<ActionResult<ResponseSucceded<ClientUserDTO>>> AddPersonalData([FromBody] ClientUserDataUpdateDTO clientUserDataAddDTO)
         {
             ClaimsPrincipal claims = this.User;
             var idUser = claims.FindFirst(u => u.Type == ClaimTypes.NameIdentifier)?.Value;
@@ -62,12 +79,12 @@ namespace WebApi.Controllers
             };
             var clientUserUpdated = await _clientUserRepository.AddAsync(clientUser);
             var clientUserDTO = _mapper.Map<ClientUserDTO>(clientUserUpdated);
-            return Ok(clientUserDTO);
+            return Ok(new ResponseSucceded<ClientUserDTO>((int)HttpStatusCode.OK, clientUserDTO));
         }
 
         [Authorize(Roles = "Admin, Cliente")]
-        [HttpPatch("PersonalDataUpdate")]
-        public async Task<ActionResult<ClientUserDTO>> PersonalDataUpdate([FromBody] ClientUserDataUpdateDTO clientUserDataUpdateDTO)
+        [HttpPatch("update")]
+        public async Task<ActionResult<ResponseSucceded<ClientUserDTO>>> PersonalDataUpdate([FromBody] ClientUserDataUpdateDTO clientUserDataUpdateDTO)
         {
             ClaimsPrincipal claims = this.User;
             var idUser = claims.FindFirst(u => u.Type == ClaimTypes.NameIdentifier)?.Value;
@@ -75,7 +92,7 @@ namespace WebApi.Controllers
             _mapper.Map(clientUserDataUpdateDTO, clientUser);
             var clientUserUpdated = await _clientUserRepository.UpdateAsync(clientUser);
             var clientUserDTO = _mapper.Map<ClientUserDTO>(clientUserUpdated);
-            return Ok(clientUserDTO);
+            return Ok(new ResponseSucceded<ClientUserDTO>((int)HttpStatusCode.OK, clientUserDTO));
         }
 
     }
