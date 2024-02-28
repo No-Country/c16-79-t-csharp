@@ -1,0 +1,20 @@
+  [
+    {
+      "id": "1",
+      "nombre": "Lilu",
+      "tipo": "perro",
+      "raza": "torlvald",
+      "edad": "14",
+      "peso": "12",
+      "foto": "https://images-ext-2.discordapp.net/external/MZ55zdvIfPg_rs-Jv8S1iVnUaun_eecepofb-nxNixg/%3Falt%3Dmedia%26token%3D7c01b6e7-1257-4e94-b7ca-ba2ecceb64f4/https/firebasestorage.googleapis.com/v0/b/subida-de-imagenes.appspot.com/o/d90b0900-3f50-43ee-97b5-5a6e1ccf20de?format=webp&width=334&height=418"
+    },
+    {
+      "id": "2",
+      "nombre": "Zhukov",
+      "tipo": "perro",
+      "raza": "boyero australiano",
+      "edad": "5",
+      "peso": "24",
+      "foto": "https://images-ext-2.discordapp.net/external/gHZZ0hdnwgQTJfRpnoxPdyRTHUKJibyvi5L2HP3U3Is/%3Falt%3Dmedia%26token%3Dfa209c76-1e21-4be2-9329-946e25183e18/https/firebasestorage.googleapis.com/v0/b/subida-de-imagenes.appspot.com/o/bfb4ba6a-f04a-434a-abda-569ccbdbb716?format=webp&width=235&height=418"
+    }
+  ]

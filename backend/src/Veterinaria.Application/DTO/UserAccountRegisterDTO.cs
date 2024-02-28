@@ -13,6 +13,6 @@ namespace Veterinaria.Application.DTO
         public string Email { get; set; }
         [Required(ErrorMessage = "La contraseña es obligatoria")]
         public string Password { get; set; }
-        public string Role { get; set; }
+        public string Role { get; private set; } = "Cliente";
     }
 }

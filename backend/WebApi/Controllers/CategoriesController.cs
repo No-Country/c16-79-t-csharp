@@ -20,12 +20,11 @@ public class CategoriesController : ControllerBase
     }
 
 
-    [HttpGet]
+    [HttpGet] // INFO: Sin autorizacion
     public async Task<ActionResult<ResponseSucceded<IEnumerable<CategorieDto>>>> GetAll()
     {
         List<Categorie> catetegories = await _categorieService.GetAllAsync();
 
-        //TODO: Usar AutoMapper cuando este configurado
         IEnumerable<CategorieDto> categorieDtos = catetegories.Select(c => new CategorieDto(c.Id, c.Name));
 
         return Ok(
@@ -33,7 +32,7 @@ public class CategoriesController : ControllerBase
         );
     }
 
-    [HttpGet("{id}")]
+    [HttpGet("{id}")] // INFO: Sin autorizacion
     public async Task<ActionResult<ResponseSucceded<CategorieDto>>> GetById(int id)
     {
         Categorie categorie = await _categorieService.GetByIdAsync(id);
@@ -42,21 +41,21 @@ public class CategoriesController : ControllerBase
         return Ok(new ResponseSucceded<CategorieDto>((int)HttpStatusCode.OK, new CategorieDto(categorie.Id, categorie.Name)));
     }
 
-    [HttpPost]
+    [HttpPost] // INFO: Solo Admin
     public async Task<IActionResult> Create([FromBody] CategorieCreateDto createDto)
     {
         Categorie categorie = await _categorieService.CreateAsync(createDto.Name);
         return Created();
     }
 
-    [HttpPut("{id}")]
+    [HttpPut("{id}")] // INFO: Solo Admin
     public async Task<IActionResult> Update(int id, [FromBody] CategorieCreateDto updateDto)
     {
         await _categorieService.UpdateAsync(id, updateDto.Name);
         return NoContent();
     }
 
-    [HttpDelete("{id}")]
+    [HttpDelete("{id}")] // INFO: Solo Admin
     public async Task<IActionResult> Delete(int id)
     {
         await _categorieService.DeleteAsync(id);

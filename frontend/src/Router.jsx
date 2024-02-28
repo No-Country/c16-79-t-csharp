@@ -7,6 +7,8 @@ import { Servicios } from "./Pages/Servicios/Servicios";
 import { PerdidosEncontrados } from "./Pages/Perdidos-Encontrados/PerdidosEncontrados";
 import { QuieneSomos } from "./Pages/QuienesSomos/QuieneSomos";
 import { Perfil } from './Pages/Perfil/Perfil'
+import { Login } from "./Pages/Login/Login";
+import { Registro } from "./Pages/Registro/Registro";
 
 export const Router = () => {
   return (
@@ -19,6 +21,9 @@ export const Router = () => {
       <Route path="/servicios" element={<Servicios />} />
       <Route path="/perdidos-Encontrados" element={<PerdidosEncontrados />} />
       <Route path="/quienesSomos" element={<QuieneSomos />} />
+      <Route path="/login" element={<Login/>} />
+      <Route path="/registro" element={<Registro/>} />
+
     </Routes>
   );
 };

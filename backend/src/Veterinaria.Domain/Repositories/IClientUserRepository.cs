@@ -10,7 +10,7 @@ namespace Veterinaria.Domain.Repositories
 {
     public interface IClientUserRepository : IBasicRepository<ClientUser, string>
     {
-        public IQueryable<ClientUser> GetAllClientUserWithData();
+        public Task<List<ClientUser>> GetAllClientUserWithData();
         public Task<ClientUser> GetClientUserByIdWithData(Expression<Func<ClientUser, bool>> filtro = null);
         public Task<ClientUser> GetClientUserById(Expression<Func<ClientUser, bool>> filtro = null);
     }

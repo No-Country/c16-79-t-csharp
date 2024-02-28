@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Tokens; //TODO: agregar el package
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -12,6 +12,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using Veterinaria.Application.Authentication;
+using Veterinaria.Application.CustomeException;
 using Veterinaria.Application.DTO;
 using Veterinaria.Domain.Models;
 using Veterinaria.Domain.Repositories;
@@ -20,7 +21,7 @@ using Veterinaria.Infrastructure.Persistance.Context;
 
 namespace Veterinaria.Infrastructure.Authentication
 {
-    public class AuthenticationUserAccountService : IAuthenticationUserAccountService
+    public class AuthenticationUserAccountService : IAuthenticationUserAccountService //TODO:
     {
         private readonly VeterinariaDbContext _context;
         private readonly UserManager<ApplicationUserAccount> _userManager;
@@ -62,20 +63,23 @@ namespace Veterinaria.Infrastructure.Authentication
                 UserName = clientUserRegisterDTO.Email
             };
             var createResult = await _userManager.CreateAsync(newClientUser, clientUserRegisterDTO.Password);
-            if (createResult.Succeeded)
+            if (!createResult.Succeeded)
             {
-                var roleExist = await _roleManager.RoleExistsAsync("Admin");
-                if (!roleExist)
-                {
-                    await _roleManager.CreateAsync(new IdentityRole("Admin"));
-                    await _roleManager.CreateAsync(new IdentityRole("Cliente"));
-                }
-                var role = clientUserRegisterDTO.Role;
-                await _userManager.AddToRoleAsync(newClientUser, role);
-                var clientReturn = await _context.ApplicationUserAccounts.FirstOrDefaultAsync(u => u.Email == clientUserRegisterDTO.Email);
-                return _mapper.Map<UserAccountResponseRegisterDTO>(clientReturn);
+                var errors = createResult.Errors;
+                throw new BadException("Could not create account", errors.Select(e => e.Description).ToList());
             }
-            return null;
+
+            var roleExist = await _roleManager.RoleExistsAsync("Admin");
+            if (!roleExist)
+            {
+                await _roleManager.CreateAsync(new IdentityRole("Admin"));
+                await _roleManager.CreateAsync(new IdentityRole("Cliente"));
+            }
+            var role = clientUserRegisterDTO.Role;
+            await _userManager.AddToRoleAsync(newClientUser, role);
+            var clientReturn = await _context.ApplicationUserAccounts.FirstOrDefaultAsync(u => u.Email == clientUserRegisterDTO.Email);
+            return _mapper.Map<UserAccountResponseRegisterDTO>(clientReturn);
+
         }
 
         public async Task<UserAccountResponseLoginDTO> Login(UserAccountLoginDTO userAccountLoginDTO)
@@ -85,37 +89,40 @@ namespace Veterinaria.Infrastructure.Authentication
             bool isValid = await _userManager.CheckPasswordAsync(clientUserFound, userAccountLoginDTO.Password);
             if (clientUserFound is null || isValid is false)
             {
-                return new UserAccountResponseLoginDTO
-                {
-                    ClientUser = null,
-                    Token = ""
-                };
+                throw new UnauthorizedException("Email or password incorrect");
             }
 
             var roles = await _userManager.GetRolesAsync(clientUserFound);
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_secretKey);
+            var roleUser = roles.FirstOrDefault() ?? throw new ConflictException("Not found the user role ");
 
-            var tokenInformation = new SecurityTokenDescriptor
-            {
-                //Se deben fijar el mismo valor que para ValidAudience y ValidIssuer puestos en program.cs
-                //Issuer = ,
-                //Audience = ,
-                Subject = new ClaimsIdentity(new Claim[]
-                {
-                    new Claim(ClaimTypes.NameIdentifier, clientUserFound.Id.ToString()),
-                    new Claim(ClaimTypes.Email, clientUserFound.Email.ToString()),
-                    new Claim(ClaimTypes.Role, roles.FirstOrDefault())
-                }),
-                Expires = DateTime.UtcNow.AddDays(1),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-            };
 
-            var tokenCreated = tokenHandler.CreateToken(tokenInformation);
+            // var tokenHandler = new JwtSecurityTokenHandler();
+            // var key = Encoding.ASCII.GetBytes(_secretKey);
+
+            // var tokenInformation = new SecurityTokenDescriptor
+            // {
+            //     //Se deben fijar el mismo valor que para ValidAudience y ValidIssuer puestos en program.cs
+            //     //Issuer = ,
+            //     //Audience = ,
+            //     Subject = new ClaimsIdentity(new Claim[]
+            //     {
+            //         new Claim(ClaimTypes.NameIdentifier, clientUserFound.Id.ToString()),
+            //         new Claim(ClaimTypes.Email, clientUserFound.Email.ToString()),
+            //         new Claim(ClaimTypes.Role, roleUser)
+            //     }),
+            //     Expires = DateTime.UtcNow.AddDays(1),
+            //     SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+            // };
+
+            // var tokenCreated = tokenHandler.CreateToken(tokenInformation);
+
+            // string token = tokenHandler.WriteToken(tokenCreated);
+            string token = JwtGenerator.GenerateToken(clientUserFound, roleUser, _secretKey);
+
             var clientUserResponseLoginDTO = new UserAccountResponseLoginDTO()
             {
                 ClientUser = _mapper.Map<ClientUserDTO>(clientUserFound),
-                Token = tokenHandler.WriteToken(tokenCreated)
+                Token = token
             };
             return clientUserResponseLoginDTO;
         }

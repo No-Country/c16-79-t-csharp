@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 using Veterinaria.Domain.Models;
 using Veterinaria.Domain.Repositories;
 using Veterinaria.Infrastructure.Persistance.Context;
-using Veterinaria.Infrastructure.Repository;
 
 namespace Veterinaria.Infrastructure.Repositories
 {
@@ -21,15 +20,15 @@ namespace Veterinaria.Infrastructure.Repositories
             _context = context;
         }
 
-        virtual public IQueryable<ClientUser> GetAllClientUserWithData()
+        virtual public async Task<List<ClientUser>> GetAllClientUserWithData()
         {
-            var users = _context.ClientUsers.Include(u => u.Addresses)
+            var users = await _context.ClientUsers.Include(u => u.Addresses)
                                       .Include(u => u.Pets)
                                       //                              .ThenInlcude(p => p.MedicalHistories)
-                                      .ToList().AsQueryable();
+                                      .ToListAsync();
             return users;
         }
-        virtual public async Task<ClientUser> GetClientUserByIdWithData(Expression<Func<ClientUser, bool>> filtro = null)
+        virtual public async Task<ClientUser> GetClientUserByIdWithData(Expression<Func<ClientUser, bool>> filtro = null!)
         {
             var user = await _context.ClientUsers.Include(u => u.Addresses)
                                            .Include(u => u.Pets)
@@ -38,7 +37,7 @@ namespace Veterinaria.Infrastructure.Repositories
             return user;
         }
 
-        virtual public async Task<ClientUser> GetClientUserById(Expression<Func<ClientUser, bool>> filtro = null)
+        virtual public async Task<ClientUser> GetClientUserById(Expression<Func<ClientUser, bool>> filtro = null!)
         {
             var user = await _context.ClientUsers.FirstOrDefaultAsync(filtro);
             return user;

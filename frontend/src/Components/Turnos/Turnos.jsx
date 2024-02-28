@@ -4,7 +4,7 @@ import { Table } from "flowbite-react";
 
 export const Turnos = () => {
   return (
-    <>
+    <div className='container w-4/5 mx-auto mt-10 mb-10'>
 
       <p>
         * Todos los turnos son de 30 minutos. Solo podran ser cancelados hasta
@@ -52,6 +52,6 @@ export const Turnos = () => {
           </Table.Body>
         </Table>
       </div>
-    </>
+    </div>
   );
 };

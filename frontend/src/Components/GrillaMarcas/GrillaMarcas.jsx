@@ -43,11 +43,11 @@ export const GrillaMarcas = () => {
       <div className="grid sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-0">
         {marcas.map((marca) => {
           return (
-            <>
-              <div id={marca.title} className="self-center">
+            
+              <div key={marca.title} className="self-center">
                 <img className="mx-auto max-h-36" src={marca.img} />
               </div>
-            </>
+            
           );
         })}
       </div>
