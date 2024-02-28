@@ -1,12 +1,12 @@
-#Proyecto Sanatorio Veterinario 
+# Proyecto Sanatorio Veterinario 
 
 ## Descripcion 
 
-###¡Bienvenido al Sanatorio Veterinario Huellas Felices!
+### ¡Bienvenido al Sanatorio Veterinario Huella Amiga!
 
 En nuestro sanatorio, nos dedicamos a brindar atención médica integral para tus queridas mascotas. Desde perros y gatos hasta aves y reptiles, nuestro equipo de profesionales altamente calificados está aquí para garantizar el bienestar de tus compañeros peludos.
 
-####¿Qué puedes encontrar en nuestra página?
+#### ¿Qué puedes encontrar en nuestra página?
 
 1. **Registro de Usuarios**: Crea tu cuenta para acceder a nuestros servicios y recibir actualizaciones personalizadas sobre la salud de tus mascotas.
 
@@ -22,7 +22,7 @@ En nuestro sanatorio, nos dedicamos a brindar atención médica integral para tu
 
 7. **Sección de Mascotas Perdidas y Encontradas**: En caso de que tu mascota se haya perdido o encuentres una mascota perdida, utiliza nuestra sección dedicada para ayudar a reunir a las mascotas con sus familias.
 
- *En el Sanatorio Veterinario Huellas Felices, nos comprometemos a proporcionar el más alto nivel de atención médica y cuidado para todas las mascotas que llegan a nuestras puertas. ¡Únete a nuestra comunidad y cuidemos juntos de la salud y felicidad de nuestros amigos de cuatro patas!*
+ *En el Sanatorio Veterinario Huella Amiga, nos comprometemos a proporcionar el más alto nivel de atención médica y cuidado para todas las mascotas que llegan a nuestras puertas. ¡Únete a nuestra comunidad y cuidemos juntos de la salud y felicidad de nuestros amigos de cuatro patas!*
 
  ## Equipo
 
