@@ -11,11 +11,11 @@ namespace WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ClientUserController : ControllerBase
+    public class ClientUsersController : ControllerBase
     {
         private readonly IClientUserRepository _clientUserRepository;
         private readonly IMapper _mapper;
-        public ClientUserController(IClientUserRepository clientUserRepository, IMapper mapper)
+        public ClientUsersController(IClientUserRepository clientUserRepository, IMapper mapper)
         {
             _clientUserRepository = clientUserRepository;
             _mapper = mapper;

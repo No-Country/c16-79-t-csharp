@@ -12,13 +12,13 @@ namespace WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PetController : ControllerBase
+    public class PetsController : ControllerBase
     {
         private readonly IPetRepository _petRepository;
         private readonly IClientUserRepository _clientUserRepository;
         private readonly IMapper _mapper;
 
-        public PetController(IPetRepository petRepository, IClientUserRepository clientUserRepository, IMapper mapper)
+        public PetsController(IPetRepository petRepository, IClientUserRepository clientUserRepository, IMapper mapper)
         {
             _petRepository = petRepository;
             _clientUserRepository = clientUserRepository;

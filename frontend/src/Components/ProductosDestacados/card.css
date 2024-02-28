@@ -1,0 +1,8 @@
+.cardProducto img {
+    display        : block;
+    height         : 100%;
+    max-height     : 150px;
+    object-fit     :contain;
+    object-position: top;
+    width          : 100%;
+}

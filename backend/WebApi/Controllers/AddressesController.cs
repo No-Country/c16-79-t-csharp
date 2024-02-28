@@ -11,13 +11,13 @@ namespace WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AddressController : ControllerBase
+    public class AddressesController : ControllerBase
     {
         private readonly IAddressRepository _addressRepository;
         private readonly IClientUserRepository _clientUserRepository;
         private readonly IMapper _mapper;
 
-        public AddressController(IAddressRepository addressRepository, 
+        public AddressesController(IAddressRepository addressRepository, 
                                  IClientUserRepository clientUserRepository, IMapper mapper)
         {
             _addressRepository = addressRepository;
