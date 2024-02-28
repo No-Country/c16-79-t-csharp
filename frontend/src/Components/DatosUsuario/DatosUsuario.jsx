@@ -2,7 +2,7 @@ import { Table } from "flowbite-react";
 
 const DatosUsuario = () => {
   return (
-    <div className="overflow-x-auto">
+    <div className="overflow-x-auto container w-4/5 mx-auto mt-10 mb-10">
       <Table>
         <Table.Body className="divide-y">
           <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">

@@ -2,7 +2,6 @@ import { Button, FileInput, Label, Select, TextInput } from "flowbite-react";
 import { uploadFile } from "../../Helpers/CargarImagen";
 import { useState } from "react";
 
-
 // console.log("nombre", nombre)
 /* eslint-disable react/prop-types */
 export const CargarMascota = ({ nombre, raza, tipo, edad, peso }) => {
@@ -31,7 +30,7 @@ export const CargarMascota = ({ nombre, raza, tipo, edad, peso }) => {
   };
 
   return (
-    <div>
+    <div className="container flex justify-center w-full mt-10">
       <form className="flex max-w-md flex-col gap-4" onSubmit={handleSubmit}>
         <div>
           <div className="mb-2 block">
