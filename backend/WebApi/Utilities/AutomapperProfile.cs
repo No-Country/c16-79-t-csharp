@@ -30,9 +30,8 @@ namespace WebApi.Utilities
             CreateMap<ClientUserDataUpdateDTO, ClientUser>().ForMember(d => d.Id, o => o.Ignore());
             CreateMap<UserAccountResponseLoginDTO, UserAccountLoginDTO>();
             CreateMap<UserAccountResponseRegisterDTO, UserAccountRegisterDTO>();
-            CreateMap<Sale, SaleDto>().ForPath(d => d.ClientUser, opt => opt.MapFrom(o => o.ClientUser.Name))
-                                     .ForMember(d => d.Date, opt => opt.MapFrom(o => o.Date.ToString("dd/MM/yyyy")))
-                                     .ForMember(d => d.Total, opt => opt.MapFrom(o => o.Total.ToString("0.00")));
+            CreateMap<Sale, SaleDto>().ForMember(d => d.Date, opt => opt.MapFrom(o => o.Date.ToString("dd/MM/yyyy")))
+                                      .ForMember(d => d.Total, opt => opt.MapFrom(o => o.Total.ToString("0.00")));
             CreateMap<SaleCreateDto, Sale>();
             CreateMap<SaleUpdateDto, Sale>();
             CreateMap<Sale, SaleUpdateDto>();
@@ -42,6 +41,9 @@ namespace WebApi.Utilities
             CreateMap<DetailSaleCreateDto, DetailSale>();
             CreateMap<DetailSaleUpdateDto, DetailSale>();
             CreateMap<DetailSale, DetailSaleUpdateDto>();
+            CreateMap<Product, ProductDto>();
+            CreateMap<ProductCreateDto, Product>().ForMember(d => d.Id, o => o.Ignore());
+            CreateMap<ProductUpdateDto, Product>().ForMember(d => d.Id, o => o.Ignore());
         }
     }
 }

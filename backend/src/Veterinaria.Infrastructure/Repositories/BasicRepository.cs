@@ -8,16 +8,9 @@ namespace Veterinaria.Infrastructure.Repositories;
 public class BasicRepository<TModel, TypeId> : IBasicRepository<TModel, TypeId> where TModel : class
 {
     private readonly DbContext _context;
-    private VeterinariaDbContext context;
-
     public BasicRepository(DbContext dbContext)
     {
         _context = dbContext;
-    }
-
-    public BasicRepository(VeterinariaDbContext context)
-    {
-        this.context = context;
     }
 
     virtual public async Task<TModel> AddAsync(TModel model)

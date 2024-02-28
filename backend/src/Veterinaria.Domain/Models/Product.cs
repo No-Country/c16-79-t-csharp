@@ -12,15 +12,13 @@ namespace Veterinaria.Domain.Models
         public HashSet<DetailSale> DetailSales { get; set; } = new HashSet<DetailSale>();
 
         private Product() { }
-        public Product(string name, float price, int stock, string description, string image, HashSet<Categorie> categories, HashSet<DetailSale> detailSales)
+        public Product(string name, float price, int stock, string description, string image)
         {
             Name = name;
             Price = price;
             Stock = stock;
             Description = description;
             Image = image;
-            Categories = categories;
-            DetailSales = detailSales;
         }
 
         public static Product CreateProduct(string name, float price, int stock, string description, string image)

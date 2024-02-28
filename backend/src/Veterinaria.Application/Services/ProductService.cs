@@ -46,7 +46,7 @@ namespace Veterinaria.Application.Services
         public async Task DeleteAsync(int id)
         {
             Product product = await GetByIdAsync(id);
-            await _productRepository.DeleteAsync(product);
+            await _productRepository.DeleteAsync(product);   
         }
     }
 }

@@ -43,18 +43,20 @@ namespace WebApi.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] ProductCreateDto createDto)
+        public async Task<ActionResult<ResponseSucceded<ProductDto>>> Create([FromBody] ProductCreateDto productCreateDto)
         {
-            Product product = await _productService.CreateAsync(createDto.Name, createDto.Price, createDto.Stock, createDto.Description, createDto.ImageUrl);
-            return Created();
+            Product product = await _productService.CreateAsync(productCreateDto.Name, productCreateDto.Price, productCreateDto.Stock, productCreateDto.Description, productCreateDto.Image);
+
+            return CreatedAtAction(nameof(GetById), new { id = product.Id }, new ResponseSucceded<ProductDto>((int)HttpStatusCode.Created, _mapper.Map<ProductDto>(product)));
         }
 
         [Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, [FromBody] ProductCreateDto updateDto)
+        public async Task<ActionResult<ResponseSucceded<ProductDto>>> Update(int id, [FromBody] ProductUpdateDto productUpdateDto)
         {
-            await _productService.UpdateAsync(id, updateDto.Name, updateDto.Price, updateDto.Stock, updateDto.Description, updateDto.ImageUrl);
-            return NoContent();
+            Product product = await _productService.UpdateAsync(id, productUpdateDto.Name, productUpdateDto.Price, productUpdateDto.Stock, productUpdateDto.Description, productUpdateDto.Image);
+
+            return Ok(new ResponseSucceded<ProductDto>((int)HttpStatusCode.OK, _mapper.Map<ProductDto>(product)));
         }
 
         [Authorize(Roles = "Admin")]
@@ -62,6 +64,7 @@ namespace WebApi.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             await _productService.DeleteAsync(id);
+
             return NoContent();
         }
     }

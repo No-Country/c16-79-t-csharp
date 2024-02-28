@@ -1,5 +1,6 @@
 using System.Net;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Veterinaria.Application.Dtos;
 using Veterinaria.Application.Dtos.Wrappers;
@@ -40,28 +41,31 @@ namespace WebApi.Controllers
             return Ok(new ResponseSucceded<SaleDto>((int)HttpStatusCode.OK, _mapper.Map<SaleDto>(sale)));
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<ActionResult<ResponseSucceded<SaleDto>>> Create([FromBody] SaleCreateDto saleCreateDto)
         {
-            Sale sale = await _saleService.CreateAsync(saleCreateDto.Date, saleCreateDto.Total, saleCreateDto.ClientUserId);
+            Sale sale = await _saleService.CreateAsync(saleCreateDto.Date.Date, saleCreateDto.Total, saleCreateDto.ClientUserId);
 
             return Ok(new ResponseSucceded<SaleDto>((int)HttpStatusCode.OK, _mapper.Map<SaleDto>(sale)));
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
         public async Task<ActionResult<ResponseSucceded<SaleDto>>> Update(int id, [FromBody] SaleUpdateDto saleUpdateDto)
         {
-            Sale sale = await _saleService.UpdateAsync(id, saleUpdateDto.Date, saleUpdateDto.Total, saleUpdateDto.ClientUserId);
+            Sale sale = await _saleService.UpdateAsync(id, saleUpdateDto.Date.Date, saleUpdateDto.Total, saleUpdateDto.ClientUserId);
 
             return Ok(new ResponseSucceded<SaleDto>((int)HttpStatusCode.OK, _mapper.Map<SaleDto>(sale)));
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
-        public async Task<ActionResult<ResponseSucceded<SaleDto>>> Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            Sale sale = await _saleService.DeleteAsync(id);
+            await _saleService.DeleteAsync(id);
 
-            return Ok(new ResponseSucceded<SaleDto>((int)HttpStatusCode.OK, _mapper.Map<SaleDto>(sale)));
+            return NoContent();
         }
         
     }

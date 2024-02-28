@@ -1,9 +1,9 @@
 namespace Veterinaria.Application.Dtos
 {
-    public record SaleUpdateDto(
-        int Id,
-        DateTime Date,
-        float Total,
-        int ClientUserId
-    );
+    public class SaleUpdateDto
+    {
+        public DateTime Date { get; set; }
+        public float Total { get; set; }
+        public int ClientUserId { get; set; }
+    }
 }

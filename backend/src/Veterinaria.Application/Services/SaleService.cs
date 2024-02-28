@@ -32,7 +32,7 @@ namespace Veterinaria.Application.Services
         public async Task<Sale> CreateAsync(DateTime date, float total, int clientUserId)
         {
             // Todo: Verificaciones de productos 
-            Sale sale = Sale.MakeSale(date, total, clientUserId);
+            Sale sale = Sale.MakeSale(date.Date, total, clientUserId);
             Sale savedSale = await _saleRepository.AddAsync(sale);
             return savedSale;
         }

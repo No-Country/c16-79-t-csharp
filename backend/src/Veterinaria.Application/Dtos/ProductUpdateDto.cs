@@ -1,7 +1,8 @@
 namespace Veterinaria.Application.Dtos
 {
-    public class ProductCreateDto
+    public class ProductUpdateDto
     {
+        public int Id { get; set; }
         public string Name { get; set; }
         public float Price { get; set; }
         public int Stock { get; set; }
