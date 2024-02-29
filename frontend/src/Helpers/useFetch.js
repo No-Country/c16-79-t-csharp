@@ -1,17 +1,17 @@
 import { useEffect, useState } from "react";
 
-// export const useFetchGet = async (endPoint) => {
-//   try {
-//     const response = await fetch(`http://localhost:4600/${endPoint}`);
-//     const data = await response.json();
-//     console.log("data: ", data);
-//   } catch (error) {
-//     console.log("Error: " + error);
-//   }
-// };
-
+export const useFetchGet = async (endPoint) => {
+  try {
+    const response = await fetch(`http://localhost:4600/"${endPoint}`);
+    const data = await response.json();
+    console.log("data: ", data);
+  } catch (error) {
+    console.log("Error: " + error);
+  }
+};
 
 export const useFetchPost = (endPoint, input) => {
+
 
   const [state, setState] = useState({
     data: "",
@@ -28,9 +28,15 @@ export const useFetchPost = (endPoint, input) => {
           body: JSON.stringify(input),
         });
         const data = await response.json();
+        console.log("aca si me traes", data)
         setState({
           data,
         });
+
+        //esto hay que optimizarlo no se puede guardar en una const 
+        const token = data.token
+        console.log("token en el hook", token)
+        
       } catch (error) {
         setState({
           data: "",
@@ -38,8 +44,11 @@ export const useFetchPost = (endPoint, input) => {
       }
     };
     useEffect(() => {
+      if(!endPoint){
+        return
+      }
       fetchData();
-    }, [endPoint])
+    }, [])
     
   return {
    state,
