@@ -45,7 +45,7 @@ namespace WebApi.Controllers
         [HttpPost]
         public async Task<ActionResult<ResponseSucceded<ProductDto>>> Create([FromBody] ProductCreateDto productCreateDto)
         {
-            Product product = await _productService.CreateAsync(productCreateDto.Name, productCreateDto.Price, productCreateDto.Stock, productCreateDto.Description, productCreateDto.Image);
+            Product product = await _productService.CreateAsync(productCreateDto.Name, productCreateDto.Price, productCreateDto.Stock, productCreateDto.Description, productCreateDto.Image, productCreateDto.CategoryIds);
 
             return CreatedAtAction(nameof(GetById), new { id = product.Id }, new ResponseSucceded<ProductDto>((int)HttpStatusCode.Created, _mapper.Map<ProductDto>(product)));
         }

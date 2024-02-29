@@ -45,5 +45,15 @@ namespace Veterinaria.Domain.Models
             }
             Price = newPrice;
         }
+
+        public void AssignCategory(HashSet<Categorie> categories)
+        {
+            if (categories is null)
+            {
+                throw new ArgumentNullException(nameof(categories));
+            }
+
+            Categories = categories;
+        }
     }
 }

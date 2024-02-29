@@ -1,3 +1,5 @@
+using System.Drawing;
+using Microsoft.EntityFrameworkCore;
 using Veterinaria.Domain.Models;
 using Veterinaria.Domain.Repositories;
 using Veterinaria.Infrastructure.Persistance.Context;
@@ -12,9 +14,14 @@ namespace Veterinaria.Infrastructure.Repositories
             _context = context;
         }
 
-        public Task<Product> MetodoPerzonalizado(Product product)
+        override public async Task<List<Product>> FindAllAsync()
         {
-            throw new NotImplementedException();
+            return await _context.Set<Product>().Include(p => p.Categories).ToListAsync();
+        }
+
+        override public async Task<Product?> FindByIdAsync(int id)
+        {
+            return await _context.Set<Product>().Include(p => p.Categories).FirstOrDefaultAsync(p => p.Id == id);
         }
     }
 }

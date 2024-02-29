@@ -41,9 +41,10 @@ namespace WebApi.Utilities
             CreateMap<DetailSaleCreateDto, DetailSale>();
             CreateMap<DetailSaleUpdateDto, DetailSale>();
             CreateMap<DetailSale, DetailSaleUpdateDto>();
-            CreateMap<Product, ProductDto>();
+            CreateMap<Product, ProductDto>().ForMember(dest => dest.Categories, opt => opt.MapFrom(src => src.Categories));
             CreateMap<ProductCreateDto, Product>().ForMember(d => d.Id, o => o.Ignore());
             CreateMap<ProductUpdateDto, Product>().ForMember(d => d.Id, o => o.Ignore());
+            CreateMap<Categorie, CategorieDto>();
         }
     }
 }

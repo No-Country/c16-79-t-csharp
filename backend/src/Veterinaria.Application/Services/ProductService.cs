@@ -8,9 +8,11 @@ namespace Veterinaria.Application.Services
     public class ProductService : IProductService
     {
         private readonly IProductRepository _productRepository;
-        public ProductService(IProductRepository productRepository)
+        private readonly ICategorieRepository _categoryRepository;
+        public ProductService(IProductRepository productRepository, ICategorieRepository categorieRepository)
         {
             _productRepository = productRepository;
+            _categoryRepository = categorieRepository;
         }
 
         public async Task<Product> GetByIdAsync(int id)
@@ -27,11 +29,22 @@ namespace Veterinaria.Application.Services
             return await _productRepository.FindAllAsync();
         }
 
-        public async Task<Product> CreateAsync(string name, float price, int stock, string description, string image)
+        public async Task<Product> CreateAsync(string name, float price, int stock, string description, string image, List<int> CategoryIds)
         {
+            var categories = new HashSet<Categorie>();
+            foreach (var id in CategoryIds)
+            {
+                var category = await _categoryRepository.FindByIdAsync(id);
+                if (category == null)
+                {
+                    throw new ArgumentException($"There is no category with the ID {id}", nameof(CategoryIds));
+                }
+
+                categories.Add(category);
+            }
             Product product = Product.CreateProduct(name, price, stock, description, image);
+            product.AssignCategory(categories);
             Product savedProduct = await _productRepository.AddAsync(product);
-            Console.WriteLine(savedProduct.Id.ToString(), savedProduct.Name);
             return savedProduct;
         }
 

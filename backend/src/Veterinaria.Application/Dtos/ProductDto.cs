@@ -8,5 +8,6 @@ namespace Veterinaria.Application.Dtos
         public int Stock { get; set; }
         public string Description { get; set; }
         public string Image { get; set; }
+        public List<CategorieDto> Categories { get; set; }
     }
 }
