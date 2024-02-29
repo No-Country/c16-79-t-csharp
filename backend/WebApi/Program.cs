@@ -1,57 +1,132 @@
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
+using Veterinaria.Infrastructure.Persistance.Context;
 using WebApi.DependencyInjection;
+using Microsoft.OpenApi.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Veterinaria.Domain.Models;
+using Veterinaria.Domain.Repositories;
+using Veterinaria.Application.Authentication;
+using Veterinaria.Infrastructure.Repositories;
+using Veterinaria.Infrastructure.Authentication;
+using WebApi.Utilities;
 
 var builder = WebApplication.CreateBuilder(args);
+
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 
+builder.Services.AddControllers();
+
 builder.Services.AddDependencyInfrastructure(builder.Configuration);
+builder.Services.AddDependencyApplication(builder.Configuration);
+builder.Services.AddDependencyUtilities(builder.Configuration);
+builder.Services.AddDependencyApplication(builder.Configuration);
+builder.Services.AddDependencyUtilities(builder.Configuration);
+
+builder.Services.AddAuthorization();
+
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
+    {
+        Name = "Authorizarion",
+        Type = SecuritySchemeType.Http,
+        Scheme = "Bearer",
+        BearerFormat = "Token",
+        In = ParameterLocation.Header,
+        Description = "Token Authorization Header using Bearer Scheme"
+    });
+    options.AddSecurityRequirement(new OpenApiSecurityRequirement()
+    {
+        {
+            new OpenApiSecurityScheme{
+            Reference = new OpenApiReference{
+                Type = ReferenceType.SecurityScheme,
+                Id = "Bearer"
+            },
+            Scheme = "oauth2",
+            Name = "Bearer",
+            In = ParameterLocation.Header
+        },
+        new List<string>()
+        }
+    });
+});
+
+
+var clave = builder.Configuration.GetValue<string>("Settings:SecretKey");
+builder.Services
+    .AddAuthentication(x =>
+    {
+        x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+        x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+        x.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+    })
+    .AddJwtBearer(x =>
+    {
+        //x.RequireHttpsMetadata = false;
+        //x.SaveToken = true;
+        x.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(clave)),
+            //Se deben cambiar a true una vez que fije los valores de ValidAudience y ValidIssuer
+            ValidateIssuer = false,
+            ValidateAudience = false
+            //ValidAudience,
+            //ValidIssuer
+        };
+    });
+
+
 
 builder.Services.AddHealthChecks()
-    .AddCheck("self", () => HealthCheckResult.Healthy());
+    .AddCheck("self", () => HealthCheckResult.Healthy())
+    .AddDbContextCheck<VeterinariaDbContext>();
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: "CorsPolicy", builder =>
+    {
+        builder.AllowAnyOrigin();
+        builder.AllowAnyMethod();
+        builder.AllowAnyHeader();
+    });
+});
+
+builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 
 var app = builder.Build();
+
+app.UseExceptionHandler(_ => { });
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     if (File.Exists("/.dockerenv") || Directory.Exists("/.docker"))
     {
+        var portHost = app.Configuration["WEB_API_PORT_HOST"];
+        Console.WriteLine($"--> Now listening on host machine: http://localhost:{portHost}");
+
         app.Urls.Add("http://0.0.0.0:5102");
-        Console.WriteLine("-- Ejecutando dentro de Docker --");
+        Console.WriteLine("-- Running inside Docker --");
     }
-    Console.WriteLine($"-- Modo desarrollo --");
+    Console.WriteLine($"-- Development Mode --");
+
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
 app.UseHttpsRedirection();
 
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
-
-app.MapGet("/weatherforecast", () =>
-{
-    var forecast = Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast")
-.WithOpenApi();
+app.MapSwagger();
 
 app.MapHealthChecks("/hc", new HealthCheckOptions()
 {
@@ -59,9 +134,12 @@ app.MapHealthChecks("/hc", new HealthCheckOptions()
     ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
 });
 
+app.MapControllers();
+
+app.UseAuthentication();
+app.UseAuthorization();
+
+app.UseCors("CorsPolicy");
+
 app.Run();
 
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
