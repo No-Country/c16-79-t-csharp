@@ -1,6 +1,7 @@
 import { Button, Card, Checkbox, Label, TextInput } from 'flowbite-react';
 import { useState } from 'react';
 import { useFetchPost } from '../../Helpers/useFetch';
+import { useNavigate } from 'react-router-dom';
 
 export const Login = () => {
 
@@ -17,15 +18,16 @@ export const Login = () => {
     })
   }
 
-  const {fetchData, state}  = useFetchPost("api/UserAccount/login", input);
-console.log("le pongo otra cosa", state)
+  const {fetchData}  = useFetchPost("api/UserAccount/login", input);
+  const navigate = useNavigate()
 
 
   const handleSubmit = async(e) => {
     e.preventDefault()
     try {
       const response = await fetchData()
-      console.log("esto retorna, verificar si tiene el token", response) 
+      console.log(response)
+      navigate("/");
     } catch (error) {
       console.log(error)
     }
