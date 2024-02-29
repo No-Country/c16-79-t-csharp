@@ -67,5 +67,29 @@ namespace WebApi.Controllers
 
             return NoContent();
         }
+
+        [Authorize(Roles = "Admin")]
+        [HttpDelete("{productId}/categories/{categoryId?}")]
+        public async Task<IActionResult> DeleteCategory(int productId, int? categoryId)
+        {
+            await _productService.DeleteCategoryAsync(productId, categoryId);
+            return NoContent();
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost("{productId}/categories")]
+        public async Task<ActionResult> AddCategories(int productId, [FromBody] List<int> CategoryIds)
+        {
+            await _productService.AddCategoriesAsync(productId, CategoryIds);
+            return NoContent();
+        }
+
+        [HttpGet("{productId}/categories")]
+        public async Task<ActionResult<List<CategorieDto>>> GetCategories(int productId)
+        {
+            var categories = await _productService.GetCategoriesAsync(productId);
+            return _mapper.Map<List<CategorieDto>>(categories);   
+        }
+
     }
 }

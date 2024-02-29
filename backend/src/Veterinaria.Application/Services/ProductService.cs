@@ -61,5 +61,49 @@ namespace Veterinaria.Application.Services
             Product product = await GetByIdAsync(id);
             await _productRepository.DeleteAsync(product);   
         }
+
+        public async Task<List<Categorie>> GetCategoriesAsync(int id)
+        {
+            Product product = await GetByIdAsync(id);
+            return product.Categories.ToList();
+        }
+
+        public async Task<Product> DeleteCategoryAsync(int id, int? categoryId)
+        {
+            Product product = await GetByIdAsync(id);
+            if (categoryId.HasValue)
+            {
+                var category = product.Categories.SingleOrDefault(c => c.Id == categoryId);
+                if (category == null)
+                {
+                    throw new ArgumentException($"The product does not have a category with the ID {categoryId}", nameof(categoryId));
+                }
+                product.Categories.Remove(category);
+            }
+            else
+            {
+                product.Categories.Clear();
+            }
+
+            Product updatedProduct = await _productRepository.UpdateAsync(product);
+            return updatedProduct;
+        }
+
+        public async Task<Product> AddCategoriesAsync(int id, List<int> CategoryIds)
+        {
+            Product product = await GetByIdAsync(id);
+            foreach (var categoryId in CategoryIds)
+            {
+                var category = await _categoryRepository.FindByIdAsync(categoryId);
+                if (category == null)
+                {
+                    throw new ArgumentException($"No category with the ID {categoryId} exists", nameof(CategoryIds));
+                }
+                product.Categories.Add(category);
+            }
+
+            Product updatedProduct = await _productRepository.UpdateAsync(product);
+            return updatedProduct;
+        }
     }
 }
