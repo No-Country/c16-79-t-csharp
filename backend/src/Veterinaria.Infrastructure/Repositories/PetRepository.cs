@@ -30,5 +30,6 @@ namespace Veterinaria.Infrastructure.Repositories
             var pet = await _context.Pets.Include(c => c.ClientUser).FirstOrDefaultAsync(filtro);
             return pet;
         }
+        
     }
 }

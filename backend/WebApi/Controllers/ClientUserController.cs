@@ -87,7 +87,7 @@ namespace WebApi.Controllers
         }
 
         [Authorize(Roles = "Admin, Cliente")]
-        [HttpPatch("update")]
+        [HttpPatch("me")]
         public async Task<ActionResult<ResponseSucceded<ClientUserDTO>>> PersonalDataUpdate([FromBody] ClientUserDataUpdateDTO clientUserDataUpdateDTO)
         {
             ClaimsPrincipal claims = this.User;
