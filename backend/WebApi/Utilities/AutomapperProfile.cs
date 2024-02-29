@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Veterinaria.Application.DTO;
+using Veterinaria.Application.Dtos;
 using Veterinaria.Domain.Models;
 using Veterinaria.Infrastructure.Authentication;
 
@@ -29,7 +30,21 @@ namespace WebApi.Utilities
             CreateMap<ClientUserDataUpdateDTO, ClientUser>().ForMember(d => d.Id, o => o.Ignore());
             CreateMap<UserAccountResponseLoginDTO, UserAccountLoginDTO>();
             CreateMap<UserAccountResponseRegisterDTO, UserAccountRegisterDTO>();
-
+            CreateMap<Sale, SaleDto>().ForMember(d => d.Date, opt => opt.MapFrom(o => o.Date.ToString("dd/MM/yyyy")))
+                                      .ForMember(d => d.Total, opt => opt.MapFrom(o => o.Total.ToString("0.00")));
+            CreateMap<SaleCreateDto, Sale>();
+            CreateMap<SaleUpdateDto, Sale>();
+            CreateMap<Sale, SaleUpdateDto>();
+            CreateMap<DetailSale, DetailSaleDto>().ForMember(dest => dest.SubTotal, opt => opt.MapFrom(src => src.CalculateSubTotal()))
+                                                .ForMember(d => d.Sale, opt => opt.MapFrom(o => o.Sale))
+                                                .ForMember(d => d.Product, opt => opt.MapFrom(o => o.Product));
+            CreateMap<DetailSaleCreateDto, DetailSale>();
+            CreateMap<DetailSaleUpdateDto, DetailSale>();
+            CreateMap<DetailSale, DetailSaleUpdateDto>();
+            CreateMap<Product, ProductDto>().ForMember(dest => dest.Categories, opt => opt.MapFrom(src => src.Categories));
+            CreateMap<ProductCreateDto, Product>().ForMember(d => d.Id, o => o.Ignore());
+            CreateMap<ProductUpdateDto, Product>().ForMember(d => d.Id, o => o.Ignore());
+            CreateMap<Categorie, CategorieDto>();
         }
     }
 }

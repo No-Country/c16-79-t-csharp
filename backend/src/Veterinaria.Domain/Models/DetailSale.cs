@@ -1,3 +1,4 @@
+
 namespace Veterinaria.Domain.Models
 {
     public class DetailSale
@@ -22,22 +23,27 @@ namespace Veterinaria.Domain.Models
             Product = product;
         }
 
-        public static DetailSale CreateDetailSale(int quantity, int saleId, int productId, Product product)
+        public static DetailSale CreateDetailSale(int quantity, int saleId, int productId)
         {
             var detailSale = new DetailSale()
             {
                 Quantity = quantity,
                 SaleId = saleId,
                 ProductId = productId,
-                Product = product
             };
             return detailSale;
+        }
+
+        public void Update(int quantity, int saleId, int productId)
+        {
+            Quantity = quantity;
+            SaleId = saleId;
+            ProductId = productId;
         }
 
         public float CalculateSubTotal()
         {
             return Quantity * Product.Price;
         }
-
     }
 }

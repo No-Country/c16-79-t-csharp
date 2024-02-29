@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Veterinaria.Application.CustomeException;
 using Veterinaria.Domain.Repositories;
+using Veterinaria.Infrastructure.Persistance.Context;
 
 namespace Veterinaria.Infrastructure.Repositories;
 
@@ -11,6 +12,7 @@ public class BasicRepository<TModel, TypeId> : IBasicRepository<TModel, TypeId> 
     {
         _context = dbContext;
     }
+
     virtual public async Task<TModel> AddAsync(TModel model)
     {
         try
