@@ -34,7 +34,7 @@ namespace WebApi.Controllers
             }
 
             var clientUser = await _authenticationService.Register(clientUserRegiserDTO);
-            return NoContent();
+            return Created();
         }
 
 

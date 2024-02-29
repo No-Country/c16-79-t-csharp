@@ -67,7 +67,7 @@ namespace WebApi.Controllers
 
 
         [Authorize(Roles = "Admin, Cliente")]
-        [HttpPost("me")]
+        [HttpPost("me")] // TODO: juntar Post y Patch?
         public async Task<ActionResult<ResponseSucceded<ClientUserDTO>>> AddPersonalData([FromBody] ClientUserDataUpdateDTO clientUserDataAddDTO)
         {
             // TODO: Controllar si el usuario ya existe
