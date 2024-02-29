@@ -67,6 +67,7 @@ namespace WebApi.Controllers
         [HttpPost]
         public async Task<ActionResult<ResponseSucceded<ClientUserDTO>>> AddPersonalData([FromBody] ClientUserDataUpdateDTO clientUserDataAddDTO)
         {
+            // TODO: Controllar si el usuario ya existe
             ClaimsPrincipal claims = this.User;
             var idUser = claims.FindFirst(u => u.Type == ClaimTypes.NameIdentifier)?.Value;
             var clientUser = new ClientUser

@@ -64,6 +64,7 @@ namespace WebApi.Controllers
             ClaimsPrincipal claims = this.User;
             var idUser = claims.FindFirst(u => u.Type == ClaimTypes.NameIdentifier)?.Value;
             var clientUser = await _clientUserRepository.GetClientUserById(u => u.UserAccountId == idUser);
+            // TODO: controlar cuando el clientUser aun no se ha creado
             var pet = new Pet
             {
                 Name = petCreationDTO.Name,
