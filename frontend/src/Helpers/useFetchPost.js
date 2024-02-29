@@ -41,6 +41,7 @@ export const useFetchPost = (endPoint, input) => {
     };
 
     useEffect(() => {
+      if(!endPoint) return 
       fetchData();
     }, [endPoint])
     
