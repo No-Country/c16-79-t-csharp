@@ -8,6 +8,7 @@ using Veterinaria.Application.DTO;
 using Veterinaria.Application.Dtos.Wrappers;
 using Veterinaria.Domain.Models;
 using Veterinaria.Domain.Repositories;
+using Veterinaria.Domain.Services;
 
 namespace WebApi.Controllers
 {
@@ -16,11 +17,13 @@ namespace WebApi.Controllers
     public class ClientUsersController : ControllerBase
     {
         private readonly IClientUserRepository _clientUserRepository;
+        private readonly IClientUserService _clientUserService;
         private readonly IMapper _mapper;
-        public ClientUsersController(IClientUserRepository clientUserRepository, IMapper mapper)
+        public ClientUsersController(IClientUserRepository clientUserRepository, IMapper mapper, IClientUserService clientUserService)
         {
             _clientUserRepository = clientUserRepository;
             _mapper = mapper;
+            _clientUserService = clientUserService;
         }
 
 
@@ -48,7 +51,7 @@ namespace WebApi.Controllers
         // }
 
         [Authorize(Roles = "Cliente")]
-        [HttpGet("my-clientuser")]
+        [HttpGet("me")]
         public async Task<ActionResult<ResponseSucceded<ClientUserDTO>>> GetClientUser()
         {
             ClaimsPrincipal claims = this.User;
@@ -64,7 +67,7 @@ namespace WebApi.Controllers
 
 
         [Authorize(Roles = "Admin, Cliente")]
-        [HttpPost]
+        [HttpPost("me")]
         public async Task<ActionResult<ResponseSucceded<ClientUserDTO>>> AddPersonalData([FromBody] ClientUserDataUpdateDTO clientUserDataAddDTO)
         {
             // TODO: Controllar si el usuario ya existe

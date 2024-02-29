@@ -532,7 +532,6 @@ COPY public."AspNetUserTokens" ("UserId", "LoginProvider", "Name", "Value") FROM
 --
 
 COPY public."AspNetUsers" ("Id", "UserName", "NormalizedUserName", "Email", "NormalizedEmail", "EmailConfirmed", "PasswordHash", "SecurityStamp", "ConcurrencyStamp", "PhoneNumber", "PhoneNumberConfirmed", "TwoFactorEnabled", "LockoutEnd", "LockoutEnabled", "AccessFailedCount") FROM stdin;
-a0559d60-61ea-4330-9b20-8a589410ee5a	antonio@email.com	ANTONIO@EMAIL.COM	antonio@email.com	ANTONIO@EMAIL.COM	f	AQAAAAIAAYagAAAAEMfQaT4XkXR+3xZaQEkn0pjgy3uqvjXn9+O5jqFn+MhqdYYVO+HW95czAMAbSS0VbQ==	STLX4XVLZXKIG3K5QT7DEUGEZTHN3ODV	f5e3f370-b53d-4fb8-972d-f3030dad78aa	\N	f	f	\N	t	0
 \.
 
 

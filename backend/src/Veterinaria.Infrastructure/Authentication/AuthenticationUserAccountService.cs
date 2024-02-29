@@ -86,8 +86,13 @@ namespace Veterinaria.Infrastructure.Authentication
         {
             var clientUserFound = await _context.ApplicationUserAccounts.FirstOrDefaultAsync(
                                             u => u.NormalizedEmail == userAccountLoginDTO.Email.ToUpper());
+            if (clientUserFound is null )
+            {
+                throw new UnauthorizedException("Email or password incorrect");
+            }
+
             bool isValid = await _userManager.CheckPasswordAsync(clientUserFound, userAccountLoginDTO.Password);
-            if (clientUserFound is null || isValid is false)
+            if (isValid is false)
             {
                 throw new UnauthorizedException("Email or password incorrect");
             }

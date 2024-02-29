@@ -40,7 +40,9 @@ namespace WebApi.Controllers
             var petsDTO = _mapper.Map<IEnumerable<PetDTO>>(pets);
             return Ok(petsDTO);
         }
-        // TODO: construir GET api/pets/my-pets , solo los pets de un usuario
+
+        // TODO: **construir GET api/pets/me , solo los pets de un usuario
+
 
 
         //[Authorize(Roles = "Admin, Cliente")]
