@@ -5,6 +5,7 @@ export const useFetchGet = async (endPoint) => {
   // console.log("endpoint", endPoint)
   try {
     const response = await fetch(`http://localhost:4600/${endPoint}`, {
+      // method: method ? method : "GET",
       headers: {
         "Authorization": localStorage.getItem("token") ? `Bearer ${localStorage.getItem("token")}` : ""
       }
@@ -16,13 +17,12 @@ export const useFetchGet = async (endPoint) => {
   } catch (error) {
     console.log("Error: " + error);
   }
-
 };
 
 
-export const useFetchPost = (endPoint, input) => {
+export const useFetchPost = (endPoint, input, method) => {
 
-
+  console.log(method)
   const [state, setState] = useState({
     data: "",
   });
@@ -31,7 +31,7 @@ export const useFetchPost = (endPoint, input) => {
   const fetchData = async () => {
     try {
       const response = await fetch(`http://localhost:4600/${endPoint}`, {
-        method: "POST",
+        method: method ? method : "GET",
         headers: {
           "Content-Type": "application/json",
           "Authorization": localStorage.getItem("token") ? `Bearer ${localStorage.getItem("token")}` : ""
