@@ -24,8 +24,7 @@ namespace WebApi.Utilities
             CreateMap<ApplicationUserAccount, UserAccountResponseRegisterDTO>();
             CreateMap<ApplicationUserAccount, ClientUser>().ForMember(d => d.UserAccountId, opt => opt.MapFrom(o => o.Id));
             CreateMap<ApplicationUserAccount, ClientUserDTO>().ForMember(d => d.UserAccountId, opt => opt.MapFrom(o => o.Id));
-            CreateMap<ClientUser, ClientUserDTO>().ForMember(d => d.Addresses, opt => opt.MapFrom(o => o.Addresses))
-                                                  .ForMember(d => d.Pets, opt => opt.MapFrom(o => o.Pets));
+            CreateMap<ClientUser, ClientUserDTO>().ForMember(d => d.Addresses, opt => opt.MapFrom(o => o.Addresses));
             CreateMap<ClientUserDataUpdateDTO, ClientUser>().ForMember(d => d.Id, o => o.Ignore());
             CreateMap<UserAccountResponseLoginDTO, UserAccountLoginDTO>();
             CreateMap<UserAccountResponseRegisterDTO, UserAccountRegisterDTO>();

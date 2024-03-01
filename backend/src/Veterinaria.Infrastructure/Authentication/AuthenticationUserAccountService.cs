@@ -26,19 +26,22 @@ namespace Veterinaria.Infrastructure.Authentication
         private readonly VeterinariaDbContext _context;
         private readonly UserManager<ApplicationUserAccount> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly IClientUserRepository _clientUserRepository;
         private readonly IMapper _mapper;
         private readonly string _secretKey;
         public AuthenticationUserAccountService(VeterinariaDbContext context,
                                     IConfiguration config,
                                     UserManager<ApplicationUserAccount> userManager,
                                     RoleManager<IdentityRole> roleManager,
-                                    IMapper mapper)
+                                    IMapper mapper,
+                                    IClientUserRepository clientUserRepository)
         {
             _context = context;
             _userManager = userManager;
             _roleManager = roleManager;
             _mapper = mapper;
             _secretKey = config["Settings:SecretKey"] ?? throw new Exception("Not found Secret Key");
+            _clientUserRepository = clientUserRepository;
         }
 
         public async Task<bool> IsSingleUser(string email)
@@ -62,42 +65,72 @@ namespace Veterinaria.Infrastructure.Authentication
                 NormalizedEmail = clientUserRegisterDTO.Email.ToUpper(),
                 UserName = clientUserRegisterDTO.Email
             };
-            var createResult = await _userManager.CreateAsync(newClientUser, clientUserRegisterDTO.Password);
-            if (!createResult.Succeeded)
-            {
-                var errors = createResult.Errors;
-                throw new BadException("Could not create account", errors.Select(e => e.Description).ToList());
-            }
 
-            var roleExist = await _roleManager.RoleExistsAsync("Admin");
-            if (!roleExist)
+
+            using (var tansaction = _context.Database.BeginTransactionAsync())
             {
-                await _roleManager.CreateAsync(new IdentityRole("Admin"));
-                await _roleManager.CreateAsync(new IdentityRole("Cliente"));
+                try
+                {
+                    var createResult = await _userManager.CreateAsync(newClientUser, clientUserRegisterDTO.Password);
+                    if (!createResult.Succeeded)
+                    {
+                        var errors = createResult.Errors;
+                        throw new BadException("Could not create account", errors.Select(e => e.Description).ToList());
+                    }
+
+                    var roleExist = await _roleManager.RoleExistsAsync("Admin");
+                    if (!roleExist)
+                    {
+                        await _roleManager.CreateAsync(new IdentityRole("Admin"));
+                        await _roleManager.CreateAsync(new IdentityRole("Cliente"));
+                    }
+                    var role = clientUserRegisterDTO.Role;
+                    await _userManager.AddToRoleAsync(newClientUser, role);
+                    var userAccountReturn = await _context.ApplicationUserAccounts.FirstOrDefaultAsync(u => u.Email == clientUserRegisterDTO.Email);
+                    var clientUser = new ClientUser
+                    {
+                        Name = "",
+                        LastName = "",
+                        UserName = "",
+                        PhoneNumber = "",
+                        UserAccountId = userAccountReturn.Id
+                    };
+                    Console.WriteLine($"Id de UserAccount: {newClientUser.Id}");
+                    var clientUserCreated = await _clientUserRepository.AddAsync(clientUser);
+
+                    userAccountReturn.ClientUsers.Add(clientUserCreated);
+
+
+                    await _context.Database.CommitTransactionAsync();
+
+                    return _mapper.Map<UserAccountResponseRegisterDTO>(userAccountReturn);
+                }
+                catch (Exception)
+                {
+                    await _context.Database.RollbackTransactionAsync();
+                    throw;
+                }
             }
-            var role = clientUserRegisterDTO.Role;
-            await _userManager.AddToRoleAsync(newClientUser, role);
-            var clientReturn = await _context.ApplicationUserAccounts.FirstOrDefaultAsync(u => u.Email == clientUserRegisterDTO.Email);
-            return _mapper.Map<UserAccountResponseRegisterDTO>(clientReturn);
 
         }
 
         public async Task<UserAccountResponseLoginDTO> Login(UserAccountLoginDTO userAccountLoginDTO)
         {
-            var clientUserFound = await _context.ApplicationUserAccounts.FirstOrDefaultAsync(
+            var userAccountFound = await _context.ApplicationUserAccounts.FirstOrDefaultAsync(
                                             u => u.NormalizedEmail == userAccountLoginDTO.Email.ToUpper());
-            if (clientUserFound is null )
+            if (userAccountFound is null)
             {
                 throw new UnauthorizedException("Email or password incorrect");
             }
 
-            bool isValid = await _userManager.CheckPasswordAsync(clientUserFound, userAccountLoginDTO.Password);
+
+            bool isValid = await _userManager.CheckPasswordAsync(userAccountFound, userAccountLoginDTO.Password);
             if (isValid is false)
             {
                 throw new UnauthorizedException("Email or password incorrect");
             }
 
-            var roles = await _userManager.GetRolesAsync(clientUserFound);
+            var roles = await _userManager.GetRolesAsync(userAccountFound);
             var roleUser = roles.FirstOrDefault() ?? throw new ConflictException("Not found the user role ");
 
 
@@ -122,11 +155,12 @@ namespace Veterinaria.Infrastructure.Authentication
             // var tokenCreated = tokenHandler.CreateToken(tokenInformation);
 
             // string token = tokenHandler.WriteToken(tokenCreated);
-            string token = JwtGenerator.GenerateToken(clientUserFound, roleUser, _secretKey);
+            string token = JwtGenerator.GenerateToken(userAccountFound, roleUser, _secretKey);
+            var clientUser = await _clientUserRepository.GetClientUserById(u => u.UserAccountId == userAccountFound.Id);
 
             var clientUserResponseLoginDTO = new UserAccountResponseLoginDTO()
             {
-                ClientUser = _mapper.Map<ClientUserDTO>(clientUserFound),
+                ClientUser = _mapper.Map<ClientUserDTO>(clientUser),
                 Token = token
             };
             return clientUserResponseLoginDTO;
