@@ -49,6 +49,7 @@ export const useFetchPost = (endPoint, input) => {
         return
       }
       fetchData();
+      //eslint-disable-next-line
     }, [])
     
   return {
@@ -56,6 +57,3 @@ export const useFetchPost = (endPoint, input) => {
     fetchData
   };
 };    
-
-
-//eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJiM2RlMTY5ZC1jZjYxLTQ0M2MtYTNjYS1iYWE2MzBkZTljYzkiLCJlbWFpbCI6InBydWViYTEzQHBydWViYTIuY29tIiwicm9sZSI6IkNsaWVudGUiLCJuYmYiOjE3MDkyMzEyNjEsImV4cCI6MTcwOTMxNzY2MSwiaWF0IjoxNzA5MjMxMjYxfQ.cd7ZXcmVxFv4DviGl-McOZLAnvIsHXGIUf2YuioS7yw
