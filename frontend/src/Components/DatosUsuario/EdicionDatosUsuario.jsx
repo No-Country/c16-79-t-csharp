@@ -10,8 +10,6 @@ export const EdicionDatosUsuario = ({ nombreUsuario, telefono }) => {
     const method = "PUT"
 
 
-
-
     const [openModal, setOpenModal] = useState(false);
 
     const [input, setInput] = useState({

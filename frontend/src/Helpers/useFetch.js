@@ -1,17 +1,25 @@
 import { useEffect, useState } from "react";
 
-export const useFetchGet = async (endPoint) => {
-  try {
-    const response = await fetch(`http://localhost:4600/"${endPoint}`, {
-      headers: { 
-      "Authentication" : localStorage.getItem("token") ? `Bearer ${localStorage.getItem("token")}` : ""
-    }});
-    const data = await response.json();
-    console.log("data: ", data);
-  } catch (error) {
-    console.log("Error: " + error);
-  }
-};
+export const useFetchGet = (endPoint) => {
+   const fetchData = async () => {
+    try {
+      const response = await fetch(`http://localhost:4600/${endPoint}`, {
+        headers: { 
+        "Authorization" : localStorage.getItem("token") ? `Bearer ${localStorage.getItem("token")}` : ""
+      }});
+      const data = await response.json();
+      console.log("data: ", data);
+      return data;
+    } catch (error) {
+      console.log("Error: " + error);
+    }  
+   }
+   return {
+    fetchData
+   };
+}
+
+
 
 export const useFetchPost = (endPoint, input) => {
 
@@ -27,7 +35,7 @@ export const useFetchPost = (endPoint, input) => {
           method: "POST",
           headers: {
             "Content-Type": "application/json",            
-            "Authentication" : localStorage.getItem("token") ? `Bearer ${localStorage.getItem("token")}` : ""
+            "Authorization" : localStorage.getItem("token") ? `Bearer ${localStorage.getItem("token")}` : ""
           },
           body: JSON.stringify(input),
         });
