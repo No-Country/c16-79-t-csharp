@@ -1,0 +1,8 @@
+.imagenLogo img{
+    height: 150px;
+}
+
+.imagenLogo div {
+    display: flex;
+    align-items: center;
+}

@@ -11,7 +11,7 @@ export const ProductoDestacados = () => {
       {/* <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 justify-items-center "> */}
       <div className="container mx-auto py-10 px-8 max-w-6xl">
       <h1 className="py-5 mb-4 text-2xl font-extrabold leading-none tracking-tight text-center text-gray-500 md:text-5xl lg:text-4xl dark:text-white">
-        Productos Destacados
+        Productos de nuestro shop
       </h1>
         <div className='grid sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-10'>
           {data.map((producto, index) => (
@@ -29,7 +29,7 @@ export const ProductoDestacados = () => {
               <p className="text-gray-700 dark:text-gray-300 h-14">{producto.descripcion}</p>
               {/* <p className="text-gray-700 dark:text-gray-300">Categoría: {producto.categoría}</p> */}
               {/* <p className="text-gray-700 dark:text-gray-300">Stock: {producto.stock}</p> */}
-              <div className="flex flex-col items-center ">
+              {/* <div className="flex flex-col items-center ">
                 <span className="text-3xl font-bold text-gray-900 dark:text-white">${producto.precio}</span>
                 <a
                   href="#"
@@ -37,7 +37,7 @@ export const ProductoDestacados = () => {
                 >
                   Agregar al carrito
                 </a>
-              </div>
+              </div> */}
             </Card>
           ))}
         </div>

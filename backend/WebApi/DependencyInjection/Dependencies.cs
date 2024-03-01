@@ -47,10 +47,9 @@ public static class Dependencies
         services.AddScoped<ISaleService, SaleService>();
         services.AddScoped<IServiceService, ServiceService>();
         services.AddScoped<ICategorieService, CategorieService>();
-        //services.AddScoped<IPetRepository, PetRepository>();
-        // services.AddScoped<IClientUserRepository, ClientUserRepository>();
-        // services.AddScoped<IAuthenticationUserAccountService, AuthenticationUserAccountService>();
-        // services.AddScoped<IAddressRepository, AddressRepository>();
+        services.AddScoped<IPetService, PetService>();
+        services.AddScoped<IClientUserService, ClientUserService>();
+
         return services;
     }
 

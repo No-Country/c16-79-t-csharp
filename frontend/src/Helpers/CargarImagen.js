@@ -21,3 +21,4 @@ export async function uploadFile(file) {
     const url = await getDownloadURL(storageRef)
     return url
 }
+

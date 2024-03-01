@@ -19,6 +19,12 @@ namespace Veterinaria.Infrastructure.Repositories
             _context = context;
         }
 
+        public async Task<List<Pet>> FindAllByUserAccount(string idUserAccount)
+        {
+            var pets = await _context.Pets.Include(c => c.ClientUser).Where(p => p.ClientUser.UserAccountId==idUserAccount).ToListAsync();
+            return pets;
+        }
+
         virtual public async Task<List<Pet>> GetAllWithData()
         {
             var pets = await _context.Pets.Include(c => c.ClientUser).ToListAsync();
@@ -30,5 +36,6 @@ namespace Veterinaria.Infrastructure.Repositories
             var pet = await _context.Pets.Include(c => c.ClientUser).FirstOrDefaultAsync(filtro);
             return pet;
         }
+        
     }
 }
