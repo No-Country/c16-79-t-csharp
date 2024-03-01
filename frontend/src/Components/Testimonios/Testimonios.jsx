@@ -6,7 +6,7 @@ export const Testimonios = () => {
 
   return (
     <div className="App">
-      <div className="container my-5">
+      <div className="container my-5 mx-auto">
         <div className="overflow-hidden w-full">
           <div className="flex whitespace-nowrap animate-scroll">
             {carouselBlogs.map((blog, index) => (

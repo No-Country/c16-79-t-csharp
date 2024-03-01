@@ -6,24 +6,25 @@ namespace Veterinaria.Domain.Models
         public string Name { get; private set; }
         public HashSet<Product> Products { get; private set; } = new HashSet<Product>();
 
-        public Categorie() { }
+        private Categorie(string name)
+        {
+            Name = name;
+        }
 
-        public Categorie(int id, string name, HashSet<Product> products)
+        public static Categorie CreateCategory(string name)
         {
-            Id = id;
-            Name = name;
-            Products = products;
+            return new Categorie(name);
         }
-        public static Categorie Create(string name)
+
+
+        public void UpdateName(string newName)
         {
-            return new Categorie()
+            if (string.IsNullOrWhiteSpace(newName))
             {
-                Name = name
-            };
-        }
-        public void UpdateName(string name)
-        {
-            Name = name;
+                throw new ArgumentException("The name can't be null or empty", nameof(newName));
+            }
+
+            Name = newName;
         }
     }
 

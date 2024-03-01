@@ -12,21 +12,28 @@ namespace Veterinaria.Domain.Models
         public HashSet<DetailSale> DetailSales { get; set; } = new HashSet<DetailSale>();
 
         private Product() { }
-        public Product(string name, float price, int stock, string description, string image, HashSet<Categorie> categories, HashSet<DetailSale> detailSales)
+        public Product(string name, float price, int stock, string description, string image)
         {
             Name = name;
             Price = price;
             Stock = stock;
             Description = description;
             Image = image;
-            Categories = categories;
-            DetailSales = detailSales;
         }
 
         public static Product CreateProduct(string name, float price, int stock, string description, string image)
         {
             var product = new Product() { Name = name, Price = price, Stock = stock, Description = description, Image = image };
             return product;
+        }
+
+        public void Update(string name, float price, int stock, string description, string image)
+        {
+            Name = name;
+            Price = price;
+            Stock = stock;
+            Description = description;
+            Image = image;
         }
 
         public void UpdatePrice(float newPrice)
@@ -37,6 +44,16 @@ namespace Veterinaria.Domain.Models
                 throw new ArgumentException("The price can't be negative", nameof(newPrice));
             }
             Price = newPrice;
+        }
+
+        public void AssignCategory(HashSet<Categorie> categories)
+        {
+            if (categories is null)
+            {
+                throw new ArgumentNullException(nameof(categories));
+            }
+
+            Categories = categories;
         }
     }
 }
