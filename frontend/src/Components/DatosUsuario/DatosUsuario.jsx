@@ -5,28 +5,25 @@ import { EdicionDatosUsuario } from "./EdicionDatosUsuario";
 
 const DatosUsuario = () => {
 
-
-
   const [first, setfirst] = useState()
 
   console.log("first", first)
 
+  const {fetchData} = useFetchGet("api/ClientUsers/me")
+
   useEffect(() => {
-    const fetchData = async () => {
+    const handleDatos = async () => {
       try {
-        const data = await useFetchGet("api/ClientUsers/me");
+        const data = await fetchData()
         console.log("Data received:", data);
         setfirst(data)
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
-
-    fetchData();
+    handleDatos();
+    //eslint-disable-next-line
   }, []);
-
-
-
 
   return (
     <div className="overflow-x-auto container w-4/5 mx-auto mt-10 mb-10">

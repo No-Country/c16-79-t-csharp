@@ -1,24 +1,25 @@
 
 import { useEffect, useState } from "react";
 
-export const useFetchGet = async (endPoint) => {
+export const useFetchGet = (endPoint) => {
+   const fetchData = async () => {
+    try {
+      const response = await fetch(`http://localhost:4600/${endPoint}`, {
+        headers: { 
+        "Authorization" : localStorage.getItem("token") ? `Bearer ${localStorage.getItem("token")}` : ""
+      }});
+      const data = await response.json();
+      console.log("data: ", data);
+      return data;
+    } catch (error) {
+      console.log("Error: " + error);
+    }  
+   }
+   return {
+    fetchData
+   };
+}
 
-  // console.log("endpoint", endPoint)
-  try {
-    const response = await fetch(`http://localhost:4600/${endPoint}`, {
-      // method: method ? method : "GET",
-      headers: {
-        "Authorization": localStorage.getItem("token") ? `Bearer ${localStorage.getItem("token")}` : ""
-      }
-    });
-    const data = await response.json();
-    // console.log("data: ", data);
-    return data;
-
-  } catch (error) {
-    console.log("Error: " + error);
-  }
-};
 
 
 export const useFetchPost = (endPoint, input) => {
@@ -28,25 +29,22 @@ export const useFetchPost = (endPoint, input) => {
     data: "",
   });
 
-
-  const fetchData = async () => {
-    console.log("token1", localStorage.getItem("token"))
-    try {
-
-      const response = await fetch(`http://localhost:4600/${endPoint}`, {
-        // method: method ? method : "GET",
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": localStorage.getItem("token") ? `Bearer ${localStorage.getItem("token")}` : ""
-        },
-        body: JSON.stringify(input),
-      });
-      const data = await response.json();
-      localStorage.setItem("token", data.token);
-      setState({
-        data,
-      });
+ 
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`http://localhost:4600/${endPoint}`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",            
+            "Authorization" : localStorage.getItem("token") ? `Bearer ${localStorage.getItem("token")}` : ""
+          },
+          body: JSON.stringify(input),
+        });
+        const data = await response.json();
+        localStorage.setItem("token", data.token);
+        setState({
+          data,
+        });
 
     } catch (error) {
       setState({
