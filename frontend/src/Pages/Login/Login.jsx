@@ -10,7 +10,7 @@ export const Login = () => {
       email: "",
       password: "",
     }
-  )  
+  )
   const actualizarDatos = (e) => {
     setInput({
       ...input,
@@ -18,11 +18,13 @@ export const Login = () => {
     })
   }
 
-  const {fetchData}  = useFetchPost("api/UserAccount/login", input);
+  // const method = "POST"
+
+  const { fetchData } = useFetchPost("api/UserAccount/login", input);
   const navigate = useNavigate()
 
 
-  const handleSubmit = async(e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     try {
       const response = await fetchData()
@@ -31,7 +33,7 @@ export const Login = () => {
     } catch (error) {
       console.log(error)
     }
-  } 
+  }
 
 
   return (
@@ -56,12 +58,12 @@ export const Login = () => {
             <div className="mb-2 block">
               <Label htmlFor="password1" value="Your password" />
             </div>
-            <TextInput 
-            id="password1" 
-            type="password" 
-            required 
-            onChange={actualizarDatos}
-            name="password"/>
+            <TextInput
+              id="password1"
+              type="password"
+              required
+              onChange={actualizarDatos}
+              name="password" />
           </div>
           <div className="flex items-center gap-2">
             <Checkbox id="remember" />
