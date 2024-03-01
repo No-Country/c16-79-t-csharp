@@ -12,8 +12,8 @@ export const Registro = () => {
 
   //agrego un use state para guardar la segunda repeticion de la pass y poder  compararla con el input anterior.
   const [repPass, setRepPass] = useState("")
-
-  const {fetchData}  = useFetchPost("api/UserAccount/register", input);
+  // const method = "POST"
+  const { fetchData } = useFetchPost("api/UserAccount/register", input);
 
   const actualizarDatos = (e) => {
     setInput({
@@ -29,15 +29,15 @@ export const Registro = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     //verificacion de que las pass coinciden 
-    if(input.password !== repPass){
+    if (input.password !== repPass) {
       alert("las contrasenas deben ser iguales")
       return
-    }else{
+    } else {
       try {
-        await fetchData();   
+        await fetchData();
         navigate("/login");
       } catch (error) {
-        console.error("Error fetching data:", error);  
+        console.error("Error fetching data:", error);
       }
     }
   };
@@ -78,7 +78,7 @@ export const Registro = () => {
               <Label htmlFor="" value="Repeat password" />
             </div>
             <TextInput id="repeat-password" type="password" required shadow
-            onChange={(e) => setRepPass(e.target.value)}/>
+              onChange={(e) => setRepPass(e.target.value)} />
           </div>
           <Button type="submit">Submit</Button>
         </form>
