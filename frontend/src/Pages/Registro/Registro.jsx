@@ -43,17 +43,15 @@ export const Registro = () => {
   };
 
   return (
-    <div>
+    <div className="container mx-auto my-20 max-w-7xl">
       {' '}
-      <Card className="max-w-sm">
+      <Card className="max-w-sm mx-auto">
         <form className="flex flex-col gap-4" onSubmit={e => handleSubmit(e)}>
           <div>
             <div className="mb-2 block">
-              <Label htmlFor="email1" value="Your email" />
+              <Label htmlFor="email" value="Your email" />
             </div>
             <TextInput
-              id="email1"
-              type="email"
               placeholder="name@flowbite.com"
               required
               onChange={actualizarDatos}
@@ -77,7 +75,7 @@ export const Registro = () => {
           </div>
           <div>
             <div className="mb-2 block">
-              <Label htmlFor="repeat-password" value="Repeat password" />
+              <Label htmlFor="" value="Repeat password" />
             </div>
             <TextInput id="repeat-password" type="password" required shadow
             onChange={(e) => setRepPass(e.target.value)}/>

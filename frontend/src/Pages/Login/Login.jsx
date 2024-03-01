@@ -35,9 +35,9 @@ export const Login = () => {
 
 
   return (
-    <div>
+    <div className="container mx-auto my-20 max-w-7xl">
       {" "}
-      <Card className="max-w-sm">
+      <Card className="max-w-sm mx-auto">
         <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
           <div>
             <div className="mb-2 block">
