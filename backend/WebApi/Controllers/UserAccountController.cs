@@ -8,6 +8,7 @@ using Veterinaria.Application.DTO;
 using Veterinaria.Application.Authentication;
 using Veterinaria.Domain.Repositories;
 using Veterinaria.Application.CustomeException;
+using Veterinaria.Domain.Models;
 
 namespace WebApi.Controllers
 {
@@ -16,10 +17,13 @@ namespace WebApi.Controllers
     public class UserAccountController : ControllerBase //TODO: posible nombre AuthController
     {
         private readonly IAuthenticationUserAccountService _authenticationService;
+        private readonly IClientUserRepository _clientUserRepository;
         private readonly IMapper _mapper;
-        public UserAccountController(IAuthenticationUserAccountService authenticationService, IMapper mapper)
+        public UserAccountController(IAuthenticationUserAccountService authenticationService, 
+                                     IClientUserRepository clientUserRepository, IMapper mapper)
         {
             _authenticationService = authenticationService;
+            _clientUserRepository = clientUserRepository;
             _mapper = mapper;
         }
 
@@ -32,8 +36,7 @@ namespace WebApi.Controllers
             {
                 throw new BadException("The email already exists");
             }
-
-            var clientUser = await _authenticationService.Register(clientUserRegiserDTO);
+            var userAccount = await _authenticationService.Register(clientUserRegiserDTO);
             return NoContent();
         }
 

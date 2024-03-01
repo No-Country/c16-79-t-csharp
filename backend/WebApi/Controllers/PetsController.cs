@@ -8,6 +8,8 @@ using Veterinaria.Application.DTO;
 using Veterinaria.Domain.Models;
 using Veterinaria.Domain.Repositories;
 using Veterinaria.Infrastructure.Repositories;
+using System.Net;
+using Veterinaria.Application.Dtos.Wrappers;
 
 namespace WebApi.Controllers
 {
@@ -38,7 +40,7 @@ namespace WebApi.Controllers
                 return NotFound();
             }
             var petsDTO = _mapper.Map<IEnumerable<PetDTO>>(pets);
-            return Ok(petsDTO);
+            return Ok(new ResponseSucceded<IEnumerable<PetDTO>>((int)HttpStatusCode.OK, petsDTO));
         }
         // TODO: construir GET api/pets/my-pets , solo los pets de un usuario
 
@@ -53,7 +55,7 @@ namespace WebApi.Controllers
                 throw ResourceNotFoundException.NotFoundById<Pet, int>(id);
             }
             var petDTO = _mapper.Map<PetDTO>(pet);
-            return Ok(petDTO);
+            return Ok(new ResponseSucceded<PetDTO>((int)HttpStatusCode.OK, petDTO));
         }
 
 

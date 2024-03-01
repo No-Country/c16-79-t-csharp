@@ -18,23 +18,27 @@ using Veterinaria.Domain.Models;
 using Veterinaria.Domain.Repositories;
 using Veterinaria.Infrastructure.Authentication;
 using Veterinaria.Infrastructure.Persistance.Context;
+using Veterinaria.Infrastructure.Repositories;
 
 namespace Veterinaria.Infrastructure.Authentication
 {
     public class AuthenticationUserAccountService : IAuthenticationUserAccountService //TODO:
     {
         private readonly VeterinariaDbContext _context;
+        private readonly IClientUserRepository _clientUserRepository;
         private readonly UserManager<ApplicationUserAccount> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IMapper _mapper;
         private readonly string _secretKey;
         public AuthenticationUserAccountService(VeterinariaDbContext context,
+                                    IClientUserRepository clientUserRepository,  
                                     IConfiguration config,
                                     UserManager<ApplicationUserAccount> userManager,
                                     RoleManager<IdentityRole> roleManager,
                                     IMapper mapper)
         {
             _context = context;
+            _clientUserRepository = clientUserRepository;
             _userManager = userManager;
             _roleManager = roleManager;
             _mapper = mapper;
@@ -78,6 +82,15 @@ namespace Veterinaria.Infrastructure.Authentication
             var role = clientUserRegisterDTO.Role;
             await _userManager.AddToRoleAsync(newClientUser, role);
             var clientReturn = await _context.ApplicationUserAccounts.FirstOrDefaultAsync(u => u.Email == clientUserRegisterDTO.Email);
+            var clientUser = new ClientUser
+            {
+                UserName = "",
+                Name = "",
+                LastName = "",
+                PhoneNumber = "",
+                UserAccountId = clientReturn.Id
+            };
+            await _clientUserRepository.AddAsync(clientUser);
             return _mapper.Map<UserAccountResponseRegisterDTO>(clientReturn);
 
         }
