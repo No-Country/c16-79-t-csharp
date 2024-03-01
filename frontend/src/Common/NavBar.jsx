@@ -2,7 +2,7 @@ import { Button, Dropdown, Navbar } from "flowbite-react";
 import { NavLink } from "react-router-dom"; 
 
 const NavBar = () => {
-  
+
   return (
     <>
       <Navbar fluid rounded className="container max-w-6xl mx-auto">
@@ -15,7 +15,7 @@ const NavBar = () => {
             />
           </NavLink>
         </Navbar.Brand>
-        <div className="flex md:order-2">
+        <div className="flex md:order-2 mx-auto">
           <div>
             <Button.Group className=" mr-2">
               <NavLink to={"/login"}>
