@@ -44,7 +44,6 @@ export const Registro = () => {
 
   return (
     <div className="container mx-auto my-20 max-w-7xl">
-    <div>
       {' '}
       <Card className="max-w-sm">
         <form className="flex flex-col gap-4" onSubmit={e => handleSubmit(e)}>

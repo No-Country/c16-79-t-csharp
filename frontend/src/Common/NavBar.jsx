@@ -5,12 +5,12 @@ const NavBar = () => {
   
   return (
     <>
-      <Navbar fluid rounded>
-        <Navbar.Brand href="#">
-          <NavLink to="/">
+      <Navbar fluid rounded className="container max-w-6xl mx-auto">
+        <Navbar.Brand href="#" className=" mx-auto md:ml-0">
+          <NavLink to="/" >
             <img
               src="/Huella_amiga-removebg-preview.png"
-              className="mr-12 h-12 sm:h-20"
+              className="md:mr-12 md:h-12 h-24"
               alt="Logo Huellas Felices"
             />
           </NavLink>
