@@ -16,7 +16,6 @@ const DatosUsuario = () => {
       try {
         const data = await useFetchGet("api/ClientUsers/me");
         console.log("Data received:", data);
-
         setfirst(data)
       } catch (error) {
         console.error("Error fetching data:", error);
