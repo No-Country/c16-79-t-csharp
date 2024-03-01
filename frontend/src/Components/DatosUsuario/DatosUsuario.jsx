@@ -9,12 +9,12 @@ const DatosUsuario = () => {
 
   const [first, setfirst] = useState()
 
-  // console.log("first", first)
+  console.log("first", first)
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await useFetchGet("api/ClientUsers/my-clientuser");
+        const data = await useFetchGet("api/ClientUsers/me");
         console.log("Data received:", data);
 
         setfirst(data)

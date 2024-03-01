@@ -20,18 +20,21 @@ export const useFetchGet = async (endPoint) => {
 };
 
 
-export const useFetchPost = (endPoint, input, method) => {
+export const useFetchPost = (endPoint, input) => {
 
-  console.log(method)
+  // console.log(method)
   const [state, setState] = useState({
     data: "",
   });
 
 
   const fetchData = async () => {
+    console.log("token1", localStorage.getItem("token"))
     try {
+
       const response = await fetch(`http://localhost:4600/${endPoint}`, {
-        method: method ? method : "GET",
+        // method: method ? method : "GET",
+        // method: "POST",
         headers: {
           "Content-Type": "application/json",
           "Authorization": localStorage.getItem("token") ? `Bearer ${localStorage.getItem("token")}` : ""
@@ -58,10 +61,12 @@ export const useFetchPost = (endPoint, input, method) => {
     fetchData();
   }, [])
 
+  console.log("token2", localStorage.getItem("token"))
   return {
     state,
     fetchData
   };
+
 };
 
 
