@@ -2,12 +2,12 @@
 
 import { Button, Checkbox, Label, Modal, TextInput } from 'flowbite-react';
 import { useState } from 'react';
-import { useFetchPost } from "../../Helpers/useFetch";
+import { useFetchPut } from "../../Helpers/useFetch";
 
-export const EdicionDatosUsuario = ({ nombreUsuario, telefono }) => {
+export const EdicionDatosUsuario = ({ nombreUsuario, telefono, nombre, lastName }) => {
     // console.log(nombreUsuario, telefono)
 
-    const method = "PUT"
+    // const method = "PUT"
 
 
     const [openModal, setOpenModal] = useState(false);
@@ -15,21 +15,23 @@ export const EdicionDatosUsuario = ({ nombreUsuario, telefono }) => {
     const [input, setInput] = useState({
         nombreusuario: "",
         telefono: "",
+        nombre: "",
+        lastname: ""
     })
-
-    const { fetchData } = useFetchPost("api/ClientUsers/me", input, method);
+    console.log(input)
+    const { fetchData } = useFetchPut("api/ClientUsers/me", input);
 
     const editarDatos = async () => {
-        return await fetchData()
+        await fetchData()
     }
 
-    console.log(input)
     const actualizarDatos = (e) => {
         setInput({
             ...input,
             [e.target.name]: e.target.value
         })
     }
+
 
 
     function onCloseModal() {
@@ -56,6 +58,34 @@ export const EdicionDatosUsuario = ({ nombreUsuario, telefono }) => {
                                 onChange={actualizarDatos}
                                 required
                                 name="nombreusuario"
+                            />
+                        </div>
+
+                        <div>
+                            <div className="mb-2 block">
+                                <Label htmlFor="email" value="Nombre Usuario" />
+                            </div>
+                            <TextInput
+                                id="email"
+                                placeholder="name@company.com"
+                                defaultValue={nombre}
+                                onChange={actualizarDatos}
+                                required
+                                name="nombre"
+                            />
+                        </div>
+
+                        <div>
+                            <div className="mb-2 block">
+                                <Label htmlFor="email" value="Nombre Usuario" />
+                            </div>
+                            <TextInput
+                                id="email"
+                                placeholder="name@company.com"
+                                defaultValue={lastName}
+                                onChange={actualizarDatos}
+                                required
+                                name="lastName"
                             />
                         </div>
 

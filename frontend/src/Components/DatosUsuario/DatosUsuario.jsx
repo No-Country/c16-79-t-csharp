@@ -9,7 +9,7 @@ const DatosUsuario = () => {
 
   console.log("first", first)
 
-  const {fetchData} = useFetchGet("api/ClientUsers/me")
+  const { fetchData } = useFetchGet("api/ClientUsers/me")
 
   useEffect(() => {
     const handleDatos = async () => {
@@ -88,7 +88,7 @@ const DatosUsuario = () => {
           </Table.Row>
         </Table.Body>
       </Table>
-      <EdicionDatosUsuario nombreUsuario={first?.data?.userName} telefono={first?.data?.phoneNumber} />
+      <EdicionDatosUsuario lastName={first?.data?.lastName} nombre={first?.data?.name} nombreUsuario={first?.data?.userName} telefono={first?.data?.phoneNumber} />
     </div>
   );
 };
