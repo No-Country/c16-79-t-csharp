@@ -59,6 +59,21 @@ namespace Veterinaria.Infrastructure.Authentication
         //nulo y no tener problema con los claims.
         public async Task<UserAccountResponseRegisterDTO> Register(UserAccountRegisterDTO clientUserRegisterDTO)
         {
+
+            // Solo la primera vez
+            // var roleExist = await _roleManager.RoleExistsAsync("Admin");
+            // if (!roleExist)
+            // {
+            //     await _roleManager.CreateAsync(new IdentityRole("Admin"));
+            //     await _roleManager.CreateAsync(new IdentityRole("Cliente"));
+            // }
+            var role = clientUserRegisterDTO.Role;
+            ApplicationUserAccount? existOne = await _context.ApplicationUserAccounts.FirstOrDefaultAsync(a => true);
+            if (existOne is null)
+            {
+                role = "Admin";
+            }
+            
             var newClientUser = new ApplicationUserAccount()
             {
                 Email = clientUserRegisterDTO.Email,
@@ -78,13 +93,8 @@ namespace Veterinaria.Infrastructure.Authentication
                         throw new BadException("Could not create account", errors.Select(e => e.Description).ToList());
                     }
 
-                    var roleExist = await _roleManager.RoleExistsAsync("Admin");
-                    if (!roleExist)
-                    {
-                        await _roleManager.CreateAsync(new IdentityRole("Admin"));
-                        await _roleManager.CreateAsync(new IdentityRole("Cliente"));
-                    }
-                    var role = clientUserRegisterDTO.Role;
+                    
+
                     await _userManager.AddToRoleAsync(newClientUser, role);
                     var userAccountReturn = await _context.ApplicationUserAccounts.FirstOrDefaultAsync(u => u.Email == clientUserRegisterDTO.Email);
                     var clientUser = new ClientUser
@@ -133,7 +143,7 @@ namespace Veterinaria.Infrastructure.Authentication
             var roles = await _userManager.GetRolesAsync(userAccountFound);
             var roleUser = roles.FirstOrDefault() ?? throw new ConflictException("Not found the user role ");
 
-            var clientUser = await _clientUserRepository.GetClientUserById(u => u.UserAccountId == userAccountFound.Id)?? throw new Exception("No se puedo encontrar el usuario de la cuenta.");
+            var clientUser = await _clientUserRepository.GetClientUserById(u => u.UserAccountId == userAccountFound.Id) ?? throw new Exception("No se puedo encontrar el usuario de la cuenta.");
 
             string token = JwtGenerator.GenerateToken(userAccountFound, clientUser.Id, roleUser, _secretKey);
 

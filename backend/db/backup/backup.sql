@@ -492,6 +492,8 @@ COPY public."AspNetRoleClaims" ("Id", "RoleId", "ClaimType", "ClaimValue") FROM 
 --
 
 COPY public."AspNetRoles" ("Id", "Name", "NormalizedName", "ConcurrencyStamp") FROM stdin;
+b6e5a8f0-1ea0-4eea-bc18-c3ea0c9233f0	Admin	ADMIN	\N
+1f7cf397-9221-429c-8811-e04275e05081	Cliente	CLIENTE	\N
 \.
 
 
@@ -516,6 +518,7 @@ COPY public."AspNetUserLogins" ("LoginProvider", "ProviderKey", "ProviderDisplay
 --
 
 COPY public."AspNetUserRoles" ("UserId", "RoleId") FROM stdin;
+ad9b8391-4826-408b-811e-1414ad82f43b	b6e5a8f0-1ea0-4eea-bc18-c3ea0c9233f0
 \.
 
 
@@ -532,6 +535,7 @@ COPY public."AspNetUserTokens" ("UserId", "LoginProvider", "Name", "Value") FROM
 --
 
 COPY public."AspNetUsers" ("Id", "UserName", "NormalizedUserName", "Email", "NormalizedEmail", "EmailConfirmed", "PasswordHash", "SecurityStamp", "ConcurrencyStamp", "PhoneNumber", "PhoneNumberConfirmed", "TwoFactorEnabled", "LockoutEnd", "LockoutEnabled", "AccessFailedCount") FROM stdin;
+ad9b8391-4826-408b-811e-1414ad82f43b	admin@email.com	ADMIN@EMAIL.COM	admin@email.com	ADMIN@EMAIL.COM	f	AQAAAAIAAYagAAAAEDtiF4rP5KdCBHbt3q18aRUN2GAtc2jlEQDZopFV5jS8+FhOUX3MaoowQhQDx6Wibg==	2MN53JTC2RB5EMD4K3SJSPFGIDD5AD4U	e3041463-ca70-4174-86bb-9d27f1c85292	\N	f	f	\N	t	0
 \.
 
 
@@ -561,7 +565,8 @@ COPY public."Categories" ("Id", "Name") FROM stdin;
 -- Data for Name: ClientUsers; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public."ClientUsers" ("Id", "Name", "LastName", "UserAccountId") FROM stdin;
+COPY public."ClientUsers" ("Id", "Name", "LastName", "UserName", "PhoneNumber", "UserAccountId") FROM stdin;
+1					ad9b8391-4826-408b-811e-1414ad82f43b
 \.
 
 
@@ -667,7 +672,7 @@ SELECT pg_catalog.setval('public."Categories_Id_seq"', 6, true);
 -- Name: ClientUsers_Id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public."ClientUsers_Id_seq"', 1, false);
+SELECT pg_catalog.setval('public."ClientUsers_Id_seq"', 1, true);
 
 
 --
@@ -1129,3 +1134,4 @@ ALTER TABLE ONLY public."Sales"
 --
 -- PostgreSQL database dump complete
 --
+
