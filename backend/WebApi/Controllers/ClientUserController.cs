@@ -21,16 +21,20 @@ namespace WebApi.Controllers
         private readonly IClientUserService _clientUserService;
         private readonly IPetService _petService;
         private readonly IPetRepository _petRepository;
+        private readonly IAddressRepository _addressRepository;
         private readonly IMapper _mapper;
-        public ClientUsersController(IClientUserRepository clientUserRepository, IMapper mapper, IClientUserService clientUserService, IPetRepository petRepository, IPetService petService)
+        public ClientUsersController(IClientUserRepository clientUserRepository, IMapper mapper, IClientUserService clientUserService, IPetRepository petRepository, IPetService petService, IAddressRepository addressRepository)
         {
             _clientUserRepository = clientUserRepository;
             _mapper = mapper;
             _clientUserService = clientUserService;
             _petRepository = petRepository;
             _petService = petService;
+            _addressRepository = addressRepository;
         }
 
+        // api/clientusers
+        #region ClientUsers
 
         [Authorize(Roles = "Admin")]
         [HttpGet]
@@ -103,8 +107,95 @@ namespace WebApi.Controllers
             return Ok(new ResponseSucceded<ClientUserDTO>((int)HttpStatusCode.OK, clientUserDTO));
         }
 
+        #endregion
 
-        // *INFO: uso de endpoint pertenecientes al UserClient
+
+        // *INFO: uso de endpoints relacionados a UserClient
+
+        // api/clientusers/me/addresses
+        #region Addresses
+
+        [Authorize(Roles = "Cliente")]
+        [HttpGet("me/addresses")]
+        public async Task<ActionResult<ResponseSucceded<IEnumerable<AddressDTO>>>> GetAllWithData()
+        {
+            ClaimsPrincipal claims = this.User;
+            var idUser = claims.FindFirst(u => u.Type == ClaimTypes.NameIdentifier)?.Value;
+            var clientUser = await _clientUserRepository.GetClientUserById(u => u.UserAccountId == idUser);
+
+            List<Address> addresses = await _addressRepository.FindAllByUser(clientUser.Id);
+            var addressesDTO = _mapper.Map<IEnumerable<AddressDTO>>(addresses);
+            return Ok(new ResponseSucceded<IEnumerable<AddressDTO>>((int)HttpStatusCode.OK, addressesDTO));
+        }
+
+        [Authorize(Roles = "Cliente")]
+        [HttpGet("me/addresses/{id}")]
+        public async Task<ActionResult<ResponseSucceded<AddressDTO>>> GetByIdWithData(int id)
+        {
+            ClaimsPrincipal claims = this.User;
+            var idUser = claims.FindFirst(u => u.Type == ClaimTypes.NameIdentifier)?.Value;
+
+            var address = await _addressRepository.GetByIdWithData(p => p.Id == id) ?? throw ResourceNotFoundException.NotFoundById<Address, int>(id);
+
+            var addressDTO = _mapper.Map<AddressDTO>(address);
+            return Ok(new ResponseSucceded<AddressDTO>((int)HttpStatusCode.OK, addressDTO));
+        }
+
+        [Authorize(Roles = "Cliente")]
+        [HttpPost("me/addresses")]
+        public async Task<ActionResult<ResponseSucceded<AddressDTO>>> InsertAddresses([FromBody] AddressCreationDTO addressCreationDTO)
+        {
+            ClaimsPrincipal claims = this.User;
+            var idUser = claims.FindFirst(u => u.Type == ClaimTypes.NameIdentifier)?.Value;
+            var clientUser = await _clientUserRepository.GetClientUserById(u => u.UserAccountId == idUser);
+
+            var address = new Address
+            {
+                City = addressCreationDTO.City,
+                Province = addressCreationDTO.Province,
+                Neighborhood = addressCreationDTO.Neighborhood,
+                Street = addressCreationDTO.Street,
+                Number = addressCreationDTO.Number,
+                ClientUserId = clientUser.Id
+            };
+            await _addressRepository.AddAsync(address);
+            var addressDTO = _mapper.Map<AddressDTO>(address);
+            return Ok(new ResponseSucceded<AddressDTO>((int)HttpStatusCode.OK, addressDTO));
+        }
+
+        [Authorize(Roles = "Cliente")]
+        [HttpPut("me/addresses/{id}")]
+        public async Task<ActionResult<ResponseSucceded<AddressDTO>>> Actualizar([FromRoute] int id, [FromBody] AddressCreationDTO addressCreationDTO)
+        {
+            var address = await _addressRepository.FindByIdAsync(id);
+            if (address is null)
+            {
+                throw ResourceNotFoundException.NotFoundById<Address, int>(id);
+            }
+            _mapper.Map(addressCreationDTO, address);
+            var result = await _addressRepository.UpdateAsync(address);
+            var addressDTO = _mapper.Map<AddressDTO>(result);
+            return Ok(new ResponseSucceded<AddressDTO>((int)HttpStatusCode.OK, addressDTO));
+        }
+
+        [Authorize(Roles = "Cliente")]
+        [HttpDelete("me/addresses/{id}")]
+        public async Task<ActionResult> Eliminar([FromRoute] int id)
+        {
+            var address = await _addressRepository.FindByIdAsync(id);
+            if (address is null)
+            {
+                throw ResourceNotFoundException.NotFoundById<Address, int>(id);
+            }
+            await _addressRepository.DeleteAsync(address);
+
+            return NoContent();
+        }
+
+        #endregion
+
+        // api/clientusers/me/pets
+        #region Pets 
 
         [Authorize(Roles = "Cliente")]
         [HttpGet("me/pets")]
@@ -136,7 +227,7 @@ namespace WebApi.Controllers
 
         [Authorize(Roles = "Cliente")]
         [HttpPut("me/pets/{id}")]
-        public async Task<ActionResult<PetDTO>> UpdateById([FromRoute] int id, [FromBody] PetCreationDTO petCreationDTO)
+        public async Task<ActionResult<ResponseSucceded<PetDTO>>> UpdateById([FromRoute] int id, [FromBody] PetCreationDTO petCreationDTO)
         {
             var pet = await _petRepository.FindByIdAsync(id);
             if (pet is null)
@@ -146,7 +237,7 @@ namespace WebApi.Controllers
             _mapper.Map(petCreationDTO, pet);
             var result = await _petRepository.UpdateAsync(pet);
             var petDTO = _mapper.Map<PetDTO>(result);
-            return Ok(petDTO);
+            return Ok(new ResponseSucceded<PetDTO>((int)HttpStatusCode.OK,petDTO));
         }
 
         [Authorize(Roles = "Cliente")]
@@ -188,5 +279,16 @@ namespace WebApi.Controllers
             return Ok(petDTO);
         }
 
+        #endregion
+
+        // api/clientusers/me/pets/medicalhistories
+        #region MedicalHistories
+
+        #endregion
+
+        // api/clientusers/me/pets/dates
+        #region Dates
+
+        #endregion
     }
 }

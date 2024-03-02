@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Veterinaria.Application.DTO
 {
-    public class UserAccountResponseRegisterDTO
+    public class UserAccountResponseRegisterDTO // TODO: agreagar validaciones
     {
-        public string? Id { get; set; }
-        public string? Email { get; set; }
+        public string Id { get; set; }
+        public string Email { get; set; }
     }
 }
