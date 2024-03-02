@@ -13,7 +13,7 @@ export const Registro = () => {
   //agrego un use state para guardar la segunda repeticion de la pass y poder  compararla con el input anterior.
   const [repPass, setRepPass] = useState("")
   // const method = "POST"
-  const { fetchData } = useFetchPost("api/UserAccount/register", input);
+  const { fetchData } = useFetchPost("api/UserAccount/register", input );
 
   const actualizarDatos = (e) => {
     setInput({
