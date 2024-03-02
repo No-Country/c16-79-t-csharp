@@ -88,7 +88,7 @@ const DatosUsuario = () => {
           </Table.Row>
         </Table.Body>
       </Table>
-      <EdicionDatosUsuario nombreUsuario={first?.data?.userName} telefono={first?.data?.phoneNumber} />
+      <EdicionDatosUsuario name={first?.data?.name} lastName={first?.data?.lastName} nombre={first?.data?.userName} telefono={first?.data?.phoneNumber} />
     </div>
   );
 };
