@@ -53,12 +53,11 @@ export const useFetchPost = (endPoint, input) => {
     };
     
     useEffect(() => {
-      if(!endPoint){
-        return
+      if(!input){
+        fetchData();
       }
-      fetchData();
       //eslint-disable-next-line
-    }, [])
+    }, [input])
     
   return {
    state,
