@@ -133,30 +133,9 @@ namespace Veterinaria.Infrastructure.Authentication
             var roles = await _userManager.GetRolesAsync(userAccountFound);
             var roleUser = roles.FirstOrDefault() ?? throw new ConflictException("Not found the user role ");
 
+            var clientUser = await _clientUserRepository.GetClientUserById(u => u.UserAccountId == userAccountFound.Id)?? throw new Exception("No se puedo encontrar el usuario de la cuenta.");
 
-            // var tokenHandler = new JwtSecurityTokenHandler();
-            // var key = Encoding.ASCII.GetBytes(_secretKey);
-
-            // var tokenInformation = new SecurityTokenDescriptor
-            // {
-            //     //Se deben fijar el mismo valor que para ValidAudience y ValidIssuer puestos en program.cs
-            //     //Issuer = ,
-            //     //Audience = ,
-            //     Subject = new ClaimsIdentity(new Claim[]
-            //     {
-            //         new Claim(ClaimTypes.NameIdentifier, clientUserFound.Id.ToString()),
-            //         new Claim(ClaimTypes.Email, clientUserFound.Email.ToString()),
-            //         new Claim(ClaimTypes.Role, roleUser)
-            //     }),
-            //     Expires = DateTime.UtcNow.AddDays(1),
-            //     SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-            // };
-
-            // var tokenCreated = tokenHandler.CreateToken(tokenInformation);
-
-            // string token = tokenHandler.WriteToken(tokenCreated);
-            string token = JwtGenerator.GenerateToken(userAccountFound, roleUser, _secretKey);
-            var clientUser = await _clientUserRepository.GetClientUserById(u => u.UserAccountId == userAccountFound.Id);
+            string token = JwtGenerator.GenerateToken(userAccountFound, clientUser.Id, roleUser, _secretKey);
 
             var clientUserResponseLoginDTO = new UserAccountResponseLoginDTO()
             {
@@ -169,27 +148,27 @@ namespace Veterinaria.Infrastructure.Authentication
 
         //public string TokenGenerator(IList<string> roles, ApplicationUserAccount userAccount)
         //{
-        //    var tokenHandler = new JwtSecurityTokenHandler();
-        //    var key = Encoding.ASCII.GetBytes(_secretKey);
+        // var tokenHandler = new JwtSecurityTokenHandler();
+        // var key = Encoding.ASCII.GetBytes(_secretKey);
 
-        //    var tokenInformation = new SecurityTokenDescriptor
-        //    {
-        //        //Se deben fijar el mismo valor que para ValidAudience y ValidIssuer puestos en program.cs
-        //        //Issuer = ,
-        //        //Audience = ,
-        //        Subject = new ClaimsIdentity(new Claim[]
-        //        {
-        //            new Claim(ClaimTypes.NameIdentifier, userAccount.Id.ToString()),
-        //            new Claim(ClaimTypes.Email, userAccount.Email.ToString()),
-        //            new Claim(ClaimTypes.Role, roles.FirstOrDefault())
-        //        }),
-        //        Expires = DateTime.UtcNow.AddDays(1),
-        //        SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-        //    };
+        // var tokenInformation = new SecurityTokenDescriptor
+        // {
+        //     //Se deben fijar el mismo valor que para ValidAudience y ValidIssuer puestos en program.cs
+        //     //Issuer = ,
+        //     //Audience = ,
+        //     Subject = new ClaimsIdentity(new Claim[]
+        //     {
+        //         new Claim(ClaimTypes.NameIdentifier, clientUserFound.Id.ToString()),
+        //         new Claim(ClaimTypes.Email, clientUserFound.Email.ToString()),
+        //         new Claim(ClaimTypes.Role, roleUser)
+        //     }),
+        //     Expires = DateTime.UtcNow.AddDays(1),
+        //     SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+        // };
 
-        //    var tokenCreated = tokenHandler.CreateToken(tokenInformation);
-        //    var token = tokenHandler.WriteToken(tokenCreated);
-        //    return token;
+        // var tokenCreated = tokenHandler.CreateToken(tokenInformation);
+
+        // string token = tokenHandler.WriteToken(tokenCreated);
         //}
     }
 }

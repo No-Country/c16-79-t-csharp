@@ -6,7 +6,7 @@ using Microsoft.IdentityModel.Tokens;
 namespace Veterinaria.Infrastructure.Authentication;
 public static class JwtGenerator
 {
-    public static string GenerateToken(ApplicationUserAccount userAccount, string roleUser, string secretKey)
+    public static string GenerateToken(ApplicationUserAccount userAccount ,int clientUserId, string roleUser, string secretKey)
     {
 
         var tokenHandler = new JwtSecurityTokenHandler();
@@ -17,11 +17,13 @@ public static class JwtGenerator
             //Se deben fijar el mismo valor que para ValidAudience y ValidIssuer puestos en program.cs
             //Issuer = ,
             //Audience = ,
+            
             Subject = new ClaimsIdentity(new Claim[]
             {
                     new Claim(ClaimTypes.NameIdentifier, userAccount.Id.ToString()),
                     new Claim(ClaimTypes.Email, userAccount.Email.ToString()),
-                    new Claim(ClaimTypes.Role, roleUser)
+                    new Claim(ClaimTypes.Role, roleUser),
+                    new Claim("ClientUserId",$"{clientUserId}")
             }),
             Expires = DateTime.UtcNow.AddDays(1),
             SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)

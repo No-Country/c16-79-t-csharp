@@ -10,6 +10,7 @@ using Veterinaria.Application.Dtos.Wrappers;
 using Veterinaria.Domain.Models;
 using Veterinaria.Domain.Repositories;
 using Veterinaria.Domain.Services;
+using WebApi.Utilities;
 
 namespace WebApi.Controllers
 {
@@ -63,9 +64,13 @@ namespace WebApi.Controllers
         [HttpGet("me")]
         public async Task<ActionResult<ResponseSucceded<ClientUserDTO>>> GetClientUser()
         {
-            ClaimsPrincipal claims = this.User;
-            var idUser = claims.FindFirst(u => u.Type == ClaimTypes.NameIdentifier)?.Value;
-            var clientUser = await _clientUserRepository.GetClientUserByIdWithData(u => u.UserAccountId == idUser);
+            // ClaimsPrincipal claims = this.User;
+            // var accountId = claims.FindFirst(u => u.Type == ClaimTypes.NameIdentifier)?.Value;
+
+            int clientUserId = ClaimsUtility.GetClienteIdFromClaim(this.User);
+
+            
+            var clientUser = await _clientUserRepository.GetClientUserByIdWithData(u => u.Id == clientUserId);
             if (clientUser is null)
             {
                 return NotFound();
@@ -74,33 +79,15 @@ namespace WebApi.Controllers
             return Ok(new ResponseSucceded<ClientUserDTO>((int)HttpStatusCode.OK, clientUserDataDTO));
         }
 
-
-        // [Authorize(Roles = "Admin, Cliente")]
-        // [HttpPost("me")]
-        // public async Task<ActionResult<ResponseSucceded<ClientUserDTO>>> AddPersonalData([FromBody] ClientUserDataUpdateDTO clientUserDataAddDTO)
-        // {
-        //     ClaimsPrincipal claims = this.User;
-        //     var idUser = claims.FindFirst(u => u.Type == ClaimTypes.NameIdentifier)?.Value;
-        //     var clientUser = new ClientUser
-        //     {
-        //         Name = clientUserDataAddDTO.Name,
-        //         LastName = clientUserDataAddDTO.LastName,
-        //         UserName = clientUserDataAddDTO.UserName,
-        //         PhoneNumber = clientUserDataAddDTO.PhoneNumber,
-        //         UserAccountId = idUser
-        //     };
-        //     var clientUserUpdated = await _clientUserRepository.AddAsync(clientUser);
-        //     var clientUserDTO = _mapper.Map<ClientUserDTO>(clientUserUpdated);
-        //     return Ok(new ResponseSucceded<ClientUserDTO>((int)HttpStatusCode.OK, clientUserDTO));
-        // }
-
         [Authorize(Roles = "Admin, Cliente")]
         [HttpPut("me")]
         public async Task<ActionResult<ResponseSucceded<ClientUserDTO>>> PersonalDataUpdate([FromBody] ClientUserDataUpdateDTO clientUserDataUpdateDTO)
         {
-            ClaimsPrincipal claims = this.User;
-            var idUser = claims.FindFirst(u => u.Type == ClaimTypes.NameIdentifier)?.Value;
-            var clientUser = await _clientUserRepository.GetClientUserById(u => u.UserAccountId == idUser);
+            // ClaimsPrincipal claims = this.User;
+            // var idUser = claims.FindFirst(u => u.Type == ClaimTypes.NameIdentifier)?.Value;
+            int clientUserId = ClaimsUtility.GetClienteIdFromClaim(this.User);
+
+            var clientUser = await _clientUserRepository.GetClientUserById(u => u.Id == clientUserId);
             _mapper.Map(clientUserDataUpdateDTO, clientUser);
             var clientUserUpdated = await _clientUserRepository.UpdateAsync(clientUser);
             var clientUserDTO = _mapper.Map<ClientUserDTO>(clientUserUpdated);
