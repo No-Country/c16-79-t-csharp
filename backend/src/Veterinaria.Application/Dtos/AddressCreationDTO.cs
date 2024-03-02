@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Veterinaria.Application.DTO
+namespace Veterinaria.Application.Dtos
 {
-    public class AddressDTO
+    public class AddressCreationDTO
     {
-        public int Id { get; set; }
         public string? City { get; set; }
         public string? Province { get; set; }
         public string? Neighborhood { get; set; }

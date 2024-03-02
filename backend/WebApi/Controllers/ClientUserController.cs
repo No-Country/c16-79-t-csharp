@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using System.Security.Claims;
 using Veterinaria.Application.CustomeException;
-using Veterinaria.Application.DTO;
+using Veterinaria.Application.Dtos;
 using Veterinaria.Application.Dtos.Wrappers;
 using Veterinaria.Domain.Models;
 using Veterinaria.Domain.Repositories;

@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Veterinaria.Application.DTO;
 using Veterinaria.Application.Dtos;
 using Veterinaria.Domain.Models;
 using Veterinaria.Infrastructure.Authentication;

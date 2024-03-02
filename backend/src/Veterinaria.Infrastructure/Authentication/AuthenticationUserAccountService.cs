@@ -13,7 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Veterinaria.Application.Authentication;
 using Veterinaria.Application.CustomeException;
-using Veterinaria.Application.DTO;
+using Veterinaria.Application.Dtos;
 using Veterinaria.Domain.Models;
 using Veterinaria.Domain.Repositories;
 using Veterinaria.Infrastructure.Authentication;
