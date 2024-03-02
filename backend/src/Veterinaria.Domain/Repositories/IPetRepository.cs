@@ -14,5 +14,7 @@ namespace Veterinaria.Domain.Repositories
         public Task<Pet> GetByIdWithData(Expression<Func<Pet, bool>> filtro = null!);
 
         Task<List<Pet>> FindAllByUserAccount(string idUserAccount);
+
+        Task<List<Pet>> FindAllByUserId(int userId);
     }
 }

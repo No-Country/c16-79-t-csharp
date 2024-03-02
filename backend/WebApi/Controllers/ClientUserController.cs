@@ -106,11 +106,13 @@ namespace WebApi.Controllers
         [HttpGet("me/addresses")]
         public async Task<ActionResult<ResponseSucceded<IEnumerable<AddressDTO>>>> GetAllWithData()
         {
-            ClaimsPrincipal claims = this.User;
-            var idUser = claims.FindFirst(u => u.Type == ClaimTypes.NameIdentifier)?.Value;
-            var clientUser = await _clientUserRepository.GetClientUserById(u => u.UserAccountId == idUser);
+            // ClaimsPrincipal claims = this.User;
+            // var idUser = claims.FindFirst(u => u.Type == ClaimTypes.NameIdentifier)?.Value;
+            // var clientUser = await _clientUserRepository.GetClientUserById(u => u.UserAccountId == idUser);
 
-            List<Address> addresses = await _addressRepository.FindAllByUser(clientUser.Id);
+            int clientUserId = ClaimsUtility.GetClienteIdFromClaim(this.User);
+
+            List<Address> addresses = await _addressRepository.FindAllByUser(clientUserId);
             var addressesDTO = _mapper.Map<IEnumerable<AddressDTO>>(addresses);
             return Ok(new ResponseSucceded<IEnumerable<AddressDTO>>((int)HttpStatusCode.OK, addressesDTO));
         }
@@ -119,9 +121,11 @@ namespace WebApi.Controllers
         [HttpGet("me/addresses/{id}")]
         public async Task<ActionResult<ResponseSucceded<AddressDTO>>> GetByIdWithData(int id)
         {
-            ClaimsPrincipal claims = this.User;
-            var idUser = claims.FindFirst(u => u.Type == ClaimTypes.NameIdentifier)?.Value;
+            // ClaimsPrincipal claims = this.User;
+            // var idUser = claims.FindFirst(u => u.Type == ClaimTypes.NameIdentifier)?.Value;
+            int clientUserId = ClaimsUtility.GetClienteIdFromClaim(this.User);
 
+            // agregar comprobacion de pertenencia
             var address = await _addressRepository.GetByIdWithData(p => p.Id == id) ?? throw ResourceNotFoundException.NotFoundById<Address, int>(id);
 
             var addressDTO = _mapper.Map<AddressDTO>(address);
@@ -132,9 +136,11 @@ namespace WebApi.Controllers
         [HttpPost("me/addresses")]
         public async Task<ActionResult<ResponseSucceded<AddressDTO>>> InsertAddresses([FromBody] AddressCreationDTO addressCreationDTO)
         {
-            ClaimsPrincipal claims = this.User;
-            var idUser = claims.FindFirst(u => u.Type == ClaimTypes.NameIdentifier)?.Value;
-            var clientUser = await _clientUserRepository.GetClientUserById(u => u.UserAccountId == idUser);
+            // ClaimsPrincipal claims = this.User;
+            // var idUser = claims.FindFirst(u => u.Type == ClaimTypes.NameIdentifier)?.Value;
+            // var clientUser = await _clientUserRepository.GetClientUserById(u => u.UserAccountId == idUser);
+
+            int clientUserId = ClaimsUtility.GetClienteIdFromClaim(this.User);
 
             var address = new Address
             {
@@ -143,7 +149,7 @@ namespace WebApi.Controllers
                 Neighborhood = addressCreationDTO.Neighborhood,
                 Street = addressCreationDTO.Street,
                 Number = addressCreationDTO.Number,
-                ClientUserId = clientUser.Id
+                ClientUserId = clientUserId
             };
             await _addressRepository.AddAsync(address);
             var addressDTO = _mapper.Map<AddressDTO>(address);
@@ -154,6 +160,8 @@ namespace WebApi.Controllers
         [HttpPut("me/addresses/{id}")]
         public async Task<ActionResult<ResponseSucceded<AddressDTO>>> Actualizar([FromRoute] int id, [FromBody] AddressCreationDTO addressCreationDTO)
         {
+
+            
             var address = await _addressRepository.FindByIdAsync(id);
             if (address is null)
             {
@@ -188,9 +196,12 @@ namespace WebApi.Controllers
         [HttpGet("me/pets")]
         public async Task<ActionResult<ResponseSucceded<IEnumerable<PetDTO>>>> GetAllByUser()
         {
-            ClaimsPrincipal claims = this.User;
-            string idUser = claims.FindFirst(u => u.Type == ClaimTypes.NameIdentifier)?.Value ?? "";
-            List<Pet> pets = await _petService.GetAllByUserAccount(idUser);
+            // ClaimsPrincipal claims = this.User;
+            // string idUser = claims.FindFirst(u => u.Type == ClaimTypes.NameIdentifier)?.Value ?? "";
+
+            int clientUserId = ClaimsUtility.GetClienteIdFromClaim(this.User);
+
+            List<Pet> pets = await _petService.GetAllByClientUser(clientUserId);
 
             List<PetDTO> petDtos = _mapper.Map<List<PetDTO>>(pets);
 
@@ -201,8 +212,8 @@ namespace WebApi.Controllers
         [HttpGet("me/pets/{id}")]
         public async Task<ActionResult<ResponseSucceded<PetDTO>>> GetByIdAndUser(int id)
         {
-            ClaimsPrincipal claims = this.User;
-            string idUser = claims.FindFirst(u => u.Type == ClaimTypes.NameIdentifier)?.Value ?? "";
+            // ClaimsPrincipal claims = this.User;
+            // string idUser = claims.FindFirst(u => u.Type == ClaimTypes.NameIdentifier)?.Value ?? "";
             var pet = await _petRepository.GetByIdWithData(p => p.Id == id);
             if (pet is null)
             {
@@ -244,13 +255,16 @@ namespace WebApi.Controllers
         [HttpPost("me/pets")]
         public async Task<ActionResult<PetDTO>> CreatePet([FromBody] PetCreationDTO petCreationDTO)
         {
-            ClaimsPrincipal claims = this.User;
-            var idUser = claims.FindFirst(u => u.Type == ClaimTypes.NameIdentifier)?.Value;
-            var clientUser = await _clientUserRepository.GetClientUserById(u => u.UserAccountId == idUser);
-            if (clientUser is not ClientUser)
-            {
-                throw new BadException("Debe registrar la informacion del usuario.");
-            }
+            // ClaimsPrincipal claims = this.User;
+            // var idUser = claims.FindFirst(u => u.Type == ClaimTypes.NameIdentifier)?.Value;
+            // var clientUser = await _clientUserRepository.GetClientUserById(u => u.UserAccountId == idUser);
+            // if (clientUser is not ClientUser)
+            // {
+            //     throw new BadException("Debe registrar la informacion del usuario.");
+            // }
+
+            int clientUserId = ClaimsUtility.GetClienteIdFromClaim(this.User);
+
             var pet = new Pet
             {
                 Name = petCreationDTO.Name,
@@ -259,7 +273,7 @@ namespace WebApi.Controllers
                 Birthday = DateOnly.ParseExact(petCreationDTO.Birthday, "dd/MM/yyyy"),
                 Weight = petCreationDTO.Weight,
                 Photo = petCreationDTO.Photo,
-                ClientUserId = clientUser.Id
+                ClientUserId = clientUserId
             };
             await _petRepository.AddAsync(pet);
             var petDTO = _mapper.Map<PetDTO>(pet);
