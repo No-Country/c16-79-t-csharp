@@ -15,5 +15,6 @@ namespace Veterinaria.Application.Dtos
         public string Birthday { get; set; }
         public float Weight { get; set; }
         public string Photo { get; set; }
+        public int Age { get; set; }
     }
 }
