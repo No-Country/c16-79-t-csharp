@@ -30,7 +30,6 @@ export const Login = () => {
       const response = await fetchData()
       //console.log(response)
       navigate("/");
-      window.location.reload()
     } catch (error) {
       console.log(error)
     }

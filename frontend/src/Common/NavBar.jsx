@@ -1,5 +1,5 @@
 import { Button, Dropdown, Navbar } from "flowbite-react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 const NavBar = () => {
 
@@ -13,13 +13,20 @@ const NavBar = () => {
   // prueba50@prueba.com
   // Argentina1!
 
+
+
+  // me guardo la funcion para moverme al home despues de cerrar sesión
+  const navigate = useNavigate()
+
+  // verifica si existe token en local storage y si existe lo borra y lo vuelve al home despues de cerrar sesión
   const cerrarSesion = () => {
     if (localStorage.getItem("token")) {
       localStorage.setItem("token", "");
-      window.location.reload()
+      navigate("/")
     }
   }
 
+  //  constante para guardarme cuando quiero mostra y ocultar el boton de cerrar sesión
   const ocultarBoton = localStorage.getItem("token")
     ?
     <Dropdown.Item onClick={cerrarSesion}
@@ -95,11 +102,10 @@ const NavBar = () => {
               <NavLink to="/">Catalogo</NavLink>
             </Dropdown.Item>
             <Dropdown.Divider />
-            {/* <Dropdown.Item>Iniciar sesión</Dropdown.Item> */}
+            {/* aca llamo a la contante  */}
             {
               ocultarBoton
             }
-            {/* <Dropdown.Item>Registrarse</Dropdown.Item> */}
           </Dropdown>
 
           <Navbar.Toggle />
