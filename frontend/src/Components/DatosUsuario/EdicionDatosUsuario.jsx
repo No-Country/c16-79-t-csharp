@@ -6,6 +6,7 @@ import { Button, Checkbox, Label, Modal, TextInput } from "flowbite-react";
 import { useState, useRef, useEffect } from "react";
 import { useFetchPut } from "../../Helpers/useFetch";
 
+
 export const EdicionDatosUsuario = ({
   nombre,
   telefono,

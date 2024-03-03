@@ -3,8 +3,11 @@ import { useState } from "react";
 const api_url = import.meta.env.VITE_WEB_API_URL
 console.log(api_url)
 
+
+
+
 export const useFetchGet = (endPoint) => {
-   const fetchData = async () => {
+  const fetchData = async () => {
     try {
       const response = await fetch(`${api_url}/${endPoint}`, {
         headers: { 
@@ -15,11 +18,11 @@ export const useFetchGet = (endPoint) => {
       return data;
     } catch (error) {
       console.log("Error: " + error);
-    }  
-   }
-   return {
+    }
+  }
+  return {
     fetchData
-   };
+  };
 }
 
 /* Cari - creo un fech solo para el login que setee a la variable de token en el storage */
@@ -62,7 +65,7 @@ export const useFetchLogin = (endPoint, input) => {
 /* Cari - Este queda para usar en general - no resetea la variable token */
 export const useFetchPost = (endPoint, input) => {
 
-
+  // console.log(method)
   const [state, setState] = useState({
     data: "",
   });
@@ -94,7 +97,7 @@ export const useFetchPost = (endPoint, input) => {
   
     
   return {
-   state,
+    state,
     fetchData
   };
 };
@@ -122,24 +125,24 @@ export const useFetchPut = (endPoint, input) => {
           data,
         });
 
-      } catch (error) {
-        setState({
-          data: "",
-        });
-      }
-    };
-    
-    // useEffect(() => {
-    //   if(!endPoint){
-    //     return
-    //   }
-    //   fetchData();
-    //   //eslint-disable-next-line
-    // }, [])
-    
+    } catch (error) {
+      setState({
+        data: "",
+      });
+    }
+  };
+
+  // useEffect(() => {
+  //   if(!endPoint){
+  //     return
+  //   }
+  //   fetchData();
+  //   //eslint-disable-next-line
+  // }, [])
+
   return {
    state,
   fetchData
   };
-};    
+};
 

@@ -2,6 +2,8 @@ import { Button, FileInput, Label, Select, TextInput } from "flowbite-react";
 import { uploadFile } from "../../Helpers/CargarImagen";
 import { useEffect, useState } from "react";
 import { useFetchPost } from "../../Helpers/useFetch";
+import { useEffect, useState } from "react";
+import { useFetchPost } from "../../Helpers/useFetch";
 
 /* eslint-disable react/prop-types */
 export const CargarMascota = ({ nombre, raza, tipo, edad, peso }) => {
@@ -100,9 +102,11 @@ export const CargarMascota = ({ nombre, raza, tipo, edad, peso }) => {
           <TextInput
             id="nombre"
             name="name"
+            name="name"
             type="text"
             sizing="md"
             defaultValue={nombre}
+            onChange={actualizarDatos}
             onChange={actualizarDatos}
           />
         </div>
@@ -115,6 +119,8 @@ export const CargarMascota = ({ nombre, raza, tipo, edad, peso }) => {
             </div>
             <Select id="tipo" name="type" required onChange={actualizarDatos}>
               <option>Seleccionar opcion</option>
+            <Select id="tipo" name="type" required onChange={actualizarDatos}>
+              <option>Seleccionar opcion</option>
               <option>Perro</option>
               <option>Gato</option>
             </Select>
@@ -125,6 +131,7 @@ export const CargarMascota = ({ nombre, raza, tipo, edad, peso }) => {
           <div className="mb-2 block">
             <Label htmlFor="raza" value="Raza" />
           </div>
+          <TextInput id="raza" name="race" type="text" sizing="md" defaultValue={raza} onChange={actualizarDatos} />
           <TextInput id="raza" name="race" type="text" sizing="md" defaultValue={raza} onChange={actualizarDatos} />
         </div>
 
@@ -182,7 +189,9 @@ export const CargarMascota = ({ nombre, raza, tipo, edad, peso }) => {
             id="file-upload"
             onChange={(e) => setFile(e.target.files[0])}
             name="photo"
+            name="photo"
           />
+          <Button color="light" onClick={updateFotoUrl}>Cargar Foto</Button>
           <Button color="light" onClick={updateFotoUrl}>Cargar Foto</Button>
         </div>
         <Button type="submit" disabled={boton}>Guardar</Button>
