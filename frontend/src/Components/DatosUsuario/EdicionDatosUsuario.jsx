@@ -1,10 +1,11 @@
+/* eslint-disable react/prop-types */
 'use client';
 
 import { Button, Checkbox, Label, Modal, TextInput } from 'flowbite-react';
 import { useState } from 'react';
 import { useFetchPost } from "../../Helpers/useFetch";
 
-export const EdicionDatosUsuario = ({ nombreUsuario, telefono }) => {
+export const EdicionDatosUsuario = ({ nombreUsuario, telefono, nombre, apellido  }) => {
     // console.log(nombreUsuario, telefono)
 
     const method = "PUT"

@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
+
 
 export const useFetchGet = (endPoint) => {
    const fetchData = async () => {
@@ -51,17 +52,17 @@ export const useFetchPost = (endPoint, input) => {
         });
       }
     };
-    
+/*     
     useEffect(() => {
-      if(!endPoint){
-        return
-      }
-      fetchData();
+      if(!input){
+        fetchData();
+      }      
       //eslint-disable-next-line
-    }, [])
+    }, [input]) */
+    
     
   return {
    state,
-    fetchData
+  fetchData
   };
 };    
