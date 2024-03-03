@@ -2,8 +2,8 @@
 "use client";
 
 import { Button, Checkbox, Label, Modal, TextInput } from "flowbite-react";
-import { useState, useRef } from "react";
- import { useFetchPut } from "../../Helpers/useFetch";
+import { useState, useRef, useEffect } from "react";
+import { useFetchPut } from "../../Helpers/useFetch";
 
 export const EdicionDatosUsuario = ({
   nombre,
@@ -11,54 +11,58 @@ export const EdicionDatosUsuario = ({
   name,
   lastName,
 }) => {
-  // console.log(nombreUsuario, telefono)
 
-  const inputRefname = useRef(null);
-  const inputReftel = useRef(null);
-
-//   const method = "PUT";
+  const inputRefname = useRef();
+  const inputReftel = useRef();
 
   const [openModal, setOpenModal] = useState(false);
 
   const [input, setInput] = useState({
-    userName: "",
-    phoneNumber: "",
-    name: name,
-    lastName: lastName,
+    userName: nombre,
+    phoneNumber: telefono,
+    name,
+    lastName,
   });
 
-  const { fetchData } = useFetchPut("api/ClientUsers/me", input);
+  console.log("inputttt : ", input);
+  // console.log("state : ", state);
+
+
+  const actualizarDatos = () => {
+    setInput(input => ({
+      ...input,
+      name: name,
+      lastName: lastName
+    }))
+  }
+
+  useEffect(() => {
+    setInput(prevInput => ({
+      ...prevInput,
+      // userName: inputRefname?.current?.value,
+      // phoneNumber: inputReftel?.current?.value,
+      name: name,
+      lastName: lastName,
+    }));
+  }, [name, lastName]);
+
+  function onCloseModal() {
+    setOpenModal(false);
+    // setEmail('');
+  }
 
   const editarDatos = async () => {
-    setInput({
+    setInput(input => ({
       ...input,
       userName: inputRefname.current.value,
       phoneNumber: inputReftel.current.value,
-      name: name,
-      lastName: lastName,
-    });
-    return await fetchData();
+      // name: input.name,
+      // lastName: input.lastName,
+    }));
+    await fetchData();
+    setOpenModal(false);
   };
-
-  console.log("inputttt : ",input);
-
-  //   const actualizarDatos = (e) => {
-  //     const telefonoValue = inputRef.current.value;
-
-  //     if (e.target.name == "nombreusuario") {
-  //       setInput({
-  //         ...input,
-  //         [e.target.name]: e.target.value,
-  //         telefono: telefonoValue,
-  //       });
-  //     } else {
-  //       setInput({
-  //         ...input,
-  //         [e.target.name]: e.target.value,
-  //         nombreusuario: input.nombreusuario,
-  //       });
-  //     }
-  //   };
+  const { state, fetchData } = useFetchPut("api/ClientUsers/me", input);
 
   function onCloseModal() {
     setOpenModal(false);
@@ -83,7 +87,7 @@ export const EdicionDatosUsuario = ({
                 id="email"
                 placeholder="name@company.com"
                 defaultValue={nombre}
-                // onChange={actualizarDatos}
+                onChange={actualizarDatos}
                 required
                 name="nombreusuario"
                 ref={inputRefname}
@@ -100,7 +104,7 @@ export const EdicionDatosUsuario = ({
                 required
                 defaultValue={telefono}
                 name="telefono"
-                // onChange={actualizarDatos}
+                onChange={actualizarDatos}
                 ref={inputReftel}
               />
             </div>
