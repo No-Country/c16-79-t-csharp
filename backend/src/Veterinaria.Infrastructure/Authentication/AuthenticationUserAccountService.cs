@@ -21,7 +21,7 @@ using Veterinaria.Infrastructure.Persistance.Context;
 
 namespace Veterinaria.Infrastructure.Authentication
 {
-    public class AuthenticationUserAccountService : IAuthenticationUserAccountService //TODO:
+    public class AuthenticationUserAccountService : IAuthenticationUserAccountService
     {
         private readonly VeterinariaDbContext _context;
         private readonly UserManager<ApplicationUserAccount> _userManager;

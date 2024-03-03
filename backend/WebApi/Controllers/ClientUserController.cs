@@ -282,14 +282,15 @@ namespace WebApi.Controllers
 
         #endregion
 
-        // api/clientusers/me/pets/medicalhistories
+        // api/clientusers/me/pets/{id}/medicalhistories
         #region MedicalHistories
 
         #endregion
 
-        // api/clientusers/me/pets/dates
+        // api/clientusers/me/pets/[ dates | {id}/dates ]
         #region Dates
 
         #endregion
+
     }
 }
