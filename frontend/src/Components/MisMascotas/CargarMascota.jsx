@@ -102,12 +102,11 @@ export const CargarMascota = ({ nombre, raza, tipo, edad, peso }) => {
           <TextInput
             id="nombre"
             name="name"
-            name="name"
             type="text"
             sizing="md"
             defaultValue={nombre}
             onChange={actualizarDatos}
-            onChange={actualizarDatos}
+          
           />
         </div>
 
@@ -117,8 +116,7 @@ export const CargarMascota = ({ nombre, raza, tipo, edad, peso }) => {
             <div className="mb-2 block">
               <Label htmlFor="tipo" value="Selecciona tipo de mascota" />
             </div>
-            <Select id="tipo" name="type" required onChange={actualizarDatos}>
-              <option>Seleccionar opcion</option>
+
             <Select id="tipo" name="type" required onChange={actualizarDatos}>
               <option>Seleccionar opcion</option>
               <option>Perro</option>
@@ -188,7 +186,6 @@ export const CargarMascota = ({ nombre, raza, tipo, edad, peso }) => {
           <FileInput
             id="file-upload"
             onChange={(e) => setFile(e.target.files[0])}
-            name="photo"
             name="photo"
           />
           <Button color="light" onClick={updateFotoUrl}>Cargar Foto</Button>
