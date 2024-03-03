@@ -544,6 +544,27 @@ ad9b8391-4826-408b-811e-1414ad82f43b	admin@email.com	ADMIN@EMAIL.COM	admin@email
 --
 
 COPY public."CategorieProduct" ("CategoriesId", "ProductsId") FROM stdin;
+1	1
+6	1
+3	2
+5	2
+1	3
+5	3
+6	3
+2	4
+6	4
+3	5
+6	5
+1	6
+6	6
+6	7
+8	7
+3	8
+6	8
+5	9
+7	9
+3	10
+6	10
 \.
 
 
@@ -558,6 +579,8 @@ COPY public."Categories" ("Id", "Name") FROM stdin;
 4	Entretenimiento
 5	Gatos
 6	Perros
+7	Indumentaria
+8	Juguetes
 \.
 
 
@@ -611,6 +634,12 @@ COPY public."Products" ("Id", "Name", "Price", "Stock", "Description", "Image") 
 2	Collar para gatos	8.99	15	Accesorio para identificación y seguridad	https://acdn.mitiendanube.com/stores/001/145/238/products/screenshot_51-36d138dcdef37d293e16522805674373-1024-1024.webp
 3	Antipulgas y garrapatas	25.99	7	Protección contra parásitos externos	https://acdn.mitiendanube.com/stores/001/145/238/products/20a40-7c408903f56179129e17036219661011-480-0.webp
 4	Alimento para perros	39.94	11	Nutrición balanceada para perros adultos	https://acdn.mitiendanube.com/stores/001/145/238/products/urinary-perro-21-3578016b3f083c6ddf16063303514948-1024-1024.webp
+5	Bandana para perros con estampado floral rosa y azul - Small	8700.91	21	¡Podemos garantizarte que no encontrarás otro perro en el parque para perros con un pañuelo tan único como este!	https://i.pinimg.com/236x/8d/36/09/8d36099381fa1adbb64e2f479d04431f.jpg
+6	Cepillo Guante True Touch Mascotas Sacapelos Y Masajeador	3351.7	27	El Cepillo Guante True Touch es el aliado perfecto para el cuidado de tus mascotas. Este producto, diseñado con cerdas de goma, no solo ayuda a mantener el pelaje de tu mascota limpio y saludable, sino que también proporciona un agradable masaje que tu amigo de cuatro patas disfrutará.	https://http2.mlstatic.com/D_NQ_NP_889787-MLU72612721545_112023-O.webp
+7	Juguete Para Perros Peluche Con Chifle	32020	35	Juguetes de plush con chifle. Material no toxico para tu mascota. Apto para mascotas pequeñas	https://http2.mlstatic.com/D_NQ_NP_765483-MLA53415743195_012023-O.webp
+8	Pretal Arnes Millenium Con Correa Paseo Para Perros Y Gatos	2860.6	28	Fabricado en nylon. Pretal regulable. Mosquetón metálico resistente. Es cómodo para su mascota	https://http2.mlstatic.com/D_NQ_NP_613162-MLA47021424352_082021-O.webp
+9	Ropa para gatos tipo Smoking	5200.7	12	Ropa para gatos elegantes y con estilo.	https://i.pinimg.com/736x/96/24/11/96241137c40a97d29759c88553b9ddc1.jpg
+10	Pretal Táctico K9 Para Perros K9 Dog Trainers	18380.25	34	Este modelo de pretal de nylon Táctico, es cómodo y resistente. Nuestro pretal, confeccionado en nylon de alta calidad, cosido con hilo reforzado, se caracteriza por su ligereza, solidez, comodidad y su diseño de pechera regulable.	https://http2.mlstatic.com/D_NQ_NP_882444-MLA54976629462_042023-O.webp
 \.
 
 
@@ -627,6 +656,10 @@ COPY public."Sales" ("Id", "Date", "Total", "ClientUserId") FROM stdin;
 --
 
 COPY public."Services" ("Id", "Type", "Description", "Price") FROM stdin;
+1	Baño y corte de pelo	Baño y corte de pelo	3000
+2	Vacunación	Vacunación	5000
+3	Desparasitación	Desparasitación	5499.95
+4	Consulta médica	Consulta médica	6399.95
 \.
 
 
@@ -665,7 +698,7 @@ SELECT pg_catalog.setval('public."AspNetUserClaims_Id_seq"', 1, false);
 -- Name: Categories_Id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public."Categories_Id_seq"', 6, true);
+SELECT pg_catalog.setval('public."Categories_Id_seq"', 8, true);
 
 
 --
@@ -707,7 +740,7 @@ SELECT pg_catalog.setval('public."Pets_Id_seq"', 1, false);
 -- Name: Products_Id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public."Products_Id_seq"', 4, true);
+SELECT pg_catalog.setval('public."Products_Id_seq"', 10, true);
 
 
 --
@@ -721,7 +754,7 @@ SELECT pg_catalog.setval('public."Sales_Id_seq"', 1, false);
 -- Name: Services_Id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public."Services_Id_seq"', 1, false);
+SELECT pg_catalog.setval('public."Services_Id_seq"', 4, true);
 
 
 --
