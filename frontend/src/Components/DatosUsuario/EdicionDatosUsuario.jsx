@@ -6,11 +6,10 @@ import { Button, Checkbox, Label, Modal, TextInput } from "flowbite-react";
 import { useState, useRef, useEffect } from "react";
 import { useFetchPut } from "../../Helpers/useFetch";
 
-
 export const EdicionDatosUsuario = ({
   nombre,
   telefono,
-  nombre2,
+  nombreUsu,
   apellido,
 }) => {
   // usamos useState para controlar el estado del input del formulario.
@@ -22,8 +21,10 @@ export const EdicionDatosUsuario = ({
   });
 
   //usamos useref para referenciar el campo que vamos a cambiar(hablando de los inputs del modal)
-  const inputRefname = useRef(null);
-  const inputReftel = useRef(null);
+  const inputRefName = useRef(null);
+  const inputRefApellido = useRef(null);
+  const inputRefUserName = useRef(null);
+  const inputRefTel = useRef(null);
 
   const [openModal, setOpenModal] = useState(false);
 
@@ -32,12 +33,18 @@ export const EdicionDatosUsuario = ({
 
   //funcion dentro del  onClick para guardar los datos editados
   const editarDatos = async () => {
-    console.log("lognuevo", usuarioValue, telefonoValue, nombre2, apellido);
+    console.log(
+      "lognuevo",
+      usuarioValue,
+      telefonoValue,
+      nombreValue,
+      apellidoValue
+    );
     //pasa los campos editables al body del custom hook
     setInput((prevInput) => ({
       ...prevInput,
-      name: nombre2,
-      lastName: apellido,
+      name: nombreValue,
+      lastName: apellidoValue,
       userName: usuarioValue,
       phoneNumber: telefonoValue,
     }));
@@ -56,14 +63,20 @@ export const EdicionDatosUsuario = ({
     }
   }, [input]);
 
-
   //declaro variables para los campos editables
+
+  let nombreValue;
+  let apellidoValue;
   let telefonoValue;
   let usuarioValue;
+
   const actualizarDatos = () => {
     //este el onchange que lee el valor de los inputs despues de haberlos cambiado y los guarda en las variables que declare arriba
-    telefonoValue = inputReftel.current.value;
-    usuarioValue = inputRefname.current.value;
+
+    nombreValue = inputRefName.current.value;
+    apellidoValue = inputRefApellido.current.value;
+    telefonoValue = inputRefTel.current.value;
+    usuarioValue = inputRefUserName.current.value;
   };
 
   function onCloseModal() {
@@ -82,31 +95,61 @@ export const EdicionDatosUsuario = ({
 
             <div>
               <div className="mb-2 block">
-                <Label htmlFor="email" value="Nombre Usuario" />
+                <Label htmlFor="name" value="Nombre" />
               </div>
               <TextInput
-                id="email"
-                placeholder="name@company.com"
+                id="name"
+                placeholder="Nombre"
                 defaultValue={nombre}
                 onChange={actualizarDatos}
                 required
-                name="nombreusuario"
-                ref={inputRefname}
+                name="nombre"
+                ref={inputRefName}
               />
             </div>
 
             <div>
               <div className="mb-2 block">
-                <Label htmlFor="password" value="Teléfono" />
+                <Label htmlFor="name" value="Apellido" />
               </div>
               <TextInput
-                id="password"
+                id="apellido"
+                placeholder="Apellido"
+                defaultValue={apellido}
+                onChange={actualizarDatos}
+                required
+                name="Apellido"
+                ref={inputRefApellido}
+              />
+            </div>
+
+            <div>
+              <div className="mb-2 block">
+                <Label htmlFor="username" value="Nombre Usuario" />
+              </div>
+              <TextInput
+                id="username"
+                placeholder="Nombre de usuario"
+                defaultValue={nombreUsu}
+                onChange={actualizarDatos}
+                required
+                name="nombreusuario"
+                ref={inputRefUserName}
+              />
+            </div>
+
+            <div>
+              <div className="mb-2 block">
+                <Label htmlFor="phonenumber" value="Teléfono" />
+              </div>
+              <TextInput
+                id="phonenumber"
                 type="text"
                 required
                 defaultValue={telefono}
                 name="telefono"
                 onChange={actualizarDatos}
-                ref={inputReftel}
+                ref={inputRefTel}
               />
             </div>
 

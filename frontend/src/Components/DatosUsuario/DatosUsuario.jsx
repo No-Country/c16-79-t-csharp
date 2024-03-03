@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+
 import { Table } from "flowbite-react";
 import { useFetchGet } from "../../Helpers/useFetch";
 import { useEffect, useState } from "react";
@@ -25,7 +27,6 @@ const DatosUsuario = () => {
 
     };
     handleDatos();
-    //eslint-disable-next-line
   }, []);
 
   return (
@@ -33,35 +34,19 @@ const DatosUsuario = () => {
       <Table>
         <Table.Body className="divide-y">
 
-
-
           <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
             <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
               Nombre
             </Table.Cell>
             <Table.Cell>{first?.data?.name}</Table.Cell>
-            <Table.Cell>
-              <a
-                href="#"
-                className="font-medium text-cyan-600 hover:underline dark:text-cyan-500"
-              >
-                Edit
-              </a>
-            </Table.Cell>
+
           </Table.Row>
           <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
             <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
               Nombre Usuario
             </Table.Cell>
             <Table.Cell>{first?.data?.userName}</Table.Cell>
-            <Table.Cell>
-              <a
-                href="#"
-                className="font-medium text-cyan-600 hover:underline dark:text-cyan-500"
-              >
-                Edit
-              </a>
-            </Table.Cell>
+
           </Table.Row>
 
           <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
@@ -69,32 +54,18 @@ const DatosUsuario = () => {
               Apellido
             </Table.Cell>
             <Table.Cell>{first?.data?.lastName}</Table.Cell>
-            <Table.Cell>
-              <a
-                href="#"
-                className="font-medium text-cyan-600 hover:underline dark:text-cyan-500"
-              >
-                Edit
-              </a>
-            </Table.Cell>
+
           </Table.Row>
           <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
             <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
               Telefono
             </Table.Cell>
             <Table.Cell>{first?.data?.phoneNumber}</Table.Cell>
-            <Table.Cell>
-              <a
-                href="#"
-                className="font-medium text-cyan-600 hover:underline dark:text-cyan-500"
-              >
-                Edit
-              </a>
-            </Table.Cell>
+
           </Table.Row>
         </Table.Body>
       </Table>
-      <EdicionDatosUsuario nombre2={first?.data?.name} apellido={first?.data?.lastName} nombre={first?.data?.userName} telefono={first?.data?.phoneNumber} />
+      <EdicionDatosUsuario nombre={first?.data?.name} apellido={first?.data?.lastName} nombreUsu={first?.data?.userName} telefono={first?.data?.phoneNumber} />
     </div>
   );
 };
