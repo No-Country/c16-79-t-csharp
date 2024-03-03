@@ -13,13 +13,16 @@ const DatosUsuario = () => {
 
   useEffect(() => {
     const handleDatos = async () => {
-      try {
-        const data = await fetchData()
-        console.log("Data received:", data);
-        setfirst(data)
-      } catch (error) {
-        console.error("Error fetching data:", error);
+      if (localStorage.getItem("token")) {
+        try {
+          const data = await fetchData()
+          console.log("Data received:", data);
+          setfirst(data)
+        } catch (error) {
+          console.error("Error fetching data:", error);
+        }
       }
+
     };
     handleDatos();
     //eslint-disable-next-line

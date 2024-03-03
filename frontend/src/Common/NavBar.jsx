@@ -1,7 +1,32 @@
 import { Button, Dropdown, Navbar } from "flowbite-react";
-import { NavLink } from "react-router-dom"; 
+import { NavLink } from "react-router-dom";
 
 const NavBar = () => {
+
+  // necesito una funcion que vea si existe un token y si existe lo borre o lo 
+  // ponga en vacio
+  // necesito que cuando esté cerrada la sesion el boton de cerrar sesion no esté
+
+  // const aver = localStorage.getItem("token")
+  // console.log("token", aver)
+
+  // prueba50@prueba.com
+  // Argentina1!
+
+  const cerrarSesion = () => {
+    if (localStorage.getItem("token")) {
+      localStorage.setItem("token", "");
+      window.location.reload()
+    }
+  }
+
+  const ocultarBoton = localStorage.getItem("token")
+    ?
+    <Dropdown.Item onClick={cerrarSesion}
+    >Cerrar sesión
+    </Dropdown.Item>
+    :
+    null
 
   return (
     <>
@@ -70,9 +95,11 @@ const NavBar = () => {
               <NavLink to="/">Catalogo</NavLink>
             </Dropdown.Item>
             <Dropdown.Divider />
-            <Dropdown.Item>Iniciar sesión</Dropdown.Item>
-            <Dropdown.Item>Cerrar sesión</Dropdown.Item>
-            <Dropdown.Item>Registrarse</Dropdown.Item>
+            {/* <Dropdown.Item>Iniciar sesión</Dropdown.Item> */}
+            {
+              ocultarBoton
+            }
+            {/* <Dropdown.Item>Registrarse</Dropdown.Item> */}
           </Dropdown>
 
           <Navbar.Toggle />
