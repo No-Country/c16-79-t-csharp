@@ -153,7 +153,7 @@ namespace WebApi.Controllers
             };
             await _addressRepository.AddAsync(address);
             var addressDTO = _mapper.Map<AddressDTO>(address);
-            return Ok(new ResponseSucceded<AddressDTO>((int)HttpStatusCode.OK, addressDTO));
+            return Created("",new ResponseSucceded<AddressDTO>((int)HttpStatusCode.OK, addressDTO));
         }
 
         [Authorize(Roles = "Cliente")]
@@ -277,7 +277,7 @@ namespace WebApi.Controllers
             };
             await _petRepository.AddAsync(pet);
             var petDTO = _mapper.Map<PetDTO>(pet);
-            return Ok(petDTO);
+            return Created("",petDTO);
         }
 
         #endregion

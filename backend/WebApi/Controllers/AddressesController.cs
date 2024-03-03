@@ -38,7 +38,6 @@ namespace WebApi.Controllers
             var addressesDTO = _mapper.Map<IEnumerable<AddressDTO>>(addresses);
             return Ok(new ResponseSucceded<IEnumerable<AddressDTO>>((int)HttpStatusCode.OK, addressesDTO));
         }
-        //TODO: Crear un endPoint (my-addresses)
 
 
         //[HttpGet("GetByIdWithData/{id}")]
