@@ -1,9 +1,12 @@
 import { useState } from "react";
 
+
+const apiUrl = import.meta.env.VITE_LINK_API;
+console.log(apiUrl)
 export const useFetchGet = (endPoint) => {
   const fetchData = async () => {
     try {
-      const response = await fetch(`http://localhost:4600/${endPoint}`, {
+      const response = await fetch(`${apiUrl}${endPoint}`, {
         headers: {
           "Authorization": localStorage.getItem("token") ? `Bearer ${localStorage.getItem("token")}` : ""
         }
