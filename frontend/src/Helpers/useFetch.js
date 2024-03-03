@@ -22,6 +22,44 @@ export const useFetchGet = (endPoint) => {
    };
 }
 
+/* Cari - creo un fech solo para el login que setee a la variable de token en el storage */
+export const useFetchLogin = (endPoint, input) => {
+
+  const [state, setState] = useState({
+    data: "",
+  });
+ 
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`${api_url}/${endPoint}`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",            
+            "Authorization" : localStorage.getItem("token") ? `Bearer ${localStorage.getItem("token")}` : ""
+          },
+          body: JSON.stringify(input),
+        });
+        const data = await response.json();
+        /* Linea que setea token */
+        localStorage.setItem("token", data.token);
+        setState({
+          data,
+        });
+
+      } catch (error) {
+        setState({
+          data: "",
+        });
+      }
+    };
+    
+  return {
+   state,
+    fetchData
+  };
+};
+
+/* Cari - Este queda para usar en general - no resetea la variable token */
 export const useFetchPost = (endPoint, input) => {
 
 
@@ -41,7 +79,8 @@ export const useFetchPost = (endPoint, input) => {
           body: JSON.stringify(input),
         });
         const data = await response.json();
-        localStorage.setItem("token", data.token);
+        /* Aca se elimina la linea para que el token no pase a estar en blanco */
+/*         localStorage.setItem("token", data.token); */
         setState({
           data,
         });
@@ -52,14 +91,7 @@ export const useFetchPost = (endPoint, input) => {
         });
       }
     };
-    
-    // useEffect(() => {
-    //   if(!input){
-    //     return
-    //   }
-    //   fetchData();
-    //   //eslint-disable-next-line
-    // }, [input])
+  
     
   return {
    state,
