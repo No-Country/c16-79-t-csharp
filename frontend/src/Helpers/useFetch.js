@@ -1,9 +1,12 @@
 import { useState } from "react";
 
+const api_url = import.meta.env.VITE_WEB_API_URL
+console.log(api_url)
+
 export const useFetchGet = (endPoint) => {
    const fetchData = async () => {
     try {
-      const response = await fetch(`http://localhost:4600/${endPoint}`, {
+      const response = await fetch(`${api_url}/${endPoint}`, {
         headers: { 
         "Authorization" : localStorage.getItem("token") ? `Bearer ${localStorage.getItem("token")}` : ""
       }});
@@ -29,7 +32,7 @@ export const useFetchPost = (endPoint, input) => {
  
     const fetchData = async () => {
       try {
-        const response = await fetch(`http://localhost:4600/${endPoint}`, {
+        const response = await fetch(`${api_url}/${endPoint}`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",            
@@ -72,7 +75,7 @@ export const useFetchPut = (endPoint, input) => {
 
     const fetchData = async () => {
       try {
-        const response = await fetch(`http://localhost:4600/${endPoint}`, {
+        const response = await fetch(`${api_url}/${endPoint}`, {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",            

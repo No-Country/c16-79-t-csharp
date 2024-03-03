@@ -28,7 +28,7 @@ export const Login = () => {
     e.preventDefault()
     try {
       const response = await fetchData()
-      console.log(response)
+      //console.log(response)
       navigate("/");
     } catch (error) {
       console.log(error)
