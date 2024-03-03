@@ -9,11 +9,12 @@ export const ProductoDestacados = () => {
       {/* <h1 className='text-center text-4xl'>Destacados</h1> */}
       
       {/* <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 justify-items-center "> */}
-      <div className="container mx-auto py-10 px-8 max-w-6xl">
-      <h1 className="py-5 mb-4 text-2xl font-extrabold leading-none tracking-tight text-center text-gray-500 md:text-5xl lg:text-4xl dark:text-white">
+      <h1 className=" pt-8 mb-0 font-extrabold leading-none tracking-tight text-center text-gray-500 md:text-2xl lg:text-4xl dark:text-white">
         Productos de nuestro shop
       </h1>
-        <div className='grid sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-10'>
+      <div className="container mx-auto py-10 px-8 max-w-6xl">
+      
+        <div className='grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10'>
           {data.map((producto, index) => (
             <Card
               className="mb-5 cardProducto"
