@@ -29,6 +29,9 @@ const DatosUsuario = () => {
     <div className="overflow-x-auto container w-4/5 mx-auto mt-10 mb-10">
       <Table>
         <Table.Body className="divide-y">
+
+
+
           <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
             <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
               Nombre
@@ -88,7 +91,7 @@ const DatosUsuario = () => {
           </Table.Row>
         </Table.Body>
       </Table>
-      <EdicionDatosUsuario name={first?.data?.name} lastName={first?.data?.lastName} nombre={first?.data?.userName} telefono={first?.data?.phoneNumber} />
+      <EdicionDatosUsuario nombre2={first?.data?.name} apellido={first?.data?.lastName} nombre={first?.data?.userName} telefono={first?.data?.phoneNumber} />
     </div>
   );
 };

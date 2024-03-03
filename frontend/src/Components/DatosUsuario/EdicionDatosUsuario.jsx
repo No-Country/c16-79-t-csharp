@@ -1,72 +1,74 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/prop-types */
 "use client";
 
 import { Button, Checkbox, Label, Modal, TextInput } from "flowbite-react";
 import { useState, useRef, useEffect } from "react";
 import { useFetchPut } from "../../Helpers/useFetch";
+import { useState, useRef, useEffect } from "react";
+import { useFetchPut } from "../../Helpers/useFetch";
 
 export const EdicionDatosUsuario = ({
   nombre,
   telefono,
-  name,
-  lastName,
+  nombre2,
+  apellido,
 }) => {
+  // usamos useState para controlar el estado del input del formulario.
+  const [input, setInput] = useState({
+    userName: "",
+    phoneNumber: "",
+    name: "",
+    lastName: "",
+  });
 
-  const inputRefname = useRef();
-  const inputReftel = useRef();
+  //usamos useref para referenciar el campo que vamos a cambiar(hablando de los inputs del modal)
+  const inputRefname = useRef(null);
+  const inputReftel = useRef(null);
 
   const [openModal, setOpenModal] = useState(false);
 
-  const [input, setInput] = useState({
-    userName: nombre,
-    phoneNumber: telefono,
-    name,
-    lastName,
-  });
+  //desestructuro lo que necesito del usefetchput
+  const { fetchData } = useFetchPut("api/ClientUsers/me", input);
 
-  console.log("inputttt : ", input);
-  // console.log("state : ", state);
-
-
-  const actualizarDatos = () => {
-    setInput(input => ({
-      ...input,
-      name: name,
-      lastName: lastName
-    }))
-  }
-
-  useEffect(() => {
-    setInput(prevInput => ({
-      ...prevInput,
-      // userName: inputRefname?.current?.value,
-      // phoneNumber: inputReftel?.current?.value,
-      name: name,
-      lastName: lastName,
-    }));
-  }, [name, lastName]);
-
-  function onCloseModal() {
-    setOpenModal(false);
-    // setEmail('');
-  }
-
+  //funcion dentro del  onClick para guardar los datos editados
   const editarDatos = async () => {
-    setInput(input => ({
-      ...input,
-      userName: inputRefname.current.value,
-      phoneNumber: inputReftel.current.value,
-      // name: input.name,
-      // lastName: input.lastName,
+    console.log("lognuevo", usuarioValue, telefonoValue, nombre2, apellido);
+    //pasa los campos editables al body del custom hook
+    setInput((prevInput) => ({
+      ...prevInput,
+      name: nombre2,
+      lastName: apellido,
+      userName: usuarioValue,
+      phoneNumber: telefonoValue,
     }));
-    await fetchData();
-    setOpenModal(false);
   };
-  const { state, fetchData } = useFetchPut("api/ClientUsers/me", input);
+
+  //con este useffect puedo obtener telefono y nombre usuario y puedo editarlos, tambien cierra el modal, hace el timeout hace el reload para tener devuelta el get
+  useEffect(() => {
+    //evalua que el valor del array no sea "", si esta condicion se cumple ejecuta el fetchdata,setopenmodal y settimeout
+    //el settimeout se hace para que refresque la pagina con los datos actualizados
+    if (Object.values(input).some((value) => value !== "")) {
+      fetchData();
+      setOpenModal(false);
+      setTimeout(() => {
+        window.location.reload();
+      }, "1000");
+    }
+  }, [input]);
+
+
+  //declaro variables para los campos editables
+  let telefonoValue;
+  let usuarioValue;
+  const actualizarDatos = () => {
+    //este el onchange que lee el valor de los inputs despues de haberlos cambiado y los guarda en las variables que declare arriba
+    telefonoValue = inputReftel.current.value;
+    usuarioValue = inputRefname.current.value;
+  };
 
   function onCloseModal() {
     setOpenModal(false);
-    // setEmail('');
   }
   return (
     <div>
