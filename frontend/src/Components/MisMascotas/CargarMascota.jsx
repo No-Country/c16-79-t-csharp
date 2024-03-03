@@ -2,8 +2,6 @@ import { Button, FileInput, Label, Select, TextInput } from "flowbite-react";
 import { uploadFile } from "../../Helpers/CargarImagen";
 import { useEffect, useState } from "react";
 import { useFetchPost } from "../../Helpers/useFetch";
-import { useEffect, useState } from "react";
-import { useFetchPost } from "../../Helpers/useFetch";
 
 /* eslint-disable react/prop-types */
 export const CargarMascota = ({ nombre, raza, tipo, edad, peso }) => {
