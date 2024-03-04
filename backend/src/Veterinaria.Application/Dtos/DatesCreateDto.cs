@@ -5,6 +5,5 @@ namespace Veterinaria.Application.Dtos;
 public record DateCreateDto(
     DateTime Time,
     int ServiceId,
-    int PetId,
-    DateState StateDate
+    int PetId
 );
