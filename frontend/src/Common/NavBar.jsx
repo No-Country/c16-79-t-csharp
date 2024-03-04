@@ -3,34 +3,25 @@ import { NavLink, useNavigate } from "react-router-dom";
 
 const NavBar = () => {
 
-  // prueba50@prueba.com
-  // Argentina1!
-
   // me guardo la funcion para moverme al home despues de cerrar sesión
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   // verifica si existe token en local storage y si existe lo borra y lo vuelve al home despues de cerrar sesión
   const cerrarSesion = () => {
     if (localStorage.getItem("token")) {
-      localStorage.setItem("token", "");
-      navigate("/")
+      localStorage.removeItem("token");
+      navigate("/");
     }
-  }
+  };
 
   //  constante para guardarme cuando quiero mostra y ocultar el boton de cerrar sesión
-  const ocultarBoton = localStorage.getItem("token")
-    ?
-    <Dropdown.Item onClick={cerrarSesion}
-    >Cerrar sesión
-    </Dropdown.Item>
-    :
-    null
+  const mostrarCerrarSesion = localStorage.getItem("token") ? true : false;
 
   return (
     <>
       <Navbar fluid rounded className="container max-w-6xl mx-auto">
         <Navbar.Brand href="#" className=" mx-auto md:ml-0">
-          <NavLink to="/" >
+          <NavLink to="/">
             <img
               src="/Huella_amiga-removebg-preview.png"
               className="md:mr-12 md:h-12 h-24"
@@ -40,22 +31,16 @@ const NavBar = () => {
         </Navbar.Brand>
         <div className="flex md:order-2 mx-auto">
           <div>
-            <Button.Group className=" mr-2">
-              <NavLink to={"/login"}>
-                <Button
-                  color="gray"
-                >
-                  Iniciar Sesión
-                </Button>
-              </NavLink>
-              <NavLink to={"/registro"} className=" ml-2">
-                <Button
-                  color="gray"
-                >
-                  Registrarse
-                </Button>
-              </NavLink>
-            </Button.Group>
+            {!mostrarCerrarSesion && ( // Mostrar botones solo si no está logeado
+              <Button.Group className=" mr-2">
+                <NavLink to={"/login"}>
+                  <Button color="gray">Iniciar Sesión</Button>
+                </NavLink>
+                <NavLink to={"/registro"} className=" ml-2">
+                  <Button color="gray">Registrarse</Button>
+                </NavLink>
+              </Button.Group>
+            )}
           </div>
           <Dropdown
             arrowIcon={false}
@@ -93,36 +78,35 @@ const NavBar = () => {
               <NavLink to="/">Catalogo</NavLink>
             </Dropdown.Item>
             <Dropdown.Divider />
-            {/* aca llamo a la contante  */}
-            {
-              ocultarBoton
-            }
+            {mostrarCerrarSesion && ( // Mostrar botón de cerrar sesión solo si está logeado
+              <Dropdown.Item onClick={cerrarSesion}>Cerrar sesión</Dropdown.Item>
+            )}
           </Dropdown>
 
           <Navbar.Toggle />
         </div>
         <Navbar.Collapse>
           <Navbar.Link>
-            <NavLink to="/" className="text-base">Inicio</NavLink>
-          </Navbar.Link>
-          {/* <Navbar.Link>
-            <NavLink to="" className="text-base">Tienda</NavLink>
-          </Navbar.Link> */}
-          {/* <Navbar.Link>
-            <NavLink to="" className="text-base">Quiero Adoptar</NavLink>
-          </Navbar.Link> */}
-          <Navbar.Link>
-            <NavLink to="/agenda" className="text-base">Agenda</NavLink>
+            <NavLink to="/" className="text-base">
+              Inicio
+            </NavLink>
           </Navbar.Link>
           <Navbar.Link>
-            <NavLink to="/servicios" className="text-base">Servicios</NavLink>
+            <NavLink to="/agenda" className="text-base">
+              Agenda
+            </NavLink>
           </Navbar.Link>
-          {/* <Navbar.Link>
-            <NavLink to="" className="text-base">Perdidos y Encontrados</NavLink>
-          </Navbar.Link> */}
           <Navbar.Link>
-            <NavLink to="/quienessomos" className="text-base">Quienes Somos</NavLink>
+            <NavLink to="/servicios" className="text-base">
+              Servicios
+            </NavLink>
           </Navbar.Link>
+          <Navbar.Link>
+            <NavLink to="/quienessomos" className="text-base">
+              Quienes Somos
+            </NavLink>
+          </Navbar.Link>
+          {/* Agregar otros enlaces aquí */}
         </Navbar.Collapse>
       </Navbar>
     </>

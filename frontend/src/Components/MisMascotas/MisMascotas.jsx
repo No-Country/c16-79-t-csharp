@@ -2,14 +2,18 @@
 import { useState,useEffect } from "react";
 import { useFetchGet } from "../../Helpers/useFetch";
 import { Card } from "flowbite-react";
+//import MascotasJson from "../../json/mascotas.json";
 import { ListGroup } from "flowbite-react";
 import { HiUserCircle } from "react-icons/hi";
 import { BsCalendar2DateFill } from "react-icons/bs";
 import { GiWeight } from "react-icons/gi";
 import { MdOutlinePets } from "react-icons/md";
 import "./misMascotas.css";
+import { useEffect, useState } from "react";
+import { useFetchGet } from "../../Helpers/useFetch";
 
 export const MisMascotas = () => {
+
 
   const [info, setInfo] = useState([])
 
@@ -22,11 +26,10 @@ export const MisMascotas = () => {
       if (localStorage.getItem("token")) {
         try {
           const respuesta = await fetchData()
-          console.log("Data received:", respuesta.data);
+          // console.log("Data received:", respuesta.data);
           const pruebaRes = respuesta.data
-
+          console.log("pruebaRes", pruebaRes)
           setInfo(pruebaRes)
-
         } catch (error) {
           console.error("Error fetching data:", error);
         }
@@ -34,13 +37,13 @@ export const MisMascotas = () => {
 
     };
     handleDatos();
-    console.log("pruebaRes: ",info)
+    // console.log("pruegaRes: ", info)
   }, []);
+
 
   return (
     <div className="container max-w-7xl flex justify-center gap-10 mt-10 mb-10">
-      
-      {info.length>0? (info?.map((d) => {
+      {info.length > 0 ? info?.map((d) => {
         return (
           <Card
             key={d.id}
@@ -62,7 +65,7 @@ export const MisMascotas = () => {
             </div>
           </Card>
         );
-      })): <h2 className="py-5 mb-4 text-xl font-extrabold leading-none tracking-tight text-center text-gray-500 md:text-2xl lg:text-2xl dark:text-white">Usted no tiene mascotas ingresadas.</h2>}
+      }) : <p>no tiene mascotas</p>}
     </div>
   );
 };
