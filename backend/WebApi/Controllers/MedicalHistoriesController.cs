@@ -10,6 +10,9 @@ using System.Security.Claims;
 
 namespace WebApi.Controllers
 {
+    /* 
+    
+    */
     [ApiController]
     [Route("api/[controller]")]
     public class MedicalHistoriesController : Controller
@@ -70,20 +73,21 @@ namespace WebApi.Controllers
         }
         [Authorize(Roles = "Cliente")]
         [HttpGet("MyPets")]
-        public async Task<ActionResult<ResponseSucceded<IEnumerable<DateDto>>>> GetAllMyPets()
+        public async Task<ActionResult<ResponseSucceded<IEnumerable<MedicalHistoriesDto>>>> GetMyPetHistories(IEnumerable<int> ids)
         {
+            // Ver: pueden darme un array?
             List<MedicalHistory> MHistory = await _MHService.GetAllAsync();
-
-            //
-            ClaimsPrincipal claims = this.User;
-            var idUser = claims.FindFirst(u => u.Type == ClaimTypes.NameIdentifier)?.Value;
-            //TODO: Usar AutoMapper cuando este configurado?
+        
             IEnumerable<MedicalHistoriesDto> MHDto =
-               MHistory.Select(
+               MHistory
+               .Where(c => ids.Contains(c.PetId))
+               .Select(
                     c => new MedicalHistoriesDto(c.Id, c.Diagnostic, c.Medic, c.Time, c.PetId));
+                    
             return Ok(
                 new ResponseSucceded<IEnumerable<MedicalHistory>>((int)HttpStatusCode.OK, (IEnumerable<MedicalHistory>)MHDto)
             );
         }
+        
     }
 }
