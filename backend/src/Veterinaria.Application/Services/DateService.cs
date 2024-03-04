@@ -10,11 +10,12 @@ public class DateService : IDateServise
 {
     private readonly IDateRepository _repository;
     private readonly IServiceService _servicesService;
-    // TODO: Agregar el servicio de Pets
-    public DateService(IDateRepository repository, IServiceService servicesService)
+    private readonly IPetRepository _petRepository;
+    public DateService(IDateRepository repository, IServiceService servicesService,IPetRepository petRepository)
     {
         _repository = repository;
         _servicesService = servicesService;
+        _petRepository = petRepository;
     }
     public Task ChangeState(int id, DateState state)
     {
@@ -24,7 +25,11 @@ public class DateService : IDateServise
     public async Task<Date> CreateAsync(DateTime time, int serviceId, int petId)
     {
         await _servicesService.GetByIdAsync(serviceId);
-        //TODO: agregar verificacion de existencia del Pet
+        
+        var pet = await _petRepository.FindByIdAsync(petId);
+        if (pet == null){
+            throw ResourceNotFoundException.NotFoundById<Pet,int>(petId);
+        }
         Date model = Date.Create(time, serviceId, petId);
         Date savedModel = await _repository.AddAsync(model);
         return savedModel;
@@ -53,6 +58,10 @@ public class DateService : IDateServise
     public async Task<Date> UpdateAsync(int id, DateTime time, int serviceId, int petId, DateState state)
     {
         await _servicesService.GetByIdAsync(serviceId);
+        var pet = await _petRepository.FindByIdAsync(petId);
+        if (pet == null){
+            throw ResourceNotFoundException.NotFoundById<Pet,int>(petId);
+        }
         Date model = await GetByIdAsync(id);
         model.UpdateModel(time, serviceId, petId, state);
         Date updatedModel = await _repository.UpdateAsync(model);
