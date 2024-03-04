@@ -1,5 +1,5 @@
 import { Card } from "flowbite-react";
-import MascotasJson from "../../json/mascotas.json";
+//import MascotasJson from "../../json/mascotas.json";
 import { ListGroup } from "flowbite-react";
 import { HiUserCircle } from "react-icons/hi";
 import { BsCalendar2DateFill } from "react-icons/bs";
