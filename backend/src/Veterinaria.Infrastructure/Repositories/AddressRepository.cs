@@ -30,5 +30,12 @@ namespace Veterinaria.Infrastructure.Repositories
             var address = await _context.Addresses.Include(a => a.ClientUser).FirstOrDefaultAsync(filtro);
             return address;
         }
+
+        public async Task<List<Address>> FindAllByUser(int idUser)
+        {
+            List<Address> addresses = await _context.Addresses.Where(a => a.ClientUserId == idUser).ToListAsync();
+
+            return addresses;
+        }
     }
 }
