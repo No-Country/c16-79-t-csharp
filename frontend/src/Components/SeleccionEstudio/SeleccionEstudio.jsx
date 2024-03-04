@@ -35,6 +35,10 @@ const SeleccionEstudio = ({ sendDataToParent }) => {
     sendDataToParent(valueEstudio); // Invocando la función del componente padre y pasando datos como argumento
     console.log("value estudio: ", valueEstudio);
   }, [valueEstudio]);
+
+
+
+
   return (
     <div>
       <div className="max-w-md">
@@ -45,7 +49,7 @@ const SeleccionEstudio = ({ sendDataToParent }) => {
           <option>--</option>
           {info.length > 0 ? (
             info?.map((d) => {
-              return <option key={d.id}>{d.type}</option>;
+              return <option value={d.id} key={d.id}>{d.type}</option>;
             })
           ) : (
             <option>No tiene tipos cargados </option>

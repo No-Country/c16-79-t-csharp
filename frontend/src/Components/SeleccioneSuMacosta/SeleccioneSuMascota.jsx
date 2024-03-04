@@ -50,7 +50,7 @@ export const SeleccioneSuMascota = ({ sendDataToParent }) => {
           <option>--</option>
           {info.length > 0 ? (
             info?.map((d) => {
-              return <option key={d.id}>{d.name}</option>;
+              return <option value={d.id} key={d.id}>{d.name}</option>;
             })
           ) : (
             <option>No tiene mascotas cargadas </option>

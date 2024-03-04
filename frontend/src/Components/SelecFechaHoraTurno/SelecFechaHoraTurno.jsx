@@ -1,38 +1,37 @@
-import { Label, Select, Datepicker } from "flowbite-react";
-import { horasTurnos } from "./data/horas.js";
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable react/prop-types */
+import DatePicker from "react-datepicker";
 import { useEffect, useState } from "react";
+import "react-datepicker/dist/react-datepicker.css";
+// import { utcToZonedTime } from "date-fns-tz"
 
-export const SelecFechaHoraTurno = () => {
-  const horasDisponibles = [...horasTurnos];
-
+export const SelecFechaHoraTurno = ({sendDataToParent}) => {
   const [fechaSeleccionada, setFechaSeleccionada] = useState();
 
   //Lógica para enviar datos al padre
 
-  // const guardarFecha = (e) => {
-  //   setFechaSeleccionada(e.target.value);
-  // };
-
   useEffect(() => {
-    console.log("fecha guardada: ", fechaSeleccionada);
-    console.log("tipo de fecha: ", typeof fechaSeleccionada);
+    sendDataToParent(fechaSeleccionada); // Invocando la función del componente padre y pasando datos como argumento
+    console.log("value fecha y hora: ", fechaSeleccionada);
   }, [fechaSeleccionada]);
 
   return (
     <div className="container flex-col mx-auto w-96">
-      <Datepicker 
-      value={fechaSeleccionada} 
-      onChange={(e)=>{setFechaSeleccionada(e)}} />
-      <div className="max-w-md">
-        <div className="mb-2 block">
-          <Label htmlFor="countries" value="Seleccione un horario" />
-        </div>
-        <Select id="countries" required>
-          {horasDisponibles.map((d) => (
-            <option key={d}>{d.hora}</option>
-          ))}
-        </Select>
-      </div>
+      <DatePicker
+        value={fechaSeleccionada}
+        showTimeSelect
+        showTimeInput
+        filterTime={(time) => {
+          const hour = time.getHours();
+          return hour >= 8 && hour <= 20;
+        }}
+        onChange={(date) => {
+          const utcDate = new Date(
+            date.getTime() + date.getTimezoneOffset() * 60000
+          );
+          setFechaSeleccionada(utcDate.toISOString());
+        }}
+      />
     </div>
   );
 };
