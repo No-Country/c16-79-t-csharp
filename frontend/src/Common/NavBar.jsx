@@ -2,26 +2,28 @@ import { Button, Dropdown, Navbar } from "flowbite-react";
 import { NavLink, useNavigate } from "react-router-dom";
 
 const NavBar = () => {
-
-  // me guardo la funcion para moverme al home despues de cerrar sesión
   const navigate = useNavigate();
 
-  // verifica si existe token en local storage y si existe lo borra y lo vuelve al home despues de cerrar sesión
+  // Función para cerrar sesión
   const cerrarSesion = () => {
+    // Verificar si hay un token en el almacenamiento local
     if (localStorage.getItem("token")) {
+      // Eliminar el token del almacenamiento local
       localStorage.removeItem("token");
+      // Redirigir al usuario al inicio
       navigate("/");
     }
   };
 
-  //  constante para guardarme cuando quiero mostra y ocultar el boton de cerrar sesión
-  const mostrarCerrarSesion = localStorage.getItem("token") ? true : false;
+  // Verificar si el usuario está logueado
+  const isLoggedIn = localStorage.getItem("token") ? true : false;
 
   return (
     <>
       <Navbar fluid rounded className="container max-w-6xl mx-auto">
         <Navbar.Brand href="#" className=" mx-auto md:ml-0">
           <NavLink to="/">
+            {/* Logo */}
             <img
               src="/Huella_amiga-removebg-preview.png"
               className="md:mr-12 md:h-12 h-24"
@@ -31,7 +33,8 @@ const NavBar = () => {
         </Navbar.Brand>
         <div className="flex md:order-2 mx-auto">
           <div>
-            {!mostrarCerrarSesion && ( // Mostrar botones solo si no está logeado
+            {/* Mostrar botones de inicio de sesión y registro solo si el usuario no está logueado */}
+            {!isLoggedIn && (
               <Button.Group className=" mr-2">
                 <NavLink to={"/login"}>
                   <Button color="gray">Iniciar Sesión</Button>
@@ -65,20 +68,21 @@ const NavBar = () => {
             }
           >
             <Dropdown.Header>
+              {/* Información del usuario */}
               <span className="block text-sm">Bonnie Green</span>
               <span className="block truncate text-sm font-medium">
                 name@flowbite.com
               </span>
             </Dropdown.Header>
             <NavLink to="/perfil">
-              {" "}
               <Dropdown.Item>Perfil</Dropdown.Item>
             </NavLink>
             <Dropdown.Item>
               <NavLink to="/">Catalogo</NavLink>
             </Dropdown.Item>
             <Dropdown.Divider />
-            {mostrarCerrarSesion && ( // Mostrar botón de cerrar sesión solo si está logeado
+            {/* Botón de cerrar sesión visible solo si el usuario está logueado */}
+            {isLoggedIn && (
               <Dropdown.Item onClick={cerrarSesion}>Cerrar sesión</Dropdown.Item>
             )}
           </Dropdown>
@@ -87,21 +91,27 @@ const NavBar = () => {
         </div>
         <Navbar.Collapse>
           <Navbar.Link>
+            {/* Enlace al inicio */}
             <NavLink to="/" className="text-base">
               Inicio
             </NavLink>
           </Navbar.Link>
+          {/* Enlace a la agenda visible solo si el usuario está logueado */}
+          {isLoggedIn && (
+            <Navbar.Link>
+              <NavLink to="/agenda" className="text-base">
+                Agenda
+              </NavLink>
+            </Navbar.Link>
+          )}
           <Navbar.Link>
-            <NavLink to="/agenda" className="text-base">
-              Agenda
-            </NavLink>
-          </Navbar.Link>
-          <Navbar.Link>
+            {/* Enlace a los servicios */}
             <NavLink to="/servicios" className="text-base">
               Servicios
             </NavLink>
           </Navbar.Link>
           <Navbar.Link>
+            {/* Enlace a la página "Quienes Somos" */}
             <NavLink to="/quienessomos" className="text-base">
               Quienes Somos
             </NavLink>
