@@ -3,17 +3,8 @@ import { NavLink, useNavigate } from "react-router-dom";
 
 const NavBar = () => {
 
-  // necesito una funcion que vea si existe un token y si existe lo borre o lo 
-  // ponga en vacio
-  // necesito que cuando esté cerrada la sesion el boton de cerrar sesion no esté
-
-  // const aver = localStorage.getItem("token")
-  // console.log("token", aver)
-
   // prueba50@prueba.com
   // Argentina1!
-
-
 
   // me guardo la funcion para moverme al home despues de cerrar sesión
   const navigate = useNavigate()

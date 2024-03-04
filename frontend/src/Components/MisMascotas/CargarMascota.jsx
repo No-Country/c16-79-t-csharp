@@ -1,4 +1,4 @@
-import { Button, FileInput, Label, Select, TextInput } from "flowbite-react";
+import { Button, Datepicker, FileInput, Label, Select, TextInput,Controller } from "flowbite-react";
 import { uploadFile } from "../../Helpers/CargarImagen";
 import { useEffect, useState } from "react";
 import { useFetchPost } from "../../Helpers/useFetch";
@@ -148,14 +148,27 @@ export const CargarMascota = ({ nombre, raza, tipo, edad, peso }) => {
             <div className="mb-2 block">
               <Label htmlFor="birthday" value="Nacimiento" />
             </div>
-            <TextInput
+            {/* <TextInput
               id="birthday"
               type="text"
               sizing="md"
               name="birthday"
               onChange={actualizarDatos}
               placeholder="formato: dd/mm/aaaa"
-            />
+            /> */}
+            <Controller name="date"
+            control={control}
+            rules={{ required: 'Date is required' }}
+            render=
+            {({ field }) => (
+             <Datepicker
+              value={field.value}
+              onSelectedDateChanged={(date) => field.onChange(date)}
+              dateFormat="yyyy-MM-dd"
+              className="border rounded px-4 py-2 w-full" />
+            )}
+          />
+
           </div>
 
           <div>
