@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Veterinaria.Domain.Models;
+using Veterinaria.Domain.Services;
 using Veterinaria.Domain.Repositories;
 using Veterinaria.Infrastructure.Persistance.Context;
 
@@ -14,7 +15,9 @@ public class DateRepository : BasicRepository<Date, int>, IDateRepository
 
     public async Task<List<Date>> FindAllByClientUserAsync(int id)
     {
-        List<Date> dates = await _context.Dates.Include( x => x.Pet).Where( y => y.Pet.ClientUserId== id).ToListAsync();
+        List<Date> dates = await _context.Dates.Include( x => x.Pet)
+                                                .Include(j => j.Service)
+                                                .Where( y => y.Pet.ClientUserId== id).ToListAsync();
         return dates;
         
     }
