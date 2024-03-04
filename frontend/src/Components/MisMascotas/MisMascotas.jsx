@@ -1,6 +1,4 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useState,useEffect } from "react";
-import { useFetchGet } from "../../Helpers/useFetch";
 import { Card } from "flowbite-react";
 //import MascotasJson from "../../json/mascotas.json";
 import { ListGroup } from "flowbite-react";

@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Veterinaria.Application.DTO
+namespace Veterinaria.Application.Dtos
 {
-    public class UserAccountResponseRegisterDTO
+    public class UserAccountResponseRegisterDTO // TODO: agreagar validaciones
     {
         public string Id { get; set; }
         public string Email { get; set; }

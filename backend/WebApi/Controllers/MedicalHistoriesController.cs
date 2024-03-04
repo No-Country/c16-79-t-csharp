@@ -5,9 +5,14 @@ using Veterinaria.Application.Dtos.Wrappers;
 using Veterinaria.Application.Dtos;
 using Veterinaria.Domain.Services;
 using Veterinaria.Domain.Models;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace WebApi.Controllers
 {
+    /* 
+    
+    */
     [ApiController]
     [Route("api/[controller]")]
     public class MedicalHistoriesController : Controller
@@ -66,5 +71,23 @@ namespace WebApi.Controllers
             await _MHService.DeleteAsync(id);
             return NoContent();
         }
+        [Authorize(Roles = "Cliente")]
+        [HttpGet("MyPets")]
+        public async Task<ActionResult<ResponseSucceded<IEnumerable<MedicalHistoriesDto>>>> GetMyPetHistories(IEnumerable<int> ids)
+        {
+            // Ver: pueden darme un array?
+            List<MedicalHistory> MHistory = await _MHService.GetAllAsync();
+        
+            IEnumerable<MedicalHistoriesDto> MHDto =
+               MHistory
+               .Where(c => ids.Contains(c.PetId))
+               .Select(
+                    c => new MedicalHistoriesDto(c.Id, c.Diagnostic, c.Medic, c.Time, c.PetId));
+                    
+            return Ok(
+                new ResponseSucceded<IEnumerable<MedicalHistory>>((int)HttpStatusCode.OK, (IEnumerable<MedicalHistory>)MHDto)
+            );
+        }
+        
     }
 }

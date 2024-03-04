@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Veterinaria.Application.DTO
+namespace Veterinaria.Application.Dtos
 {
     public class UserAccountResponseLoginDTO
     {
         public ClientUserDTO ClientUser { get; set; } = null!;
-        public string Token { get; set; }
+        public string Token { get; set; } = string.Empty;
     }
 }

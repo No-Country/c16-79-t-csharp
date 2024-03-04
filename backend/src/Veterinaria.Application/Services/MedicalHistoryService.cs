@@ -9,16 +9,20 @@ namespace Veterinaria.Application.Services;
 public class MedicalHistoryService : IMedicalHistoryService
 {
     private readonly IMedicalHistoryRepository _repository;
-
-    // TODO: Agregar el servicio de los Pets
-    public MedicalHistoryService(IMedicalHistoryRepository repository)
+    private readonly IPetRepository _petRepository;
+    public MedicalHistoryService(IMedicalHistoryRepository repository,IPetRepository petRepository)
     {
         _repository = repository;
+        _petRepository = petRepository;
     }
 
     public async Task<MedicalHistory> CreateAsync(string diagnostic, string medic, DateTime time, int petId)
     {
         MedicalHistory model = MedicalHistory.Create(diagnostic, medic, time, petId);
+        var pet = await _petRepository.FindByIdAsync(petId);
+        if (pet == null){
+            throw ResourceNotFoundException.NotFoundById<Pet,int>(petId);
+        }
         MedicalHistory savedModel = await _repository.AddAsync(model);
         return savedModel;
     }
@@ -46,6 +50,10 @@ public class MedicalHistoryService : IMedicalHistoryService
     public async Task<MedicalHistory> UpdateAsync(int id, string diagnostic, string medic, DateTime time, int petId)
     {
         MedicalHistory model = await GetByIdAsync(id);
+        var pet = await _petRepository.FindByIdAsync(petId);
+        if (pet == null){
+            throw ResourceNotFoundException.NotFoundById<Pet,int>(petId);
+        }
         model.UpdateModel(diagnostic, medic, time, petId);
         MedicalHistory updatedModel = await _repository.UpdateAsync(model);
         return updatedModel;

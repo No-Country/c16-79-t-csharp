@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Veterinaria.Application.DTO;
 using Veterinaria.Application.Dtos;
 using Veterinaria.Domain.Models;
 using Veterinaria.Infrastructure.Authentication;
@@ -13,13 +12,13 @@ namespace WebApi.Utilities
             CreateMap<PetCreationDTO, Pet>().ForMember(d => d.Birthday, opt => opt.MapFrom(o => DateOnly.ParseExact(o.Birthday, "dd/MM/yyyy")))
                                             .ForMember(d => d.Id, o => o.Ignore())
                                             .ForMember(d => d.ClientUser, o => o.Ignore());
-            CreateMap<Pet, PetDTO>().ForPath(d => d.ClientUserName, opt => opt.MapFrom(o => o.ClientUser.Name))
-                                    .ForMember(d => d.Birthday, opt => opt.MapFrom(o => o.Birthday.ToString("dd/MM/yyyy")));
+            CreateMap<Pet, PetDTO>().ForMember(d => d.Birthday, opt => opt.MapFrom(o => o.Birthday.ToString("dd/MM/yyyy")))
+                                            .ForMember(d => d.Age, opt => opt.MapFrom(o => o.CalculateAge()));
 
 
             CreateMap<AddressCreationDTO, Address>().ForMember(d => d.Id, o => o.Ignore())
                                                     .ForMember(d => d.ClientUser, o => o.Ignore());
-            CreateMap<Address, AddressDTO>().ForPath(d => d.ClientUserName, opt => opt.MapFrom(o => o.ClientUser.Name));
+            CreateMap<Address, AddressDTO>();
 
 
             CreateMap<ApplicationUserAccount, UserAccountResponseRegisterDTO>();

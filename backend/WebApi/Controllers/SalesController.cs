@@ -11,11 +11,11 @@ namespace WebApi.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class SaleController : ControllerBase
+    public class SalesController : ControllerBase
     {
         private readonly ISaleService _saleService;
         private readonly IMapper _mapper;
-        public SaleController(ISaleService saleService, IMapper mapper)
+        public SalesController(ISaleService saleService, IMapper mapper)
         {
             _saleService = saleService;
             _mapper = mapper;
