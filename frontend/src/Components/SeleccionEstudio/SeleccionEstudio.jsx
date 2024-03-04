@@ -1,11 +1,12 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Dropdown } from 'flowbite-react';
+import { Select, Label } from "flowbite-react";
 import { useFetchGet } from "../../Helpers/useFetch";
 import { useEffect, useState } from "react";
 
-const SeleccionEstudio = () => {
+const SeleccionEstudio = ({ sendDataToParent }) => {
   const [info, setInfo] = useState([]);
-
+  const [valueEstudio, setValueEstudio] = useState();
   console.log("info", info);
 
   const { fetchData } = useFetchGet("api/Services");
@@ -24,27 +25,35 @@ const SeleccionEstudio = () => {
     };
     handleDatos();
   }, []);
+
+  //Lógica para enviar datos al padre
+  const sendData = (e) => {
+    setValueEstudio(e.target.value);
+  };
+
+  useEffect(() => {
+    sendDataToParent(valueEstudio); // Invocando la función del componente padre y pasando datos como argumento
+    console.log("value estudio: ", valueEstudio);
+  }, [valueEstudio]);
   return (
+    <div>
+      <div className="max-w-md">
+        <div className="mb-2 block">
+          <Label htmlFor="countries" value="Select your country" />
+        </div>
+        <Select id="countries" required onChange={sendData}>
+          <option>--</option>
+          {info.length > 0 ? (
+            info?.map((d) => {
+              return <option key={d.id}>{d.type}</option>;
+            })
+          ) : (
+            <option>No tiene tipos cargados </option>
+          )}
+        </Select>
+      </div>
+    </div>
+  );
+};
 
-    <Dropdown label="Consulta Medica" dismissOnClick={false}>
-    {info.length > 0 ? (
-      info?.map((d) => {
-        return <Dropdown.Item key={d.id}>{d.type}</Dropdown.Item>;
-      })
-    ) : (
-      <Dropdown.Item >No tiene tipos cargados </Dropdown.Item>
-  )}
-  </Dropdown>
-    
-/*     <div>
-          <Dropdown label="Consulta Medica" dismissOnClick={false}>
-      <Dropdown.Item>Vacunación</Dropdown.Item>
-      <Dropdown.Item>Analisis De Sangre</Dropdown.Item>
-      <Dropdown.Item>Ecografia</Dropdown.Item>
-      <Dropdown.Item>Corte De Pelo</Dropdown.Item>
-    </Dropdown>
-    </div> */
-  )
-}
-
-export default SeleccionEstudio
+export default SeleccionEstudio;
