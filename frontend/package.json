@@ -17,6 +17,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.22.1",
+    "tailwind-datepicker-react": "^1.4.3",
     "uuid": "^9.0.1"
   },
   "devDependencies": {

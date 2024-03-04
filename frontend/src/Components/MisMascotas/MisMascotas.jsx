@@ -9,8 +9,6 @@ import { BsCalendar2DateFill } from "react-icons/bs";
 import { GiWeight } from "react-icons/gi";
 import { MdOutlinePets } from "react-icons/md";
 import "./misMascotas.css";
-import { useEffect, useState } from "react";
-import { useFetchGet } from "../../Helpers/useFetch";
 
 export const MisMascotas = () => {
 

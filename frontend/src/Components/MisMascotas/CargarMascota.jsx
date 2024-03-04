@@ -2,7 +2,6 @@ import { Button, FileInput, Label, Select, TextInput } from "flowbite-react";
 import { uploadFile } from "../../Helpers/CargarImagen";
 import { useEffect, useState } from "react";
 import { useFetchPost } from "../../Helpers/useFetch";
-
 /* eslint-disable react/prop-types */
 export const CargarMascota = ({ nombre, raza, tipo, edad, peso }) => {
   /* le paso por props los datos si encontro mascota en la bd sino el form queda en blanco para cargar nueva mascota */
@@ -10,9 +9,7 @@ export const CargarMascota = ({ nombre, raza, tipo, edad, peso }) => {
   const [file, setFile] = useState(null);
   const [url, setUrl] = useState(null);
 
-
   /* Desde aca trabajo en la carga de datos */
-
 
   //useState para guardar el input que ira en el body del post
   const [input, setInput] = useState({
@@ -21,22 +18,20 @@ export const CargarMascota = ({ nombre, raza, tipo, edad, peso }) => {
     race: "",
     birthday: "",
     weight: 0,
-    photo: ""
-  })
+    photo: "",
+  });
   //declaramos boton para habilitar y deshabilitar el submit
-  const [boton, setBoton] = useState(true)
+  const [boton, setBoton] = useState(true);
   //llamo a fetchData para armar el POST
   const { fetchData } = useFetchPost("api/ClientUsers/me/pets", input);
 
   //onChange que toma los valores completados en los campos menos la foto
   const actualizarDatos = (e) => {
-
     setInput((prevInput) => ({
       ...prevInput,
       [e.target.name]: e.target.value,
     }));
-
-  }
+  };
 
   let result;
 
@@ -57,33 +52,26 @@ export const CargarMascota = ({ nombre, raza, tipo, edad, peso }) => {
         ...prevInput,
         photo: result,
       }));
-      console.log(input)
+      console.log("Lo que guarda del form: ", input);
     } catch (error) {
       console.error(error);
     }
-  }
+  };
 
-
-
-    //creo el useEffect para las acciones posteriores a la carga de datos, dado que setState es asincronico 
-    useEffect(() => {    
-      const valoresInput = Object.values(input);
-      const todosCompletos = valoresInput.some(valor => valor !== "");
-      if(todosCompletos){
-        if(url !== null){
-          console.log(url)
-          console.log("verificarPost")
-          setBoton(false);
-          fetchData()
-          
-        }
-      }    
+  //creo el useEffect para las acciones posteriores a la carga de datos, dado que setState es asincronico
+  useEffect(() => {
+    const valoresInput = Object.values(input);
+    const todosCompletos = valoresInput.some((valor) => valor !== "");
+    if (todosCompletos) {
+      if (url !== null) {
+        console.log(url);
+        console.log("verificarPost");
+        setBoton(false);
+        fetchData();
+      }
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [input, url])
-
-
-
-
+  }, [input, url]);
 
   return (
     <>
@@ -107,7 +95,6 @@ export const CargarMascota = ({ nombre, raza, tipo, edad, peso }) => {
               sizing="md"
               defaultValue={nombre}
               onChange={actualizarDatos}
-
             />
           </div>
 
@@ -139,7 +126,6 @@ export const CargarMascota = ({ nombre, raza, tipo, edad, peso }) => {
               onChange={actualizarDatos}
             />
           </div>
-
 
           {/* TODO: no contamos con campo edad en este momento en la base se hablo con back para que se traiga este campo calculado, ellos quieren que ingresemos fecha de nacimiento con formato dd/mm/yyyy */}
           <div>
@@ -195,12 +181,15 @@ export const CargarMascota = ({ nombre, raza, tipo, edad, peso }) => {
               onChange={(e) => setFile(e.target.files[0])}
               name="photo"
             />
-            <Button color="light" onClick={updateFotoUrl}>Cargar Foto</Button>
+            <Button color="light" onClick={updateFotoUrl}>
+              Cargar Foto
+            </Button>
           </div>
-          <Button type="submit" disabled={boton}>Guardar</Button>
+          <Button type="submit" disabled={boton}>
+            Guardar
+          </Button>
         </form>
       </div>
-
     </>
   );
 };
