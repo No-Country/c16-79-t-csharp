@@ -40,10 +40,10 @@ public class ServiceService : IServiceService
         return model;
     }
 
-    public async Task<Service> UpdateAsync(int id, string type, string description, float price, HashSet<Date> dates)
+    public async Task<Service> UpdateAsync(int id, string type, string description, float price)
     {
         Service model = await GetByIdAsync(id);
-        model.UpdateModel(type, description, price, dates);
+        model.UpdateModel(type, description, price);
         Service updatedModel = await _repository.UpdateAsync(model);
         return updatedModel;
     }

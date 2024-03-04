@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Veterinaria.Application.DTO
+namespace Veterinaria.Application.Dtos
 {
     public class PetDTO
     {
@@ -15,6 +15,6 @@ namespace Veterinaria.Application.DTO
         public string Birthday { get; set; }
         public float Weight { get; set; }
         public string Photo { get; set; }
-        public string ClientUserName { get; set; } = null!;
+        public int Age { get; set; }
     }
 }

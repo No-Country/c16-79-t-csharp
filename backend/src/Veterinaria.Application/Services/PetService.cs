@@ -13,6 +13,12 @@ public class PetService : IPetService
         _repository = repository;
     }
 
+    public async Task<List<Pet>> GetAllByClientUser(int userId)
+    {
+        List<Pet> pets = await _repository.FindAllByUserId(userId);
+        return pets;
+    }
+
     public async Task<List<Pet>> GetAllByUserAccount(string idUserAccount)
     {
         List<Pet> pets = await _repository.FindAllByUserAccount(idUserAccount);

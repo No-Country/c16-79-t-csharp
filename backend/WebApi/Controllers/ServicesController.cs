@@ -53,10 +53,10 @@ namespace WebApi.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, [FromBody] ServiceDto updateDto)
+        public async Task<IActionResult> Update(int id, [FromBody] ServiceCreateDto updateDto)
         {
             // TODO: Corregir interface y Implementacion del servico con respecto a los HashSet<Date>()
-            await _ServiceService.UpdateAsync(id, updateDto.Type,updateDto.Description,updateDto.Price,new HashSet<Date>());
+            await _ServiceService.UpdateAsync(id, updateDto.Type,updateDto.Description,updateDto.Price);
             return NoContent();
         }
 

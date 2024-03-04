@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Veterinaria.Application.CustomeException;
 using System.Security.Claims;
-using Veterinaria.Application.DTO;
+using Veterinaria.Application.Dtos;
 using Veterinaria.Domain.Models;
 using Veterinaria.Domain.Repositories;
 using Veterinaria.Infrastructure.Repositories;
@@ -50,7 +50,7 @@ namespace WebApi.Controllers
 
         //[Authorize(Roles = "Admin, Cliente")]
         [HttpGet("{id}")] // 
-        public async Task<ActionResult<PetDTO>> GetByIdWithData(int id)
+        public async Task<ActionResult<ResponseSucceded<PetDTO>>> GetByIdWithData(int id)
         {
             var pet = await _petRepository.GetByIdWithData(p => p.Id == id);
             if (pet is null)
@@ -58,7 +58,7 @@ namespace WebApi.Controllers
                 throw ResourceNotFoundException.NotFoundById<Pet, int>(id);
             }
             var petDTO = _mapper.Map<PetDTO>(pet);
-            return Ok(petDTO);
+            return Ok(new ResponseSucceded<PetDTO>((int)HttpStatusCode.OK,petDTO));
         }
 
 

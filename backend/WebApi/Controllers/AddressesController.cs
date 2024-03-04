@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Veterinaria.Application.CustomeException;
 using System.Security.Claims;
-using Veterinaria.Application.DTO;
+using Veterinaria.Application.Dtos;
 using Veterinaria.Domain.Models;
 using Veterinaria.Domain.Repositories;
 using Veterinaria.Application.Dtos.Wrappers;
@@ -38,12 +38,11 @@ namespace WebApi.Controllers
             var addressesDTO = _mapper.Map<IEnumerable<AddressDTO>>(addresses);
             return Ok(new ResponseSucceded<IEnumerable<AddressDTO>>((int)HttpStatusCode.OK, addressesDTO));
         }
-        //TODO: Crear un endPoint (my-addresses)
 
 
-        //[Authorize(Roles = "Admin, Cliente")]
         //[HttpGet("GetByIdWithData/{id}")]
-        [HttpGet("{id}")] // INFO: Parar Admin o Cliente
+        [Authorize(Roles = "Cliente")]
+        [HttpGet("{id}")] 
         public async Task<ActionResult<ResponseSucceded<AddressDTO>>> GetByIdWithData(int id)
         {
             var address = await _addressRepository.GetByIdWithData(p => p.Id == id) ?? throw ResourceNotFoundException.NotFoundById<Address, int>(id);
@@ -53,9 +52,9 @@ namespace WebApi.Controllers
         }
 
 
-        //[Authorize(Roles = "Cliente")]
+        [Authorize(Roles = "Cliente")]
         [HttpPost] // INFO: Parar Admin o Cliente
-        public async Task<ActionResult<ResponseSucceded<AddressDTO>>> Insert([FromBody] AddressCreationDTO addressCreationDTO)
+        public async Task<ActionResult<ResponseSucceded<AddressDTO>>> InsertAddresses([FromBody] AddressCreationDTO addressCreationDTO)
         {
             ClaimsPrincipal claims = this.User;
             var idUser = claims.FindFirst(u => u.Type == ClaimTypes.NameIdentifier)?.Value;
@@ -75,7 +74,7 @@ namespace WebApi.Controllers
         }
 
 
-        //[Authorize(Roles = "Cliente")]
+        [Authorize(Roles = "Cliente")]
         [HttpPut("{id}")]// INFO: Parar Admin o Cliente
         public async Task<ActionResult<ResponseSucceded<AddressDTO>>> Actualizar([FromRoute] int id, [FromBody] AddressCreationDTO addressCreationDTO)
         {

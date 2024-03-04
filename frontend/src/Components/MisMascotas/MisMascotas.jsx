@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Card } from "flowbite-react";
 //import MascotasJson from "../../json/mascotas.json";
 import { ListGroup } from "flowbite-react";
