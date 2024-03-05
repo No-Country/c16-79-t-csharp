@@ -9,5 +9,6 @@ public record DatePetDto(
     string ServiceType,
     int PetId ,
     string PetName,
-    DateState StateDate
+    DateState StateDate,
+    string StateName=""
 );
