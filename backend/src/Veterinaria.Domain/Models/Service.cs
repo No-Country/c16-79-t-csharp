@@ -33,12 +33,11 @@ public class   Service
         };
     }
 
-    public void UpdateModel(string type, string description, float price, HashSet<Date> dates)
+    public void UpdateModel(string type, string description, float price)
     {
        
         Type = type;
         Description = description;
         Price = price;
-        Dates = dates;
     }
 }

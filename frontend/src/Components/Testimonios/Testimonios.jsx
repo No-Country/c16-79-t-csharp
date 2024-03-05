@@ -1,50 +1,53 @@
-import { Carousel } from 'flowbite-react';
-import data from './data'
+
+import { blogs } from "./data/blogs.js";
 
 export const Testimonios = () => {
-  return (
-    <>
-       <div className="w-3/4 m-auto mt-50 h-56 sm:h-64 xl:h-80 2xl:h-96 ">
-      <Carousel >
-        {data.map((d)=> {
-         return(
-         <div key={d.name} className="bg-black h-[450px] text-white rounded-xl mt-20">
-         <div className="h-56 rounded-t-xl bg-indigo-500 flex justify-center items-center ">
-           <img src={d.img} alt="" className="h-44 w-44 rounded-full" />
-         </div>
- 
-         <div className="flex flex-col justify-center items-center gap-4 p-4">
-           <p className="text-xl font-semibold">{d.name}</p>
-           <p>{d.review}</p>
+  const carouselBlogs = [...blogs, ...blogs];
 
-         </div>
-       </div>)
-         
-        })}
-       
-      </Carousel>
-    </div>
-    {/* <div  className="h-56 sm:h-64 xl:h-80 2xl:h-96 " >
-<div className='mt-20'>
-        <Carousel >
-          {data.map((d) => {
-            <div className="bg-white h-[450px] text-black rounded-xl">
-              <div className="h-56 rounded-t-xl bg-indigo-500 flex justify-center items-center ">
-                <img src={d.img} alt="" className="h-44 w-44 rounded-full" />
+  return (
+    <div className="App">
+      <div className="container my-5 mx-auto">
+        <div className="overflow-hidden w-full">
+          <div className="flex whitespace-nowrap animate-scroll">
+            {carouselBlogs.map((blog, index) => (
+              <div
+                className="h-full w-[400px] m-2 flex-shrink-0 cursor-pointer"
+                key={index}
+              >
+                <div className="rounded-3xl overflow-hidden mb-4 relative h-[250px]">
+                  <img src={`/testimoniosImgs/img-${blog.id}.jpg`} alt={blog.title} />
+                </div>
+                <div className="px-4 flex gap-4">
+                  <img
+                    src={
+                      blog.author === "Mary Smith"
+                        ? "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                        : blog.author === "Jhon Doe"
+                        ? "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=2080&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                        : "https://images.unsplash.com/photo-1634926878768-2a5b3c42f139?q=80&w=1956&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                    }
+                    alt="Author"
+                    className="object-cover w-12 h-12 rounded-full"
+                  />
+                  <div className="flex flex-col gap-2 w-full">
+                    <h3 className=" text-sm font-medium text-slate-700 leading-1 whitespace-normal">
+                      {blog.title}
+                    </h3>
+                    <div className="flex gap-4">
+                      <p className="text-sm text-slate-800 font-semibold">
+                        {blog.author}
+                      </p>
+                      <p className="text-sm text-gray-500 font-normal">
+                        {blog.date}
+                      </p>
+                    </div>
+                  </div>
+                </div>
               </div>
-      
-              <div className="flex flex-col justify-center items-center gap-4 p-4">
-                <p className="text-xl font-semibold">{d.name}</p>
-                <p>{d.review}</p>
-                <button className="bg-indigo-500 text-white text-lg px-6 py-1 rounded-xl">
-                  Ver Mas
-                </button>
-              </div>
-            </div>;
-          })}
-        </Carousel>
+            ))}
+          </div>
         </div>
-    </div> */}
-    </>
+      </div>
+    </div>
   );
-}
+};

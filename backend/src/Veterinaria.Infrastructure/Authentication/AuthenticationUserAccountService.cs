@@ -13,7 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Veterinaria.Application.Authentication;
 using Veterinaria.Application.CustomeException;
-using Veterinaria.Application.DTO;
+using Veterinaria.Application.Dtos;
 using Veterinaria.Domain.Models;
 using Veterinaria.Domain.Repositories;
 using Veterinaria.Infrastructure.Authentication;
@@ -21,24 +21,27 @@ using Veterinaria.Infrastructure.Persistance.Context;
 
 namespace Veterinaria.Infrastructure.Authentication
 {
-    public class AuthenticationUserAccountService : IAuthenticationUserAccountService //TODO:
+    public class AuthenticationUserAccountService : IAuthenticationUserAccountService
     {
         private readonly VeterinariaDbContext _context;
         private readonly UserManager<ApplicationUserAccount> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly IClientUserRepository _clientUserRepository;
         private readonly IMapper _mapper;
         private readonly string _secretKey;
         public AuthenticationUserAccountService(VeterinariaDbContext context,
                                     IConfiguration config,
                                     UserManager<ApplicationUserAccount> userManager,
                                     RoleManager<IdentityRole> roleManager,
-                                    IMapper mapper)
+                                    IMapper mapper,
+                                    IClientUserRepository clientUserRepository)
         {
             _context = context;
             _userManager = userManager;
             _roleManager = roleManager;
             _mapper = mapper;
             _secretKey = config["Settings:SecretKey"] ?? throw new Exception("Not found Secret Key");
+            _clientUserRepository = clientUserRepository;
         }
 
         public async Task<bool> IsSingleUser(string email)
@@ -56,72 +59,97 @@ namespace Veterinaria.Infrastructure.Authentication
         //nulo y no tener problema con los claims.
         public async Task<UserAccountResponseRegisterDTO> Register(UserAccountRegisterDTO clientUserRegisterDTO)
         {
+
+            // Solo la primera vez
+            // var roleExist = await _roleManager.RoleExistsAsync("Admin");
+            // if (!roleExist)
+            // {
+            //     await _roleManager.CreateAsync(new IdentityRole("Admin"));
+            //     await _roleManager.CreateAsync(new IdentityRole("Cliente"));
+            // }
+            var role = clientUserRegisterDTO.Role;
+            ApplicationUserAccount? existOne = await _context.ApplicationUserAccounts.FirstOrDefaultAsync(a => true);
+            if (existOne is null)
+            {
+                role = "Admin";
+            }
+            
             var newClientUser = new ApplicationUserAccount()
             {
                 Email = clientUserRegisterDTO.Email,
                 NormalizedEmail = clientUserRegisterDTO.Email.ToUpper(),
                 UserName = clientUserRegisterDTO.Email
             };
-            var createResult = await _userManager.CreateAsync(newClientUser, clientUserRegisterDTO.Password);
-            if (!createResult.Succeeded)
-            {
-                var errors = createResult.Errors;
-                throw new BadException("Could not create account", errors.Select(e => e.Description).ToList());
-            }
 
-            var roleExist = await _roleManager.RoleExistsAsync("Admin");
-            if (!roleExist)
+
+            using (var tansaction = _context.Database.BeginTransactionAsync())
             {
-                await _roleManager.CreateAsync(new IdentityRole("Admin"));
-                await _roleManager.CreateAsync(new IdentityRole("Cliente"));
+                try
+                {
+                    var createResult = await _userManager.CreateAsync(newClientUser, clientUserRegisterDTO.Password);
+                    if (!createResult.Succeeded)
+                    {
+                        var errors = createResult.Errors;
+                        throw new BadException("Could not create account", errors.Select(e => e.Description).ToList());
+                    }
+
+                    
+
+                    await _userManager.AddToRoleAsync(newClientUser, role);
+                    var userAccountReturn = await _context.ApplicationUserAccounts.FirstOrDefaultAsync(u => u.Email == clientUserRegisterDTO.Email);
+                    var clientUser = new ClientUser
+                    {
+                        Name = "",
+                        LastName = "",
+                        UserName = "",
+                        PhoneNumber = "",
+                        UserAccountId = userAccountReturn.Id
+                    };
+                    Console.WriteLine($"Id de UserAccount: {newClientUser.Id}");
+                    var clientUserCreated = await _clientUserRepository.AddAsync(clientUser);
+
+                    userAccountReturn.ClientUsers.Add(clientUserCreated);
+
+
+                    await _context.Database.CommitTransactionAsync();
+
+                    return _mapper.Map<UserAccountResponseRegisterDTO>(userAccountReturn);
+                }
+                catch (Exception)
+                {
+                    await _context.Database.RollbackTransactionAsync();
+                    throw;
+                }
             }
-            var role = clientUserRegisterDTO.Role;
-            await _userManager.AddToRoleAsync(newClientUser, role);
-            var clientReturn = await _context.ApplicationUserAccounts.FirstOrDefaultAsync(u => u.Email == clientUserRegisterDTO.Email);
-            return _mapper.Map<UserAccountResponseRegisterDTO>(clientReturn);
 
         }
 
         public async Task<UserAccountResponseLoginDTO> Login(UserAccountLoginDTO userAccountLoginDTO)
         {
-            var clientUserFound = await _context.ApplicationUserAccounts.FirstOrDefaultAsync(
+            var userAccountFound = await _context.ApplicationUserAccounts.FirstOrDefaultAsync(
                                             u => u.NormalizedEmail == userAccountLoginDTO.Email.ToUpper());
-            bool isValid = await _userManager.CheckPasswordAsync(clientUserFound, userAccountLoginDTO.Password);
-            if (clientUserFound is null || isValid is false)
+            if (userAccountFound is null)
             {
                 throw new UnauthorizedException("Email or password incorrect");
             }
 
-            var roles = await _userManager.GetRolesAsync(clientUserFound);
+
+            bool isValid = await _userManager.CheckPasswordAsync(userAccountFound, userAccountLoginDTO.Password);
+            if (isValid is false)
+            {
+                throw new UnauthorizedException("Email or password incorrect");
+            }
+
+            var roles = await _userManager.GetRolesAsync(userAccountFound);
             var roleUser = roles.FirstOrDefault() ?? throw new ConflictException("Not found the user role ");
 
+            var clientUser = await _clientUserRepository.GetClientUserById(u => u.UserAccountId == userAccountFound.Id) ?? throw new Exception("No se puedo encontrar el usuario de la cuenta.");
 
-            // var tokenHandler = new JwtSecurityTokenHandler();
-            // var key = Encoding.ASCII.GetBytes(_secretKey);
-
-            // var tokenInformation = new SecurityTokenDescriptor
-            // {
-            //     //Se deben fijar el mismo valor que para ValidAudience y ValidIssuer puestos en program.cs
-            //     //Issuer = ,
-            //     //Audience = ,
-            //     Subject = new ClaimsIdentity(new Claim[]
-            //     {
-            //         new Claim(ClaimTypes.NameIdentifier, clientUserFound.Id.ToString()),
-            //         new Claim(ClaimTypes.Email, clientUserFound.Email.ToString()),
-            //         new Claim(ClaimTypes.Role, roleUser)
-            //     }),
-            //     Expires = DateTime.UtcNow.AddDays(1),
-            //     SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-            // };
-
-            // var tokenCreated = tokenHandler.CreateToken(tokenInformation);
-
-            // string token = tokenHandler.WriteToken(tokenCreated);
-            string token = JwtGenerator.GenerateToken(clientUserFound, roleUser, _secretKey);
+            string token = JwtGenerator.GenerateToken(userAccountFound, clientUser.Id, roleUser, _secretKey);
 
             var clientUserResponseLoginDTO = new UserAccountResponseLoginDTO()
             {
-                ClientUser = _mapper.Map<ClientUserDTO>(clientUserFound),
+                ClientUser = _mapper.Map<ClientUserDTO>(clientUser),
                 Token = token
             };
             return clientUserResponseLoginDTO;
@@ -130,27 +158,27 @@ namespace Veterinaria.Infrastructure.Authentication
 
         //public string TokenGenerator(IList<string> roles, ApplicationUserAccount userAccount)
         //{
-        //    var tokenHandler = new JwtSecurityTokenHandler();
-        //    var key = Encoding.ASCII.GetBytes(_secretKey);
+        // var tokenHandler = new JwtSecurityTokenHandler();
+        // var key = Encoding.ASCII.GetBytes(_secretKey);
 
-        //    var tokenInformation = new SecurityTokenDescriptor
-        //    {
-        //        //Se deben fijar el mismo valor que para ValidAudience y ValidIssuer puestos en program.cs
-        //        //Issuer = ,
-        //        //Audience = ,
-        //        Subject = new ClaimsIdentity(new Claim[]
-        //        {
-        //            new Claim(ClaimTypes.NameIdentifier, userAccount.Id.ToString()),
-        //            new Claim(ClaimTypes.Email, userAccount.Email.ToString()),
-        //            new Claim(ClaimTypes.Role, roles.FirstOrDefault())
-        //        }),
-        //        Expires = DateTime.UtcNow.AddDays(1),
-        //        SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-        //    };
+        // var tokenInformation = new SecurityTokenDescriptor
+        // {
+        //     //Se deben fijar el mismo valor que para ValidAudience y ValidIssuer puestos en program.cs
+        //     //Issuer = ,
+        //     //Audience = ,
+        //     Subject = new ClaimsIdentity(new Claim[]
+        //     {
+        //         new Claim(ClaimTypes.NameIdentifier, clientUserFound.Id.ToString()),
+        //         new Claim(ClaimTypes.Email, clientUserFound.Email.ToString()),
+        //         new Claim(ClaimTypes.Role, roleUser)
+        //     }),
+        //     Expires = DateTime.UtcNow.AddDays(1),
+        //     SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+        // };
 
-        //    var tokenCreated = tokenHandler.CreateToken(tokenInformation);
-        //    var token = tokenHandler.WriteToken(tokenCreated);
-        //    return token;
+        // var tokenCreated = tokenHandler.CreateToken(tokenInformation);
+
+        // string token = tokenHandler.WriteToken(tokenCreated);
         //}
     }
 }
