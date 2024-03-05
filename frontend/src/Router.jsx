@@ -1,6 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import { Home } from "./Pages/Home/Home";
-import { Tienda } from "./Pages/Tienda/Tienda";
+import { Catalogo } from "./Pages/Catalogo/Catalogo";
 import { Adoptar } from "./Pages/Adoptar/Adoptar";
 import { Agenda } from "./Pages/Agenda/Agenda";
 import { Servicios } from "./Pages/Servicios/Servicios";
@@ -45,7 +45,7 @@ export const Router = () => {
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/perfil" element={<Perfil mascotasData={info} />} />
-      <Route path="/tienda" element={<Tienda />} />
+      <Route path="/catalogo" element={<Catalogo />} />
       <Route path="/adoptar" element={<Adoptar />} />
       <Route path="/agenda" element={<Agenda />} />
       <Route path="/servicios" element={<Servicios />} />
