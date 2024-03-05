@@ -27,11 +27,11 @@ export const Agenda = () => {
     setDataFromFecha(dataF);
   };
 
-  // useEffect(() => {
-  //   console.log("recibiendo mascota: ", dataFromMascota);
-  //   console.log("recibiendo servicio: ", dataFromServicio);
-  //   console.log("recibiendo fecha y hora: ", dataFromFecha);
-  // }, [dataFromMascota, dataFromServicio, dataFromFecha]);
+  useEffect(() => {
+    console.log("recibiendo mascota: ", dataFromMascota);
+    console.log("recibiendo servicio: ", dataFromServicio);
+    console.log("recibiendo fecha y hora: ", dataFromFecha);
+  }, [dataFromMascota, dataFromServicio, dataFromFecha]);
 
   // Lógica del POST
 
@@ -47,31 +47,20 @@ export const Agenda = () => {
   const { fetchData } = useFetchPost("api/Dates", input);
 
   //creo el useEffect para las acciones posteriores a la carga de datos, dado que setState es asincronico
-
-  // console.log("input",input)
-  // useEffect(() => {
-  //   setInput( {
-  //     time: receiveDataFromMascota,
-  //     serviceId: receiveDataFromServicio,
-  //     petId: receiveDataFromFecha,
-  //   });
-  //   const valoresInput = Object.values(input);
-  //   console.log("valores inputs: ", valoresInput)
-  //   const todosCompletos = valoresInput.some((valor) => valor !== null);
-  //   if (todosCompletos) {
-  //     fetchData();
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
-
   useEffect(() => {
     setInput({
-      time: receiveDataFromMascota,
-      serviceId: receiveDataFromServicio,
-      petId: receiveDataFromFecha,
+      petId: dataFromMascota,
+      serviceId: dataFromServicio,
+      time: dataFromFecha,
     });
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dataFromFecha, dataFromMascota, dataFromServicio]);
+
+  const guardarAgenda = () => {
     const valoresInput = Object.values(input);
-    console.log("valores inputs: ",valoresInput)
+    console.log("valores inputs y la concha de t: ");
+    console.log("input en guardar agenda: ", input);
     const todosCompletos = valoresInput.some((valor) => valor !== null);
     if (todosCompletos) {
       fetchData();
@@ -88,9 +77,6 @@ export const Agenda = () => {
       <h1 className="py-5 mb-4 text-2xl font-extrabold leading-none tracking-tight text-center text-gray-500 md:text-5xl lg:text-4xl dark:text-white">
         Agenda
       </h1>
-      <button onClick={handlePost}>
-        agendar
-      </button>
       <div className="flex place-content-around mb-10 mt-16 flex-wrap gap-2">
         <SeleccioneSuMascota
           sendDataToParent={receiveDataFromMascota}
