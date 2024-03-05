@@ -58,11 +58,14 @@ namespace WebApi.Controllers
             return NoContent();
         }
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
+        
+        [HttpGet("CancelDateById")]
+        public async Task<ActionResult<ResponseSucceded<DateDto>>> CancelDate(int id)
         {
-            await _DateService.DeleteAsync(id);
-            return NoContent();
+            await _DateService.CancelDate(id);
+            Date Date = await _DateService.GetByIdAsync(id);
+            return Ok(new ResponseSucceded<DateDto>((int)HttpStatusCode.OK,
+                new DateDto(Date.Id, Date.Time, Date.ServiceId, Date.PetId, Date.StateDate)));
         }
     }
 }
