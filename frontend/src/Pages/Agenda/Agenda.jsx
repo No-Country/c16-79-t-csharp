@@ -11,9 +11,9 @@ export const Agenda = () => {
         Agenda
       </h1>
       <div className="flex place-content-around mb-10 mt-16 flex-wrap gap-2">
-        <SeleccioneSuMascota className=" w-2/5" />
-        <SeleccionEstudio className=" w-2/5 " />
-        <SelecFechaHoraTurno />
+        <SeleccioneSuMascota  className="w-2/5" />
+        <SeleccionEstudio className="w-2/5" />
+        <SelecFechaHoraTurno className="w-2/5" />
       </div>
       <ToastAgenda />
     </div>
