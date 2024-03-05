@@ -1,14 +1,18 @@
+// eslint-disable-next-line react-hooks/exhaustive-deps
 import { useEffect, useState } from "react";
 import { SeleccioneSuMascota } from "../../Components/SeleccioneSuMacosta/SeleccioneSuMascota";
 import SeleccionEstudio from "../../Components/SeleccionEstudio/SeleccionEstudio";
-import { ToastAgenda } from "../../Components/ToastAgenda/ToastAgenda";
+// import { ToastAgenda } from "../../Components/ToastAgenda/ToastAgenda";
 import { useFetchPost } from "../../Helpers/useFetch";
 import { SelecFechaHoraTurno } from "../../Components/SelecFechaHoraTurno/SelecFechaHoraTurno";
+import { Button, Toast } from "flowbite-react";
+import { HiFire } from "react-icons/hi";
 
 export const Agenda = () => {
   const [dataFromMascota, setDataFromMascota] = useState("");
   const [dataFromServicio, setDataFromServicio] = useState("");
   const [dataFromFecha, setDataFromFecha] = useState("");
+  const [showToast, setShowToast] = useState(false);
 
   // Función para recibir datos del componente hijo
   const receiveDataFromMascota = (dataM) => {
@@ -33,9 +37,9 @@ export const Agenda = () => {
 
   //useState para guardar el input que ira en el body del post
   const [input, setInput] = useState({
-    time: null,
-    serviceId: null,
     petId: null,
+    serviceId: null,
+    time: null,
   });
   //declaramos boton para habilitar y deshabilitar el submit
   // const [boton, setBoton] = useState(true)
@@ -61,21 +65,23 @@ export const Agenda = () => {
   // }, []);
 
   useEffect(() => {
-    const todosCompletos = dataFromMascota !== null && dataFromServicio !== null && dataFromFecha !== null;
+    setInput({
+      time: receiveDataFromMascota,
+      serviceId: receiveDataFromServicio,
+      petId: receiveDataFromFecha,
+    });
+    const valoresInput = Object.values(input);
+    console.log("valores inputs: ",valoresInput)
+    const todosCompletos = valoresInput.some((valor) => valor !== null);
     if (todosCompletos) {
-      setInput({
-        time: dataFromFecha,
-        serviceId: dataFromServicio,
-        petId: dataFromMascota,
-      });
-      // fetchData();
+      fetchData();
     }
-  }, [dataFromFecha, dataFromServicio, dataFromMadascota]);
+  };
 
-  console.log(input)
-  const handlePost = () => {
-    fetchData();
-  }
+  const handleClick = () => {
+    setShowToast((state) => !state);
+    guardarAgenda();
+  };
 
   return (
     <div className="container w-4/5 mx-auto">
@@ -96,7 +102,23 @@ export const Agenda = () => {
         />
         <SelecFechaHoraTurno sendDataToParent={receiveDataFromFecha} />
       </div>
-      <ToastAgenda />
+      {/* <ToastAgenda /> */}
+      <div className="flex justify-center">
+        <div className="flex space-y-4">
+          <Button onClick={handleClick}>Agendar</Button>
+          {showToast && (
+            <Toast className="fixed top-20 right-5 bg-purple-100">
+              <div className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-green-100 text-green-500 dark:bg-green-800 dark:text-green-200">
+                <HiFire className="h-5 w-5" />
+              </div>
+              <div className="ml-3 text-sm font-normal">
+                Cita agendada con éxito!
+              </div>
+              <Toast.Toggle onDismiss={() => setShowToast(false)} />
+            </Toast>
+          )}
+        </div>
+      </div>
     </div>
   );
 };

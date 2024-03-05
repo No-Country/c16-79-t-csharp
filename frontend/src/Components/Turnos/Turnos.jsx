@@ -1,11 +1,38 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
-import TurnosJSON from "../../json/turnos.json";
+
 import { Table } from "flowbite-react";
+import { useFetchGet } from "../../Helpers/useFetch";
+import { useEffect, useState } from "react";
 
-export const Turnos = () => {
+export const Turnos = ({ mascotasData }) => {
+  const [first, setfirst] = useState();
+
+  // console.log("first", first);
+
+  let { fetchData } = useFetchGet("api/ClientUsers/me/Dates");
+
+  useEffect(() => {
+    const handleDatos = async () => {
+      if (localStorage.getItem("token")) {
+        try {
+          const objetoTurnos = await fetchData();
+          console.log("Turnos received:", objetoTurnos.data);
+          setfirst(objetoTurnos.data);
+        } catch (error) {
+          console.error("Error fetching data:", error);
+        }
+      }
+    };
+    handleDatos();
+    //eslint-disable-next-line
+  }, []);
+
+  console.log(" mascotas data desde turnos: ", mascotasData[1]);
+
   return (
-    <div className='container w-4/5 mx-auto mt-10 mb-10'>
-
+    <div className="container w-4/5 mx-auto mt-10 mb-10">
       <p>
         * Todos los turnos son de 30 minutos. Solo podran ser cancelados hasta
         24hs antes de la fecha y hora agendada.
@@ -26,29 +53,32 @@ export const Turnos = () => {
           </Table.Head>
 
           <Table.Body className="divide-y">
-            {TurnosJSON.map((turno) => (
-              <Table.Row
-                key={turno.id}
-                className="bg-gray-200 dark:border-gray-700 dark:bg-gray-800"
-              >
-                <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
-                  <p>
-                    {turno.Fecha} {turno.Hora}hs
-                  </p>
-                </Table.Cell>
-                <Table.Cell>{turno.Servicio}</Table.Cell>
-                <Table.Cell>{turno.Mascota}</Table.Cell>
-                <Table.Cell>{turno.Estado}</Table.Cell>
-                <Table.Cell>
-                  <a
-                    href="#"
-                    className="font-medium text-cyan-600 hover:underline dark:text-cyan-500"
-                  >
-                    Cancelar
-                  </a>
-                </Table.Cell>
-              </Table.Row>
-            ))}
+            {first?.map((turno) => {
+              let dt = new Date(turno.time);
+              console.log("dt: ", dt)
+              return (
+                <Table.Row
+                  key={turno.id}
+                  className="bg-gray-200 dark:border-gray-700 dark:bg-gray-800"
+                >
+                  <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
+                    <p>{dt.toLocaleString()}</p>
+                  </Table.Cell>
+                  <Table.Cell>{turno.serviceType}</Table.Cell>
+                  <Table.Cell>{turno.petName}</Table.Cell>
+                  <Table.Cell>{turno.stateDate}</Table.Cell>
+                  <Table.Cell>
+                    <a
+                      href="#"
+                      className="font-medium text-cyan-600 hover:underline dark:text-cyan-500"
+                    >
+                      Cancelar
+                    </a>
+                  </Table.Cell>
+                </Table.Row>
+              );
+            })
+            }
           </Table.Body>
         </Table>
       </div>

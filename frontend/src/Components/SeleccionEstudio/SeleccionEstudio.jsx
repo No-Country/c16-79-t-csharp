@@ -43,7 +43,7 @@ const SeleccionEstudio = ({ sendDataToParent }) => {
     <div>
       <div className="max-w-md">
         <div className="mb-2 block">
-          <Label htmlFor="countries" value="Select your country" />
+          <Label htmlFor="countries" value="Selecciona el estudio" />
         </div>
         <Select id="countries" required onChange={sendData}>
           <option>--</option>

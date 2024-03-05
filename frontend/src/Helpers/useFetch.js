@@ -3,9 +3,6 @@ import { useState } from "react";
 const api_url = import.meta.env.VITE_WEB_API_URL
 console.log(api_url)
 
-
-
-
 export const useFetchGet = (endPoint) => {
   const fetchData = async () => {
     try {
@@ -33,8 +30,10 @@ export const useFetchLogin = (endPoint, input) => {
   });
  
     const fetchData = async () => {
+      
       try {
         const response = await fetch(`${api_url}/${endPoint}`, {
+          
           method: "POST",
           headers: {
             "Content-Type": "application/json",            
@@ -42,9 +41,11 @@ export const useFetchLogin = (endPoint, input) => {
           },
           body: JSON.stringify(input),
         });
+        console.log(response, "RESPONSE")
         const data = await response.json();
         /* Linea que setea token */
-        localStorage.setItem("token", data.token);
+        if(response.status === 200){
+        localStorage.setItem("token", data.token);}
         setState({
           data,
         });
