@@ -7,6 +7,7 @@ public record DateDto(
     DateTime Time,
     int ServiceId ,
     int PetId ,
-    DateState StateDate
+    DateState StateDate,
+    string StateName=""
 );
 
