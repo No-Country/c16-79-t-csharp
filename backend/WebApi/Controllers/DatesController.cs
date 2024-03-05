@@ -4,6 +4,7 @@ using Veterinaria.Application.Dtos.Wrappers;
 using Veterinaria.Application.Dtos;
 using Veterinaria.Domain.Models;
 using Veterinaria.Domain.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebApi.Controllers
 {
@@ -58,11 +59,13 @@ namespace WebApi.Controllers
             return NoContent();
         }
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
+        [Authorize(Roles = "Cliente")]
+        [HttpGet("{id}/cancel")]
+        public async Task<ActionResult<ResponseSucceded<DateDto>>> CancelDate(int id)
         {
-            await _DateService.DeleteAsync(id);
-            return NoContent();
+            Date Date =  await _DateService.CancelDate(id); 
+            return Ok(new ResponseSucceded<DateDto>((int)HttpStatusCode.OK,
+                new DateDto(Date.Id, Date.Time, Date.ServiceId, Date.PetId, Date.StateDate, EnumExtension.GetEnumDescription(Date.StateDate))));
         }
     }
 }
