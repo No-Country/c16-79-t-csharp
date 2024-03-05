@@ -23,11 +23,11 @@ export const Agenda = () => {
     setDataFromFecha(dataF);
   };
 
-  useEffect(() => {
-    console.log("recibiendo mascota: ", dataFromMascota);
-    console.log("recibiendo servicio: ", dataFromServicio);
-    console.log("recibiendo fecha y hora: ", dataFromFecha);
-  }, [dataFromMascota, dataFromServicio, dataFromFecha]);
+  // useEffect(() => {
+  //   console.log("recibiendo mascota: ", dataFromMascota);
+  //   console.log("recibiendo servicio: ", dataFromServicio);
+  //   console.log("recibiendo fecha y hora: ", dataFromFecha);
+  // }, [dataFromMascota, dataFromServicio, dataFromFecha]);
 
   // Lógica del POST
 
@@ -43,26 +43,48 @@ export const Agenda = () => {
   const { fetchData } = useFetchPost("api/Dates", input);
 
   //creo el useEffect para las acciones posteriores a la carga de datos, dado que setState es asincronico
+
+  // console.log("input",input)
+  // useEffect(() => {
+  //   setInput( {
+  //     time: receiveDataFromMascota,
+  //     serviceId: receiveDataFromServicio,
+  //     petId: receiveDataFromFecha,
+  //   });
+  //   const valoresInput = Object.values(input);
+  //   console.log("valores inputs: ", valoresInput)
+  //   const todosCompletos = valoresInput.some((valor) => valor !== null);
+  //   if (todosCompletos) {
+  //     fetchData();
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
+
   useEffect(() => {
-    setInput({
-      time: receiveDataFromMascota,
-      serviceId: receiveDataFromServicio,
-      petId: receiveDataFromFecha,
-    });
-    const valoresInput = Object.values(input);
-    console.log("valores inputs: ",valoresInput)
-    const todosCompletos = valoresInput.some((valor) => valor !== null);
+    const todosCompletos = dataFromMascota !== null && dataFromServicio !== null && dataFromFecha !== null;
     if (todosCompletos) {
+      setInput({
+        time: dataFromFecha,
+        serviceId: dataFromServicio,
+        petId: dataFromMascota,
+      });
       // fetchData();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [dataFromFecha, dataFromServicio, dataFromMadascota]);
+
+  console.log(input)
+  const handlePost = () => {
+    fetchData();
+  }
 
   return (
     <div className="container w-4/5 mx-auto">
       <h1 className="py-5 mb-4 text-2xl font-extrabold leading-none tracking-tight text-center text-gray-500 md:text-5xl lg:text-4xl dark:text-white">
         Agenda
       </h1>
+      <button onClick={handlePost}>
+        agendar
+      </button>
       <div className="flex place-content-around mb-10 mt-16 flex-wrap gap-2">
         <SeleccioneSuMascota
           sendDataToParent={receiveDataFromMascota}

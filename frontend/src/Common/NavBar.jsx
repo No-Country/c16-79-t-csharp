@@ -92,6 +92,11 @@ const NavBar = () => {
             </NavLink>
           </Navbar.Link>
           <Navbar.Link>
+            <NavLink to="/catalogo" className="text-base">
+              Catálogo
+            </NavLink>
+          </Navbar.Link>
+          <Navbar.Link>
             <NavLink to="/agenda" className="text-base">
               Agenda
             </NavLink>
