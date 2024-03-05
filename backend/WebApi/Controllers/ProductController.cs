@@ -91,5 +91,13 @@ namespace WebApi.Controllers
             return _mapper.Map<List<CategorieDto>>(categories);   
         }
 
+        [HttpGet()]
+        public async Task<ActionResult<ResponseSucceded<List<ProductDto>>>> GetLastFive()
+        {
+            var products = await _productService.GetLastFiveProductsAsync();
+            return Ok(new ResponseSucceded<List<ProductDto>>((int)HttpStatusCode.OK, _mapper.Map<List<ProductDto>>(products)));
+        }
+        
+
     }
 }

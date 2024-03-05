@@ -23,5 +23,10 @@ namespace Veterinaria.Infrastructure.Repositories
         {
             return await _context.Set<Product>().Include(p => p.Categories).FirstOrDefaultAsync(p => p.Id == id);
         }
+
+        public async Task<List<Product>> GetLastFiveProductsAsync()
+        {
+            return await _context.Products.OrderByDescending(p => p.Id).Take(5).ToListAsync();
+        }
     }
 }
