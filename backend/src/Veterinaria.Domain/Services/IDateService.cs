@@ -12,5 +12,7 @@ public interface IDateServise
     Task DeleteAsync(int id);
     Task<List<Date>> GetAllByClientUser(int id);
 
+    Task<Date> CancelDate(int id);
+
     //Task ExampleFunction();
 }
