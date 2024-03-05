@@ -1032,8 +1032,10 @@
             "description": "Success"
           }
         }
-      },
-      "delete": {
+      }
+    },
+    "/api/Dates/{id}/cancel": {
+      "get": {
         "tags": [
           "Dates"
         ],
@@ -1051,7 +1053,24 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/DateDtoResponseSucceded"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DateDtoResponseSucceded"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DateDtoResponseSucceded"
+                }
+              }
+            }
           }
         }
       }
