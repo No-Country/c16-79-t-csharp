@@ -126,6 +126,11 @@ const NavBar = () => {
               Inicio
             </NavLink>
           </Navbar.Link>
+          <Navbar.Link>
+            <NavLink to="/catalogo" className="text-base">
+              Catálogo
+            </NavLink>
+          </Navbar.Link>
           {/* Enlace a la agenda visible solo si el usuario está logueado */}
           {isLoggedIn && (
             <Navbar.Link>
