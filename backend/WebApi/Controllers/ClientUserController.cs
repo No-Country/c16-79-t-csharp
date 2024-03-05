@@ -310,7 +310,7 @@ namespace WebApi.Controllers
             List<Date> dates = await _dateService.GetAllByClientUser(ClaimsUtility.GetClienteIdFromClaim(this.User));
             IEnumerable<DatePetDto> datesDtos =
                 dates.Where(c => c.StateDate ==DateState.Crearted)
-                .Where (c =>  (dateTime - c.Time).TotalHours < 24 && dateTime < c.Time)
+                .Where (c =>  (dateTime - c.Time).TotalHours >= 24 && dateTime < c.Time)
                 .Select(c => new DatePetDto(c.Id, c.Time, c.ServiceId, c.Service.Type,c.PetId, c.Pet.Name, c.StateDate, EnumExtension.GetEnumDescription(c.StateDate)));
 
             return Ok(
