@@ -26,7 +26,7 @@ namespace WebApi.Controllers
 
             //TODO: Usar AutoMapper cuando este configurado?
             IEnumerable<DateDto> datesDtos =
-                Dates.Select(c => new DateDto(c.Id,c.Time,c.ServiceId,c.PetId,c.StateDate ));
+                Dates.Select(c => new DateDto(c.Id, c.Time, c.ServiceId, c.PetId, c.StateDate, EnumExtension.GetEnumDescription(c.StateDate)));
 
             return Ok(
                 new ResponseSucceded<IEnumerable<DateDto>>((int)HttpStatusCode.OK, datesDtos)
@@ -40,7 +40,7 @@ namespace WebApi.Controllers
 
             //TODO: usar AutoMapper
             return Ok(new ResponseSucceded<DateDto>((int)HttpStatusCode.OK,
-                new DateDto(Date.Id, Date.Time,Date.ServiceId,Date.PetId,Date.StateDate)));
+                new DateDto(Date.Id, Date.Time, Date.ServiceId, Date.PetId, Date.StateDate, EnumExtension.GetEnumDescription(Date.StateDate))));
             //ver service y pet  
         }
 
@@ -54,7 +54,7 @@ namespace WebApi.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, [FromBody] DateDto updateDto)
         {
-            await _DateService.UpdateAsync(id, updateDto.Time,updateDto.ServiceId,updateDto.PetId,updateDto.StateDate);
+            await _DateService.UpdateAsync(id, updateDto.Time, updateDto.ServiceId, updateDto.PetId, updateDto.StateDate);
             return NoContent();
         }
 
