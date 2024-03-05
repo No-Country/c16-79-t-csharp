@@ -1,8 +1,17 @@
 import { Button, Dropdown, Navbar } from "flowbite-react";
 import { NavLink, useNavigate } from "react-router-dom";
+import  { useEffect, useState } from  'react';
+import { useFetchGet } from "../Helpers/useFetch";
+
+
 
 const NavBar = () => {
   const navigate = useNavigate();
+
+  const { fetchData } = useFetchGet("api/ClientUsers/me")
+  const [info, setInfo] = useState([])
+
+
 
   // Función para cerrar sesión
   const cerrarSesion = () => {
@@ -17,6 +26,30 @@ const NavBar = () => {
 
   // Verificar si el usuario está logueado
   const isLoggedIn = localStorage.getItem("token") ? true : false;
+  console.log(localStorage.getItem("token"),"LOCALSTORAGE")
+  console.log(isLoggedIn,"ISLOGGEDIN")
+
+
+  //funcion para  mostrar los botones de acuerdo a su estado de autenticacion
+  
+  useEffect(() => {
+    const handleDatos = async () => {
+      if (localStorage.getItem("token")) {
+        try {
+          const respuesta = await fetchData()
+          // console.log("Data received:", respuesta.data);
+          const pruebaRes = respuesta.data
+          console.log("pruebaRes", pruebaRes)
+          setInfo(pruebaRes)
+        } catch (error) {
+          console.error("Error fetching data:", error);
+        }
+      }
+
+    };
+    handleDatos();
+    // console.log("pruegaRes: ", info)
+  }, []);
 
   return (
     <>
@@ -69,10 +102,7 @@ const NavBar = () => {
           >
             <Dropdown.Header>
               {/* Información del usuario */}
-              <span className="block text-sm">Bonnie Green</span>
-              <span className="block truncate text-sm font-medium">
-                name@flowbite.com
-              </span>
+              <span className="block text-sm">Bienvenido {isLoggedIn && (info?.name)}</span>
             </Dropdown.Header>
             <NavLink to="/perfil">
               <Dropdown.Item>Perfil</Dropdown.Item>
