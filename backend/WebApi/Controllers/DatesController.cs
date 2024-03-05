@@ -60,7 +60,7 @@ namespace WebApi.Controllers
         }
 
         [Authorize(Roles = "Cliente")]
-        [HttpGet("{id}/cancel")]
+        [HttpPatch("{id}/cancel")]
         public async Task<ActionResult<ResponseSucceded<DateDto>>> CancelDate(int id)
         {
             Date Date =  await _DateService.CancelDate(id); 
