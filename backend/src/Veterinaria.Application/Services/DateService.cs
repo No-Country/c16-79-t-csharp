@@ -67,4 +67,9 @@ public class DateService : IDateServise
         Date updatedModel = await _repository.UpdateAsync(model);
         return updatedModel;
     }
+    public async Task<List<Date>> GetAllByClientUser(int id){
+
+        return await _repository.FindAllByClientUserAsync(id);
+
+    }
 }

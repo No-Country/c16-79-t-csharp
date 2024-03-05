@@ -22,9 +22,10 @@ namespace WebApi.Controllers
         private readonly IClientUserService _clientUserService;
         private readonly IPetService _petService;
         private readonly IPetRepository _petRepository;
+        private readonly IDateServise _dateService;
         private readonly IAddressRepository _addressRepository;
         private readonly IMapper _mapper;
-        public ClientUsersController(IClientUserRepository clientUserRepository, IMapper mapper, IClientUserService clientUserService, IPetRepository petRepository, IPetService petService, IAddressRepository addressRepository)
+        public ClientUsersController(IClientUserRepository clientUserRepository, IMapper mapper, IClientUserService clientUserService, IPetRepository petRepository, IPetService petService, IAddressRepository addressRepository,IDateServise dateService)
         {
             _clientUserRepository = clientUserRepository;
             _mapper = mapper;
@@ -32,6 +33,7 @@ namespace WebApi.Controllers
             _petRepository = petRepository;
             _petService = petService;
             _addressRepository = addressRepository;
+            _dateService = dateService;
         }
 
         // api/clientusers
@@ -289,7 +291,18 @@ namespace WebApi.Controllers
 
         // api/clientusers/me/pets/[ dates | {id}/dates ]
         #region Dates
-
+        
+        [Authorize(Roles = "Cliente")]
+        [HttpGet("me/Dates")] //citas x user
+        public async Task<ActionResult<ResponseSucceded<DatePetDto>>> MyPetsDates()
+        {
+            List<Date> dates = await _dateService.GetAllByClientUser(ClaimsUtility.GetClienteIdFromClaim(this.User));
+            IEnumerable<DatePetDto> datesDtos =
+                dates.Select(c => new DatePetDto(c.Id,c.Time,c.ServiceId,c.Service.Type,c.PetId,c.Pet.Name,c.StateDate ));
+             return Ok(
+                new ResponseSucceded<IEnumerable<DatePetDto>>((int)HttpStatusCode.OK, datesDtos)
+            );
+        }
         #endregion
 
     }
