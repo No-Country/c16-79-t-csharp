@@ -2029,6 +2029,35 @@
         }
       }
     },
+    "/api/Products/lastFive": {
+      "get": {
+        "tags": [
+          "Products"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductDtoListResponseSucceded"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductDtoListResponseSucceded"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductDtoListResponseSucceded"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/Sales": {
       "get": {
         "tags": [
@@ -2756,6 +2785,10 @@
           },
           "stateDate": {
             "$ref": "#/components/schemas/DateState"
+          },
+          "stateName": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -2825,6 +2858,10 @@
           },
           "stateDate": {
             "$ref": "#/components/schemas/DateState"
+          },
+          "stateName": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -3230,6 +3267,26 @@
         "additionalProperties": false
       },
       "ProductDtoIEnumerableResponseSucceded": {
+        "type": "object",
+        "properties": {
+          "succeded": {
+            "type": "boolean"
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ProductDto"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ProductDtoListResponseSucceded": {
         "type": "object",
         "properties": {
           "succeded": {
