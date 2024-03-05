@@ -10,6 +10,7 @@ public interface IDateServise
     Task<Date> CreateAsync(DateTime time, int  serviceId, int petId );
     Task<Date> UpdateAsync(int id, DateTime time, int serviceId, int petId ,DateState state);
     Task DeleteAsync(int id);
+    Task<List<Date>> GetAllByClientUser(int id);
 
     //Task ExampleFunction();
 }
