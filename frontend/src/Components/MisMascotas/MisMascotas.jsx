@@ -15,7 +15,7 @@ export const MisMascotas = () => {
 
   const [info, setInfo] = useState([])
 
-  console.log("info", info)
+  // console.log("info", info)
 
   const { fetchData } = useFetchGet("api/ClientUsers/me/pets")
 
@@ -26,7 +26,7 @@ export const MisMascotas = () => {
           const respuesta = await fetchData()
           // console.log("Data received:", respuesta.data);
           const pruebaRes = respuesta.data
-          console.log("pruebaRes", pruebaRes)
+          //  console.log("pruebaRes", pruebaRes)
           setInfo(pruebaRes)
         } catch (error) {
           console.error("Error fetching data:", error);
