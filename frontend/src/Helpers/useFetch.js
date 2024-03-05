@@ -3,9 +3,6 @@ import { useState } from "react";
 const api_url = import.meta.env.VITE_WEB_API_URL
 console.log(api_url)
 
-
-
-
 export const useFetchGet = (endPoint) => {
   const fetchData = async () => {
     try {
