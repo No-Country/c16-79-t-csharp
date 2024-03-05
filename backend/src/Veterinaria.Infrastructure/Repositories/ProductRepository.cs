@@ -26,7 +26,7 @@ namespace Veterinaria.Infrastructure.Repositories
 
         public async Task<List<Product>> GetLastFiveProductsAsync()
         {
-            return await _context.Products.OrderByDescending(p => p.Id).Take(5).ToListAsync();
+            return await _context.Products.OrderByDescending(p => p.Id).Take(5).OrderBy(p => p.Id).ToListAsync();
         }
     }
 }
