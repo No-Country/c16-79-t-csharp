@@ -11,7 +11,7 @@ export const Turnos = ({ mascotasData }) => {
 
   // console.log("first", first);
 
-  let { fetchData } = useFetchGet("api/Dates");
+  let { fetchData } = useFetchGet("api/ClientUsers/me/Dates");
 
   useEffect(() => {
     const handleDatos = async () => {
@@ -62,11 +62,10 @@ export const Turnos = ({ mascotasData }) => {
                   className="bg-gray-200 dark:border-gray-700 dark:bg-gray-800"
                 >
                   <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
-                    <p>{dt.toString()
-                    }</p>
+                    <p>{dt.toLocaleString()}</p>
                   </Table.Cell>
-                  <Table.Cell>{turno.serviceId}</Table.Cell>
-                  <Table.Cell>{turno.petId}</Table.Cell>
+                  <Table.Cell>{turno.serviceType}</Table.Cell>
+                  <Table.Cell>{turno.petName}</Table.Cell>
                   <Table.Cell>{turno.stateDate}</Table.Cell>
                   <Table.Cell>
                     <a
