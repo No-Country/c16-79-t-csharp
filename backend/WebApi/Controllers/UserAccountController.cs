@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
-using Veterinaria.Application.DTO;
+using Veterinaria.Application.Dtos;
 using Veterinaria.Application.Authentication;
 using Veterinaria.Domain.Repositories;
 using Veterinaria.Application.CustomeException;
@@ -14,16 +14,13 @@ namespace WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UserAccountController : ControllerBase //TODO: posible nombre AuthController
+    public class UserAccountController : ControllerBase 
     {
         private readonly IAuthenticationUserAccountService _authenticationService;
-        private readonly IClientUserRepository _clientUserRepository;
         private readonly IMapper _mapper;
-        public UserAccountController(IAuthenticationUserAccountService authenticationService, 
-                                     IClientUserRepository clientUserRepository, IMapper mapper)
+        public UserAccountController(IAuthenticationUserAccountService authenticationService, IMapper mapper)
         {
             _authenticationService = authenticationService;
-            _clientUserRepository = clientUserRepository;
             _mapper = mapper;
         }
 
@@ -36,13 +33,14 @@ namespace WebApi.Controllers
             {
                 throw new BadException("The email already exists");
             }
-            var userAccount = await _authenticationService.Register(clientUserRegiserDTO);
-            return NoContent();
+
+            var clientUser = await _authenticationService.Register(clientUserRegiserDTO);
+            return Created();
         }
 
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] UserAccountLoginDTO userAccountLoginDTO)
+        public async Task<ActionResult<UserAccountResponseLoginDTO>> Login([FromBody] UserAccountLoginDTO userAccountLoginDTO)
         {
             var loginResponse = await _authenticationService.Login(userAccountLoginDTO);
             // if (loginResponse.ClientUser is null || string.IsNullOrEmpty(loginResponse.Token))

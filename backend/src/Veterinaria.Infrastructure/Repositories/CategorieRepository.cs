@@ -1,15 +1,21 @@
 using Veterinaria.Domain.Models;
 using Veterinaria.Domain.Repositories;
 using Veterinaria.Infrastructure.Persistance.Context;
+using Veterinaria.Infrastructure.Repositories;
 
-namespace Veterinaria.Infrastructure.Repositories;
-
-public class CategorieRepository: BasicRepository<Categorie,int>, ICategorieRepository
+namespace Veterinaria.Infrastructure
 {
-    private readonly VeterinariaDbContext _context;
-
-    public CategorieRepository(VeterinariaDbContext context):base(context)
+    public class CategorieRepository : BasicRepository<Categorie, int>, ICategorieRepository
     {
-        _context = context;
+        private readonly VeterinariaDbContext _context;
+        public CategorieRepository(VeterinariaDbContext context) : base(context)
+        {
+            _context = context;
+        }
+
+        public Task<Categorie> MetodoPerzonalizado(Categorie categorie)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

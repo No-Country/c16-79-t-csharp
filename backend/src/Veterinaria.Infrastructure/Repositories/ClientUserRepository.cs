@@ -42,5 +42,11 @@ namespace Veterinaria.Infrastructure.Repositories
             var user = await _context.ClientUsers.FirstOrDefaultAsync(filtro);
             return user;
         }
+
+        public async Task<ClientUser?> FindByUserAccount(string idUserAccount)
+        {
+            var user = await _context.ClientUsers.FirstOrDefaultAsync(u => u.UserAccountId==idUserAccount);
+            return user;
+        }
     }
 }

@@ -5,14 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Veterinaria.Application.DTO
+namespace Veterinaria.Application.Dtos
 {
-    public class UserAccountRegisterDTO
+    public class UserAccountLoginDTO
     {
         [Required(ErrorMessage = "El email es obligatorio")]
         public string Email { get; set; }
         [Required(ErrorMessage = "La contraseña es obligatoria")]
         public string Password { get; set; }
-        public string Role { get; private set; } = "Cliente";
     }
 }

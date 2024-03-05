@@ -1,6 +1,4 @@
-
 import { Banner } from 'flowbite-react';
-import { HiArrowRight } from 'react-icons/hi';
 import { MdPercent } from 'react-icons/md';
 
 export const Ofertas = () => {
@@ -32,8 +30,3 @@ export const Ofertas = () => {
     </Banner>
   )
 }
-
-
-//   <div div className = "flex justify-center bg-purple-400 text-white" >
-//     <p>UTILIZA EL CÓDIGO DE CUPÓN: <strong>BIENVENIDO</strong> PARA OBTENER UN 25% DE DESCUENTO</p>
-// </div >

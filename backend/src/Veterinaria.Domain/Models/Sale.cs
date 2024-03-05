@@ -19,11 +19,23 @@ namespace Veterinaria.Domain.Models
             ClientUserId = clientUserId;
         }
 
+        public void Update(DateTime date, float total, int clientUserId)
+        {
+            Date = date;
+            Total = total;
+            ClientUserId = clientUserId;
+        }
+
 
         public static Sale MakeSale(DateTime date, float total, int clientUserId)
         {
             var sale = new Sale(date, total, clientUserId);
             return sale;
+        }
+
+        public int CalculateAmount()
+        {
+            return DetailSales.Sum(ds => ds.Quantity);
         }
     }
 }
