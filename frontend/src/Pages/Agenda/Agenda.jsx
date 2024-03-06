@@ -70,40 +70,44 @@ export const Agenda = () => {
   const handleClick = () => {
     setShowToast((state) => !state);
     guardarAgenda();
-    window.location.reload()
+    window.location.reload();
   };
 
   return (
-    <div className="container w-4/5 mx-auto">
-      <h1 className="py-5 mb-4 text-2xl font-extrabold leading-none tracking-tight text-center text-gray-500 md:text-5xl lg:text-4xl dark:text-white">
-        Agenda
-      </h1>
-      <div className="flex place-content-around mb-10 mt-16 flex-wrap gap-2">
-        <SeleccioneSuMascota
-          sendDataToParent={receiveDataFromMascota}
-          className=" w-2/5"
-        />
-        <SeleccionEstudio
-          sendDataToParent={receiveDataFromServicio}
-          className=" w-2/5 "
-        />
-        <SelecFechaHoraTurno sendDataToParent={receiveDataFromFecha} />
-      </div>
-      {/* <ToastAgenda /> */}
-      <div className="flex justify-center">
-        <div className="flex space-y-4">
-          <Button onClick={handleClick}>Agendar</Button>
-          {showToast && (
-            <Toast className="fixed top-20 right-5 bg-purple-100">
-              <div className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-green-100 text-green-500 dark:bg-green-800 dark:text-green-200">
-                <HiFire className="h-5 w-5" />
-              </div>
-              <div className="ml-3 text-sm font-normal">
-                Cita agendada con éxito!
-              </div>
-              <Toast.Toggle onDismiss={() => setShowToast(false)} />
-            </Toast>
-          )}
+    <div className="bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))]">
+      <div className="container w-4/5 mx-auto ">
+        <h1 className="py-5 mb-4 text-2xl font-extrabold leading-none tracking-tight text-center text-gray-500 md:text-5xl lg:text-4xl dark:text-white">
+          Agenda
+        </h1>
+        <div className="flex place-content-around mb-10 mt-16 flex-wrap gap-2">
+          <div className="container flex gap-2 w-2/5">
+            <SeleccioneSuMascota
+              sendDataToParent={receiveDataFromMascota}
+              className=" w-2/5"
+            />
+            <SeleccionEstudio
+              sendDataToParent={receiveDataFromServicio}
+              className=" w-2/5 "
+            />
+          </div>
+          <SelecFechaHoraTurno sendDataToParent={receiveDataFromFecha} />
+        </div>
+        {/* <ToastAgenda /> */}
+        <div className="flex justify-center">
+          <div className="flex space-y-4">
+            <Button onClick={handleClick}>Agendar</Button>
+            {showToast && (
+              <Toast className="fixed top-20 right-5 bg-purple-100">
+                <div className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-green-100 text-green-500 dark:bg-green-800 dark:text-green-200">
+                  <HiFire className="h-5 w-5" />
+                </div>
+                <div className="ml-3 text-sm font-normal">
+                  Cita agendada con éxito!
+                </div>
+                <Toast.Toggle onDismiss={() => setShowToast(false)} />
+              </Toast>
+            )}
+          </div>
         </div>
       </div>
     </div>

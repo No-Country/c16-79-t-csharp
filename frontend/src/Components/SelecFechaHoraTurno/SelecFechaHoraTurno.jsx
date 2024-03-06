@@ -21,15 +21,16 @@ export const SelecFechaHoraTurno = ({ sendDataToParent }) => {
   }, [fechaSeleccionada]);
 
   return (
-    <div className="container flex-col mx-auto w-96">
+    <div className="container w-2/5 flex-col mx-auto justify-around flex-wrap ">
       <div className="mb-2 block">
-        <p className="text-sm font-medium text-gray-900 dark:text-white">
+        <p className="text-sm font-medium text-gray-900 dark:text-white pt-1">
           {" "}
           Seleccione una fecha y hora
         </p>
       </div>
-      <div className="container flex">
+      <div className="container flex gap-2 ">
         <DatePicker
+          className="block w-full border disabled:cursor-not-allowed disabled:opacity-50 bg-gray-50 border-gray-300 text-gray-900 focus:border-cyan-500 focus:ring-cyan-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-cyan-500 dark:focus:ring-cyan-500 p-2.5 text-sm rounded-lg"
           value={mostrarFecha}
           onChange={(date) => {
             const utcDate = new Date(date.getTime());
@@ -39,6 +40,7 @@ export const SelecFechaHoraTurno = ({ sendDataToParent }) => {
         ></DatePicker>
 
         <DatePicker
+          className="block w-full border disabled:cursor-not-allowed disabled:opacity-50 bg-gray-50 border-gray-300 text-gray-900 focus:border-cyan-500 focus:ring-cyan-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-cyan-500 dark:focus:ring-cyan-500 p-2.5 text-sm rounded-lg"
           value={mostrarHora}
           showTimeSelect
           showTimeSelectOnly
@@ -56,7 +58,7 @@ export const SelecFechaHoraTurno = ({ sendDataToParent }) => {
         />
       </div>
       <Button
-        className=" mt-5"
+        className=" mt-5 mx-auto"
         onClick={() => {
           // Obtenemos los componentes de fecha de la primera fecha
           const dia = capturarFecha.getDate();
@@ -70,10 +72,15 @@ export const SelecFechaHoraTurno = ({ sendDataToParent }) => {
 
           const nuevaFecha = new Date(anio, mes, dia, hora, minutos, segundos);
 
-          setFechaSeleccionada(new Date(nuevaFecha.toUTCString()).toISOString());
+          setFechaSeleccionada(
+            new Date(nuevaFecha.toUTCString()).toISOString()
+          );
           console.log("fecha completa: ", capturarHora);
           console.log("fecha nueva: ", nuevaFecha);
-          console.log("fecha iso: ", new Date(nuevaFecha.toUTCString()).toISOString());
+          console.log(
+            "fecha iso: ",
+            new Date(nuevaFecha.toUTCString()).toISOString()
+          );
         }}
       >
         Agendar fecha y hora
