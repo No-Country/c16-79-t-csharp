@@ -4,7 +4,7 @@ const api_url = import.meta.env.VITE_WEB_API_URL
 console.log(api_url)
 
 export const useFetchGet = (endPoint) => {
-   const fetchData = async () => {
+  const fetchData = async () => {
     try {
       const response = await fetch(`${api_url}/${endPoint}`, {
         headers: { 
@@ -15,16 +15,58 @@ export const useFetchGet = (endPoint) => {
       return data;
     } catch (error) {
       console.log("Error: " + error);
-    }  
-   }
-   return {
+    }
+  }
+  return {
     fetchData
-   };
+  };
 }
 
+/* Cari - creo un fech solo para el login que setee a la variable de token en el storage */
+export const useFetchLogin = (endPoint, input) => {
+
+  const [state, setState] = useState({
+    data: "",
+  });
+ 
+    const fetchData = async () => {
+      
+      try {
+        const response = await fetch(`${api_url}/${endPoint}`, {
+          
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",            
+            "Authorization" : localStorage.getItem("token") ? `Bearer ${localStorage.getItem("token")}` : ""
+          },
+          body: JSON.stringify(input),
+        });
+        console.log(response, "RESPONSE")
+        const data = await response.json();
+        /* Linea que setea token */
+        if(response.status === 200){
+        localStorage.setItem("token", data.token);}
+        setState({
+          data,
+        });
+
+      } catch (error) {
+        setState({
+          data: "",
+        });
+      }
+    };
+    
+  return {
+   state,
+    fetchData
+  };
+};
+
+/* Cari - Este queda para usar en general - no resetea la variable token */
 export const useFetchPost = (endPoint, input) => {
 
-
+  // console.log(method)
   const [state, setState] = useState({
     data: "",
   });
@@ -41,7 +83,8 @@ export const useFetchPost = (endPoint, input) => {
           body: JSON.stringify(input),
         });
         const data = await response.json();
-        localStorage.setItem("token", data.token);
+        /* Aca se elimina la linea para que el token no pase a estar en blanco */
+/*         localStorage.setItem("token", data.token); */
         setState({
           data,
         });
@@ -52,17 +95,10 @@ export const useFetchPost = (endPoint, input) => {
         });
       }
     };
-    
-    // useEffect(() => {
-    //   if(!input){
-    //     return
-    //   }
-    //   fetchData();
-    //   //eslint-disable-next-line
-    // }, [input])
+  
     
   return {
-   state,
+    state,
     fetchData
   };
 };
@@ -84,30 +120,55 @@ export const useFetchPut = (endPoint, input) => {
           body: JSON.stringify(input),
         });
         const data = await response.json();
-        // localStorage.setItem("token", data.token);
         console.log(" responseee ",response)
         setState({
           data,
         });
 
-      } catch (error) {
-        setState({
-          data: "",
-        });
-      }
-    };
-    
-    // useEffect(() => {
-    //   if(!endPoint){
-    //     return
-    //   }
-    //   fetchData();
-    //   //eslint-disable-next-line
-    // }, [])
-    
+    } catch (error) {
+      setState({
+        data: "",
+      });
+    }
+  };
+
   return {
    state,
     fetchData
   };
-};    
+};
 
+export const useFetchPatch = (endPoint) => {
+
+  const [state, setState] = useState({
+    data: "",
+  });
+
+    const fetchDataPatch = async () => {
+      try {
+        const response = await fetch(`${api_url}/${endPoint}`, {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",            
+            "Authorization" : localStorage.getItem("token") ? `Bearer ${localStorage.getItem("token")}` : ""
+          },
+          body: {},
+        });
+        const data = await response.json();
+        console.log(" responseee ",response)
+        setState({
+          data,
+        });
+
+    } catch (error) {
+      setState({
+        data: "",
+      });
+    }
+  };
+
+  return {
+   state,
+   fetchDataPatch
+  };
+};
