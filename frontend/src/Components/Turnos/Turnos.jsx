@@ -2,7 +2,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
-import { Table } from "flowbite-react";
+import { Button, Table } from "flowbite-react";
 import { useFetchGet } from "../../Helpers/useFetch";
 import { useEffect, useState } from "react";
 
@@ -28,6 +28,21 @@ export const Turnos = ({ mascotasData }) => {
     handleDatos();
     //eslint-disable-next-line
   }, []);
+
+
+
+  const fechaActual = new Date();
+  const fechaGuardada = new Date(first?.map(turnos => turnos.time));
+console.log(fechaGuardada)
+  const diferenciaMilisegundos = fechaActual.getTime() - fechaGuardada.getTime();
+  const diferenciaHoras = diferenciaMilisegundos / 3600000;
+
+  if (diferenciaHoras > 24) {
+    console.log("La fecha se guardó hace más de 24 horas");
+  } else {
+    console.log("La fecha se guardó hace menos de 24 horas");
+  }
+
 
   console.log(" mascotas data desde turnos: ", mascotasData[1]);
 
@@ -68,12 +83,14 @@ export const Turnos = ({ mascotasData }) => {
                   <Table.Cell>{turno.petName}</Table.Cell>
                   <Table.Cell>{turno.stateDate}</Table.Cell>
                   <Table.Cell>
-                    <a
+                    {/* <a
+
                       href="#"
                       className="font-medium text-cyan-600 hover:underline dark:text-cyan-500"
                     >
                       Cancelar
-                    </a>
+                    </a> */}
+                    <Button >cancelar</Button>
                   </Table.Cell>
                 </Table.Row>
               );
