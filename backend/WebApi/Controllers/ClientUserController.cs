@@ -1,9 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
-using System.Security.Claims;
 using Veterinaria.Application.CustomeException;
 using Veterinaria.Application.Dtos;
 using Veterinaria.Application.Dtos.Wrappers;

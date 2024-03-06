@@ -1,13 +1,10 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Veterinaria.Application.CustomeException;
-using System.Security.Claims;
 using Veterinaria.Application.Dtos;
 using Veterinaria.Domain.Models;
 using Veterinaria.Domain.Repositories;
-using Veterinaria.Infrastructure.Repositories;
 using Veterinaria.Application.Dtos.Wrappers;
 using Veterinaria.Domain.Services;
 using System.Net;
@@ -46,7 +43,6 @@ namespace WebApi.Controllers
         }
 
 
-
         [Authorize(Roles = "Admin, Cliente")]
         [HttpGet("{id}")]
         public async Task<ActionResult<ResponseSucceded<PetDTO>>> GetByIdWithData(int id)
@@ -60,6 +56,8 @@ namespace WebApi.Controllers
             return Ok(new ResponseSucceded<PetDTO>((int)HttpStatusCode.OK, petDTO));
         }
 
+
+        #region EndpointsViejos
 
         //[Authorize(Roles = "Admin, Cliente")]
         //[HttpPost]
@@ -113,7 +111,8 @@ namespace WebApi.Controllers
         //    await _petRepository.DeleteAsync(pet);
         //    return NoContent();
         //}
-    }
 
+        #endregion
+    }
 
 }

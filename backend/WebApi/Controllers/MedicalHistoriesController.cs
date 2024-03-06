@@ -1,13 +1,10 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using Veterinaria.Application.Dtos.Wrappers;
 using Veterinaria.Application.Dtos;
 using Veterinaria.Domain.Services;
 using Veterinaria.Domain.Models;
 using Microsoft.AspNetCore.Authorization;
-using System.Security.Claims;
-using WebApi.Utilities;
 
 namespace WebApi.Controllers
 {
@@ -67,9 +64,5 @@ namespace WebApi.Controllers
             await _MHService.DeleteAsync(id);
             return NoContent();
         }
-
-
-        
-        
     }
 }

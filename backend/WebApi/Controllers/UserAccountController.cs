@@ -1,14 +1,8 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 using Veterinaria.Application.Dtos;
 using Veterinaria.Application.Authentication;
-using Veterinaria.Domain.Repositories;
 using Veterinaria.Application.CustomeException;
-using Veterinaria.Domain.Models;
 
 namespace WebApi.Controllers
 {
