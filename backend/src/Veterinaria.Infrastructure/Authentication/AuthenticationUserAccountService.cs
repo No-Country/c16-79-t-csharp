@@ -18,6 +18,7 @@ using Veterinaria.Domain.Models;
 using Veterinaria.Domain.Repositories;
 using Veterinaria.Infrastructure.Authentication;
 using Veterinaria.Infrastructure.Persistance.Context;
+using Veterinaria.Infrastructure.Repositories;
 
 namespace Veterinaria.Infrastructure.Authentication
 {
@@ -30,11 +31,11 @@ namespace Veterinaria.Infrastructure.Authentication
         private readonly IMapper _mapper;
         private readonly string _secretKey;
         public AuthenticationUserAccountService(VeterinariaDbContext context,
+                                    IClientUserRepository clientUserRepository,  
                                     IConfiguration config,
                                     UserManager<ApplicationUserAccount> userManager,
                                     RoleManager<IdentityRole> roleManager,
-                                    IMapper mapper,
-                                    IClientUserRepository clientUserRepository)
+                                    IMapper mapper)
         {
             _context = context;
             _userManager = userManager;

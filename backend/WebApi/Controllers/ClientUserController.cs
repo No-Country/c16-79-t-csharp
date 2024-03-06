@@ -1,9 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
-using System.Security.Claims;
 using Veterinaria.Application.CustomeException;
 using Veterinaria.Application.Dtos;
 using Veterinaria.Application.Dtos.Wrappers;
@@ -22,11 +20,11 @@ namespace WebApi.Controllers
         private readonly IClientUserService _clientUserService;
         private readonly IPetService _petService;
         private readonly IPetRepository _petRepository;
-        private readonly IDateServise _dateService;
+        private readonly IDateService _dateService;
         private readonly IAddressRepository _addressRepository;
         private readonly IMedicalHistoryService _MHService;
         private readonly IMapper _mapper;
-        public ClientUsersController(IClientUserRepository clientUserRepository, IMapper mapper, IClientUserService clientUserService, IPetRepository petRepository, IPetService petService, IAddressRepository addressRepository, IDateServise dateService, IMedicalHistoryService mHService)
+        public ClientUsersController(IClientUserRepository clientUserRepository, IMapper mapper, IClientUserService clientUserService, IPetRepository petRepository, IPetService petService, IAddressRepository addressRepository, IDateService dateService, IMedicalHistoryService mHService)
         {
             _clientUserRepository = clientUserRepository;
             _mapper = mapper;
@@ -50,29 +48,25 @@ namespace WebApi.Controllers
             return Ok(new ResponseSucceded<IEnumerable<ClientUserDTO>>((int)HttpStatusCode.OK, usuariosDTO));
         }
 
-        // INFO: por momento nos concentramod en el clientuser
-        // [Authorize(Roles = "Admin")]
-        // [HttpGet("by-useraccount/{id}")]
-        // public async Task<ActionResult<ClientUserDTO>> GetById(string id)
-        // {
-        //     var clientUser = await _clientUserRepository.GetClientUserByIdWithData(u => u.UserAccountId == id);
-        //     if (clientUser is null)
-        //     {
-        //         return NotFound();
-        //     }
-        //     var clientUserDataDTO = _mapper.Map<ClientUserDTO>(clientUser);
-        //     return Ok(clientUserDataDTO);
-        // }
+        
+        [Authorize(Roles = "Admin")]
+        [HttpGet("by-useraccount/{id}")]
+        public async Task<ActionResult<ClientUserDTO>> GetById(string id)
+        {
+            var clientUser = await _clientUserRepository.GetClientUserByIdWithData(u => u.UserAccountId == id);
+            if (clientUser is null)
+            {
+                return NotFound();
+            }
+            var clientUserDataDTO = _mapper.Map<ClientUserDTO>(clientUser);
+            return Ok(clientUserDataDTO);
+        }
 
         [Authorize(Roles = "Cliente")]
         [HttpGet("me")]
         public async Task<ActionResult<ResponseSucceded<ClientUserDTO>>> GetClientUser()
         {
-            // ClaimsPrincipal claims = this.User;
-            // var accountId = claims.FindFirst(u => u.Type == ClaimTypes.NameIdentifier)?.Value;
-
             int clientUserId = ClaimsUtility.GetClienteIdFromClaim(this.User);
-
             
             var clientUser = await _clientUserRepository.GetClientUserByIdWithData(u => u.Id == clientUserId);
             if (clientUser is null)
@@ -87,8 +81,6 @@ namespace WebApi.Controllers
         [HttpPut("me")]
         public async Task<ActionResult<ResponseSucceded<ClientUserDTO>>> PersonalDataUpdate([FromBody] ClientUserDataUpdateDTO clientUserDataUpdateDTO)
         {
-            // ClaimsPrincipal claims = this.User;
-            // var idUser = claims.FindFirst(u => u.Type == ClaimTypes.NameIdentifier)?.Value;
             int clientUserId = ClaimsUtility.GetClienteIdFromClaim(this.User);
 
             var clientUser = await _clientUserRepository.GetClientUserById(u => u.Id == clientUserId);
@@ -110,10 +102,6 @@ namespace WebApi.Controllers
         [HttpGet("me/addresses")]
         public async Task<ActionResult<ResponseSucceded<IEnumerable<AddressDTO>>>> GetAllWithData()
         {
-            // ClaimsPrincipal claims = this.User;
-            // var idUser = claims.FindFirst(u => u.Type == ClaimTypes.NameIdentifier)?.Value;
-            // var clientUser = await _clientUserRepository.GetClientUserById(u => u.UserAccountId == idUser);
-
             int clientUserId = ClaimsUtility.GetClienteIdFromClaim(this.User);
 
             List<Address> addresses = await _addressRepository.FindAllByUser(clientUserId);
@@ -125,8 +113,6 @@ namespace WebApi.Controllers
         [HttpGet("me/addresses/{id}")]
         public async Task<ActionResult<ResponseSucceded<AddressDTO>>> GetByIdWithData(int id)
         {
-            // ClaimsPrincipal claims = this.User;
-            // var idUser = claims.FindFirst(u => u.Type == ClaimTypes.NameIdentifier)?.Value;
             int clientUserId = ClaimsUtility.GetClienteIdFromClaim(this.User);
 
             // agregar comprobacion de pertenencia
@@ -140,10 +126,6 @@ namespace WebApi.Controllers
         [HttpPost("me/addresses")]
         public async Task<ActionResult<ResponseSucceded<AddressDTO>>> InsertAddresses([FromBody] AddressCreationDTO addressCreationDTO)
         {
-            // ClaimsPrincipal claims = this.User;
-            // var idUser = claims.FindFirst(u => u.Type == ClaimTypes.NameIdentifier)?.Value;
-            // var clientUser = await _clientUserRepository.GetClientUserById(u => u.UserAccountId == idUser);
-
             int clientUserId = ClaimsUtility.GetClienteIdFromClaim(this.User);
 
             var address = new Address
@@ -164,8 +146,6 @@ namespace WebApi.Controllers
         [HttpPut("me/addresses/{id}")]
         public async Task<ActionResult<ResponseSucceded<AddressDTO>>> Actualizar([FromRoute] int id, [FromBody] AddressCreationDTO addressCreationDTO)
         {
-
-            
             var address = await _addressRepository.FindByIdAsync(id);
             if (address is null)
             {
@@ -200,9 +180,6 @@ namespace WebApi.Controllers
         [HttpGet("me/pets")]
         public async Task<ActionResult<ResponseSucceded<IEnumerable<PetDTO>>>> GetAllByUser()
         {
-            // ClaimsPrincipal claims = this.User;
-            // string idUser = claims.FindFirst(u => u.Type == ClaimTypes.NameIdentifier)?.Value ?? "";
-
             int clientUserId = ClaimsUtility.GetClienteIdFromClaim(this.User);
 
             List<Pet> pets = await _petService.GetAllByClientUser(clientUserId);
@@ -216,8 +193,6 @@ namespace WebApi.Controllers
         [HttpGet("me/pets/{id}")]
         public async Task<ActionResult<ResponseSucceded<PetDTO>>> GetByIdAndUser(int id)
         {
-            // ClaimsPrincipal claims = this.User;
-            // string idUser = claims.FindFirst(u => u.Type == ClaimTypes.NameIdentifier)?.Value ?? "";
             var pet = await _petRepository.GetByIdWithData(p => p.Id == id);
             if (pet is null)
             {
@@ -259,14 +234,6 @@ namespace WebApi.Controllers
         [HttpPost("me/pets")]
         public async Task<ActionResult<PetDTO>> CreatePet([FromBody] PetCreationDTO petCreationDTO)
         {
-            // ClaimsPrincipal claims = this.User;
-            // var idUser = claims.FindFirst(u => u.Type == ClaimTypes.NameIdentifier)?.Value;
-            // var clientUser = await _clientUserRepository.GetClientUserById(u => u.UserAccountId == idUser);
-            // if (clientUser is not ClientUser)
-            // {
-            //     throw new BadException("Debe registrar la informacion del usuario.");
-            // }
-
             int clientUserId = ClaimsUtility.GetClienteIdFromClaim(this.User);
 
             var pet = new Pet
@@ -294,7 +261,6 @@ namespace WebApi.Controllers
         public async Task<ActionResult<ResponseSucceded<IEnumerable<MedicalHistoryPetDto>>>> GetMyPetHistories()
         {
             int clientUserId = ClaimsUtility.GetClienteIdFromClaim(this.User);
-            // Ver: pueden darme un array?
             List<MedicalHistory> MHistory = await _MHService.GetAllAsync();
 
             IEnumerable<MedicalHistoryPetDto> MHDto =
@@ -314,7 +280,7 @@ namespace WebApi.Controllers
         #region Dates
 
         [Authorize(Roles = "Cliente")]
-        [HttpGet("me/Dates")] //citas x user
+        [HttpGet("me/Dates")]
         public async Task<ActionResult<ResponseSucceded<DatePetDto>>> MyPetsDates()
         {
             List<Date> dates = await _dateService.GetAllByClientUser(ClaimsUtility.GetClienteIdFromClaim(this.User));
@@ -324,16 +290,19 @@ namespace WebApi.Controllers
                 new ResponseSucceded<IEnumerable<DatePetDto>>((int)HttpStatusCode.OK, datesDtos)
             );
         }
+
+
         [Authorize(Roles = "Cliente")]
-        [HttpGet("me/Next24hsDates")] //citas x user
+        [HttpGet("me/Next24hsDates")]
         public async Task<ActionResult<ResponseSucceded<DatePetDto>>> MyNextDates()
         {
             DateTime dateTime = DateTime.UtcNow;
             List<Date> dates = await _dateService.GetAllByClientUser(ClaimsUtility.GetClienteIdFromClaim(this.User));
+            // refactorizar codigo para hacer la consulta en la db.
             IEnumerable<DatePetDto> datesDtos =
                 dates.Where(c => c.StateDate ==DateState.Crearted)
-                .Where (c =>  (c.Time - dateTime).TotalHours >= 24 && dateTime < c.Time)
-                .Select(c => new DatePetDto(c.Id, c.Time, c.ServiceId, c.Service.Type,c.PetId, c.Pet.Name, c.StateDate, EnumExtension.GetEnumDescription(c.StateDate)));
+                .Where(c =>  (c.Time - dateTime).TotalHours >= 24 && dateTime < c.Time)
+                .Select(c => new DatePetDto(c.Id, c.Time, c.ServiceId, c.Service.Type, c.PetId, c.Pet.Name, c.StateDate, EnumExtension.GetEnumDescription(c.StateDate)));
 
             return Ok(
                 new ResponseSucceded<IEnumerable<DatePetDto>>((int)HttpStatusCode.OK, datesDtos)

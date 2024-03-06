@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Veterinaria.Application.CustomeException;
 using System.Security.Claims;
@@ -29,9 +28,8 @@ namespace WebApi.Controllers
         }
 
 
-        //[Authorize(Roles = "Admin")]
-        // [HttpGet("GetAllWithData")]
-        [HttpGet] // INFO: solo el Admin
+        [Authorize(Roles = "Admin")]
+        [HttpGet]
         public async Task<ActionResult<ResponseSucceded<IEnumerable<AddressDTO>>>> GetAllWithData()
         {
             List<Address> addresses = await _addressRepository.GetAllWithData();
@@ -40,8 +38,7 @@ namespace WebApi.Controllers
         }
 
 
-        //[HttpGet("GetByIdWithData/{id}")]
-        [Authorize(Roles = "Cliente")]
+        [Authorize(Roles = "Admin,Cliente")]
         [HttpGet("{id}")] 
         public async Task<ActionResult<ResponseSucceded<AddressDTO>>> GetByIdWithData(int id)
         {
@@ -53,7 +50,7 @@ namespace WebApi.Controllers
 
 
         [Authorize(Roles = "Cliente")]
-        [HttpPost] // INFO: Parar Admin o Cliente
+        [HttpPost]
         public async Task<ActionResult<ResponseSucceded<AddressDTO>>> InsertAddresses([FromBody] AddressCreationDTO addressCreationDTO)
         {
             ClaimsPrincipal claims = this.User;
@@ -75,7 +72,7 @@ namespace WebApi.Controllers
 
 
         [Authorize(Roles = "Cliente")]
-        [HttpPut("{id}")]// INFO: Parar Admin o Cliente
+        [HttpPut("{id}")]
         public async Task<ActionResult<ResponseSucceded<AddressDTO>>> Actualizar([FromRoute] int id, [FromBody] AddressCreationDTO addressCreationDTO)
         {
             var address = await _addressRepository.FindByIdAsync(id);
@@ -90,7 +87,7 @@ namespace WebApi.Controllers
         }
 
 
-        //[Authorize(Roles = "Admin, Cliente")]
+        [Authorize(Roles = "Admin, Cliente")]
         [HttpDelete("{id}")]
         public async Task<ActionResult> Eliminar([FromRoute] int id)
         {
