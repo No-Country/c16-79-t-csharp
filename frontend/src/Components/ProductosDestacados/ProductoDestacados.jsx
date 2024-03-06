@@ -4,16 +4,19 @@ import "../ProductosDestacados/card.css"
 
 export const ProductoDestacados = () => {
 
+
+
+
   return (
     <>
       {/* <h1 className='text-center text-4xl'>Destacados</h1> */}
-      
+
       {/* <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 justify-items-center "> */}
       <h1 className=" pt-8 mb-0 font-extrabold leading-none tracking-tight text-center text-gray-500 md:text-2xl lg:text-4xl dark:text-white">
-        Productos de nuestro shop
+        Últimos Productos
       </h1>
       <div className="container mx-auto py-10 px-8 max-w-6xl">
-      
+
         <div className='grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10'>
           {data.map((producto, index) => (
             <Card

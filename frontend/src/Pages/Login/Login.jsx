@@ -1,6 +1,6 @@
 import { Button, Card, Checkbox, Label, TextInput } from 'flowbite-react';
 import { useState } from 'react';
-import { useFetchPost } from '../../Helpers/useFetch';
+import { useFetchLogin } from '../../Helpers/useFetch';
 import { useNavigate } from 'react-router-dom';
 
 export const Login = () => {
@@ -18,18 +18,18 @@ export const Login = () => {
     })
   }
 
-  // const method = "POST"
-
-  const { fetchData } = useFetchPost("api/UserAccount/login", input);
+  const { fetchData } = useFetchLogin("api/UserAccount/login", input);
   const navigate = useNavigate()
+
 
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-      const response = await fetchData()
+      await fetchData()
       //console.log(response)
       navigate("/");
+      window.location.reload()
     } catch (error) {
       console.log(error)
     }

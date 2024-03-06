@@ -15,6 +15,7 @@
     "flowbite-react": "^0.7.2",
     "google-map-react": "^2.2.1",
     "react": "^18.2.0",
+    "react-datepicker": "^6.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.22.1",
     "uuid": "^9.0.1"
