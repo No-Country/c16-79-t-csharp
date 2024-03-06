@@ -617,6 +617,11 @@ COPY public."DetailSales" ("Id", "SubTotal", "Quantity", "SaleId", "ProductId") 
 --
 
 COPY public."MedicalHistories" ("Id", "Diagnostic", "Medic", "Time", "PetId") FROM stdin;
+1	Fractura de pata	Dr. Pérez	2024-03-05 08:15:23.456+00	3
+2	Gastritis	Dra. González	2024-03-05 14:30:45.789+00	2
+3	Infección de oído	Dr. Sánchez	2024-03-05 11:45:12.123+00	4
+4	Conjuntivitis	Dra. Martínez	2024-03-05 17:20:35.987+00	1
+5	Deshidratación	Dr. López	2024-03-05 19:00:59.321+00	3
 \.
 
 
@@ -626,6 +631,9 @@ COPY public."MedicalHistories" ("Id", "Diagnostic", "Medic", "Time", "PetId") FR
 
 COPY public."Pets" ("Id", "Name", "Type", "Race", "Birthday", "Weight", "Photo", "ClientUserId") FROM stdin;
 1	Max	Perro	Labrador Retriever	2023-10-12	4	https://i.pinimg.com/736x/d7/e6/50/d7e650e5dd4f9f4cdf3c07a483c83dfb.jpg	2
+2	Luna	Gato	Otros	2020-04-25	4	https://i.pinimg.com/736x/da/9f/4a/da9f4a89b3eeefedc675aa25536235d8.jpg	2
+3	Mochi	Gato	Siamés	2022-11-15	4	https://i.pinimg.com/736x/d6/eb/28/d6eb285bcd26c45009e68f0581d87e36.jpg	2
+4	Sven	Perro	Bulldog Francés	2020-02-03	9	https://i.pinimg.com/736x/a2/91/dc/a291dc4f869e5cae10b4623d04b8742d.jpg	2
 \.
 
 
@@ -730,14 +738,14 @@ SELECT pg_catalog.setval('public."DetailSales_Id_seq"', 1, false);
 -- Name: MedicalHistories_Id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public."MedicalHistories_Id_seq"', 1, false);
+SELECT pg_catalog.setval('public."MedicalHistories_Id_seq"', 5, true);
 
 
 --
 -- Name: Pets_Id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public."Pets_Id_seq"', 1, true);
+SELECT pg_catalog.setval('public."Pets_Id_seq"', 4, true);
 
 
 --
