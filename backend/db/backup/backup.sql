@@ -601,6 +601,13 @@ COPY public."ClientUsers" ("Id", "Name", "LastName", "UserName", "PhoneNumber", 
 --
 
 COPY public."Dates" ("Id", "Time", "ServiceId", "PetId", "StateDate") FROM stdin;
+1	2024-03-07 18:00:00+00	2	1	3
+2	2024-03-08 19:00:00+00	3	2	3
+3	2024-03-03 19:00:00+00	1	4	3
+4	2024-03-09 15:00:00+00	3	3	3
+5	2024-03-11 16:30:00+00	2	3	3
+6	2024-03-15 18:30:00+00	1	4	3
+7	2024-03-20 18:30:00+00	3	2	3
 \.
 
 
@@ -724,7 +731,7 @@ SELECT pg_catalog.setval('public."ClientUsers_Id_seq"', 2, true);
 -- Name: Dates_Id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public."Dates_Id_seq"', 1, false);
+SELECT pg_catalog.setval('public."Dates_Id_seq"', 7, true);
 
 
 --
