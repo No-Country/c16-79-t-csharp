@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Veterinaria.Application.Dtos;
 using Veterinaria.Application.Dtos.Wrappers;
@@ -8,7 +9,6 @@ using Veterinaria.Domain.Services;
 
 namespace WebApi.Controllers
 {
-
     [ApiController]
     [Route("api/[controller]")]
     public class ServicesController : Controller
@@ -25,8 +25,6 @@ namespace WebApi.Controllers
         public async Task<ActionResult<ResponseSucceded<IEnumerable<ServiceDto>>>> GetAll()
         {
             List<Service> services = await _ServiceService.GetAllAsync();
-
-            //TODO: Usar AutoMapper cuando este configurado?
             IEnumerable<ServiceDto> servicesDtos =
                services.Select(c => new ServiceDto(c.Id, c.Type, c.Description, c.Price));
 
@@ -39,12 +37,11 @@ namespace WebApi.Controllers
         public async Task<ActionResult<ResponseSucceded<ServiceDto>>> GetById(int id)
         {
             Service services = await _ServiceService.GetByIdAsync(id);
-
-            //TODO: usar AutoMapper
             return Ok(new ResponseSucceded<ServiceDto>((int)HttpStatusCode.OK,
                 new ServiceDto(services.Id,services.Type,services.Description,services.Price)));
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] ServiceCreateDto createDto)
         {
@@ -52,14 +49,15 @@ namespace WebApi.Controllers
             return Created();
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, [FromBody] ServiceCreateDto updateDto)
         {
-            // TODO: Corregir interface y Implementacion del servico con respecto a los HashSet<Date>()
             await _ServiceService.UpdateAsync(id, updateDto.Type,updateDto.Description,updateDto.Price);
             return NoContent();
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {

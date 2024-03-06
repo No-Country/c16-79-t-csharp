@@ -11,9 +11,6 @@ using WebApi.Utilities;
 
 namespace WebApi.Controllers
 {
-    /* 
-    
-    */
     [ApiController]
     [Route("api/[controller]")]
     public class MedicalHistoriesController : Controller
@@ -25,33 +22,29 @@ namespace WebApi.Controllers
             _MHService = mHServise;
         }
 
-
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public async Task<ActionResult<ResponseSucceded<IEnumerable<MedicalHistoriesDto>>>> GetAll()
         {
             List<MedicalHistory> Dates = await _MHService.GetAllAsync();
-
-            //TODO: Usar AutoMapper cuando este configurado?
             IEnumerable<MedicalHistoriesDto> datesDtos =
                Dates.Select(
                     c => new MedicalHistoriesDto(c.Id, c.Diagnostic, c.Medic, c.Time, c.PetId));
-            //REVER: PET
             return Ok(
                 new ResponseSucceded<IEnumerable<MedicalHistoriesDto>>((int)HttpStatusCode.OK, datesDtos)
             );
         }
 
+        [Authorize(Roles = "Admin, Cliente")]
         [HttpGet("{id}")]
         public async Task<ActionResult<ResponseSucceded<MedicalHistoriesDto>>> GetById(int id)
         {
             MedicalHistory mHistory = await _MHService.GetByIdAsync(id);
-
-            //TODO: usar AutoMapper
             return Ok(new ResponseSucceded<MedicalHistoriesDto>((int)HttpStatusCode.OK,
                 new MedicalHistoriesDto(mHistory.Id, mHistory.Diagnostic, mHistory.Medic, mHistory.Time, mHistory.PetId)));
-            //ver service y pet  
         }
 
+        [Authorize(Roles = "Admin, Cliente")]
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] MedicalHistoriesCreatedDto createDto)
         {
@@ -59,6 +52,7 @@ namespace WebApi.Controllers
             return Created();
         }
 
+        [Authorize(Roles = "Admin, Cliente")]
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, [FromBody] MedicalHistoriesDto updateDto)
         {
@@ -66,6 +60,7 @@ namespace WebApi.Controllers
             return NoContent();
         }
 
+        [Authorize(Roles = "Admin, Cliente")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {

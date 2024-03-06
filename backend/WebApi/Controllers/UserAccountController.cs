@@ -43,10 +43,6 @@ namespace WebApi.Controllers
         public async Task<ActionResult<UserAccountResponseLoginDTO>> Login([FromBody] UserAccountLoginDTO userAccountLoginDTO)
         {
             var loginResponse = await _authenticationService.Login(userAccountLoginDTO);
-            // if (loginResponse.ClientUser is null || string.IsNullOrEmpty(loginResponse.Token))
-            // {
-            //     throw new UnauthorizedException("Nombre de usuario o contraseña incorrectos");
-            // }
             return Ok(loginResponse);
         }
     }
