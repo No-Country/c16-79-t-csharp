@@ -29,25 +29,32 @@ export const SelecFechaHoraTurno = ({ sendDataToParent }) => {
         </p>
       </div>
       <DatePicker
+      placeholderText="Ingrese la Fecha"
   value={mostrarFecha}
   onChange={(date) => {
-    const selectedDay = date.getDay(); // Obtener el día de la semana seleccionado
-    if (selectedDay !== 0 && selectedDay !== 6) { // Validar si no es sábado (0) ni domingo (6)
-      const utcDate = new Date(date.getTime());
-      setMostrarFecha(utcDate.toLocaleDateString());
-      setCapturarFecha(date);
+    const today = new Date(); // Obtener la fecha actual
+    if (date >= today) { // Verificar si la fecha seleccionada es hoy o en el futuro
+      const selectedDay = date.getDay();
+      if (selectedDay !== 0 && selectedDay !== 6) {
+        const utcDate = new Date(date.getTime());
+        setMostrarFecha(utcDate.toLocaleDateString());
+        setCapturarFecha(date);
+      } else {
+        alert("No puedes seleccionar turnos los fines de semana");
+      }
     } else {
-      // Aquí puedes manejar la lógica para informar al usuario que no puede seleccionar días de fin de semana
-      alert("No puedes seleccionar turnos los fines de semana");
+      alert("No puedes seleccionar fechas pasadas"); // Mostrar alerta si se selecciona una fecha pasada
     }
   }}
+  minDate={new Date()} // Establecer la fecha mínima como la fecha actual
   filterDate={(date) => {
     const dayOfWeek = date.getDay();
-    return dayOfWeek !== 0 && dayOfWeek !== 6; // Filtrar días de fin de semana
+    return dayOfWeek !== 0 && dayOfWeek !== 6;
   }}
 />
 
 <DatePicker
+placeholderText="Ingrese La Hora"
   value={mostrarHora}
   showTimeSelect
   showTimeSelectOnly
