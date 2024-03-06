@@ -1,11 +1,5 @@
-.imagenLogo img{
+.imagenLogo .logoImg img{
     height: 150px;
-}
-
-.imagenLogo div {
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
 
 .colaboradores a{

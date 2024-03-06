@@ -23,7 +23,7 @@ export const SelecFechaHoraTurno = ({ sendDataToParent }) => {
   return (
     <div className="container w-2/5 flex-col mx-auto justify-around flex-wrap ">
       <div className="mb-2 block">
-        <p className="text-sm font-medium text-gray-900 dark:text-white">
+        <p className="text-sm font-medium text-gray-900 dark:text-white pt-1">
           {" "}
           Seleccione una fecha y hora
         </p>
