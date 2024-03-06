@@ -298,11 +298,27 @@ namespace WebApi.Controllers
         {
             List<Date> dates = await _dateService.GetAllByClientUser(ClaimsUtility.GetClienteIdFromClaim(this.User));
             IEnumerable<DatePetDto> datesDtos =
-                dates.Select(c => new DatePetDto(c.Id,c.Time,c.ServiceId,c.Service.Type,c.PetId,c.Pet.Name,c.StateDate ));
-             return Ok(
+                dates.Select(c => new DatePetDto(c.Id,c.Time,c.ServiceId,c.Service.Type,c.PetId,c.Pet.Name,c.StateDate, EnumExtension.GetEnumDescription(c.StateDate)));
+            return Ok(
                 new ResponseSucceded<IEnumerable<DatePetDto>>((int)HttpStatusCode.OK, datesDtos)
             );
         }
+        [Authorize(Roles = "Cliente")]
+        [HttpGet("me/Next24hsDates")] //citas x user
+        public async Task<ActionResult<ResponseSucceded<DatePetDto>>> MyNextDates()
+        {
+            DateTime dateTime = DateTime.UtcNow;
+            List<Date> dates = await _dateService.GetAllByClientUser(ClaimsUtility.GetClienteIdFromClaim(this.User));
+            IEnumerable<DatePetDto> datesDtos =
+                dates.Where(c => c.StateDate ==DateState.Crearted)
+                .Where (c =>  (c.Time - dateTime).TotalHours >= 24 && dateTime < c.Time)
+                .Select(c => new DatePetDto(c.Id, c.Time, c.ServiceId, c.Service.Type,c.PetId, c.Pet.Name, c.StateDate, EnumExtension.GetEnumDescription(c.StateDate)));
+
+            return Ok(
+                new ResponseSucceded<IEnumerable<DatePetDto>>((int)HttpStatusCode.OK, datesDtos)
+            );
+        }
+
         #endregion
 
     }

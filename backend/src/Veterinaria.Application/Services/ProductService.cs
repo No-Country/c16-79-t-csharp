@@ -105,5 +105,10 @@ namespace Veterinaria.Application.Services
             Product updatedProduct = await _productRepository.UpdateAsync(product);
             return updatedProduct;
         }
+
+        public async Task<List<Product>> GetLastFiveProductsAsync()
+        {
+            return await _productRepository.GetLastFiveProductsAsync();
+        }
     }
 }
