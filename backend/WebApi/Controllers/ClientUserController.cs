@@ -24,8 +24,9 @@ namespace WebApi.Controllers
         private readonly IPetRepository _petRepository;
         private readonly IDateServise _dateService;
         private readonly IAddressRepository _addressRepository;
+        private readonly IMedicalHistoryService _MHService;
         private readonly IMapper _mapper;
-        public ClientUsersController(IClientUserRepository clientUserRepository, IMapper mapper, IClientUserService clientUserService, IPetRepository petRepository, IPetService petService, IAddressRepository addressRepository,IDateServise dateService)
+        public ClientUsersController(IClientUserRepository clientUserRepository, IMapper mapper, IClientUserService clientUserService, IPetRepository petRepository, IPetService petService, IAddressRepository addressRepository, IDateServise dateService, IMedicalHistoryService mHService)
         {
             _clientUserRepository = clientUserRepository;
             _mapper = mapper;
@@ -34,6 +35,7 @@ namespace WebApi.Controllers
             _petService = petService;
             _addressRepository = addressRepository;
             _dateService = dateService;
+            _MHService = mHService;
         }
 
         // api/clientusers
@@ -287,11 +289,30 @@ namespace WebApi.Controllers
         // api/clientusers/me/pets/{id}/medicalhistories
         #region MedicalHistories
 
+        [Authorize(Roles = "Cliente")]
+        [HttpGet("me/pets/medicalhistories")]
+        public async Task<ActionResult<ResponseSucceded<IEnumerable<MedicalHistoryPetDto>>>> GetMyPetHistories()
+        {
+            int clientUserId = ClaimsUtility.GetClienteIdFromClaim(this.User);
+            // Ver: pueden darme un array?
+            List<MedicalHistory> MHistory = await _MHService.GetAllAsync();
+
+            IEnumerable<MedicalHistoryPetDto> MHDto =
+               MHistory
+               .Where(c => c.Pet.ClientUserId == clientUserId)
+               .Select(
+                    c => new MedicalHistoryPetDto(c.Id, c.Diagnostic, c.Medic, c.Time, c.PetId,c.Pet.Name));
+
+            return Ok(
+                new ResponseSucceded<IEnumerable<MedicalHistoryPetDto>>((int)HttpStatusCode.OK, MHDto)
+            );
+        }
+
         #endregion
 
         // api/clientusers/me/pets/[ dates | {id}/dates ]
         #region Dates
-        
+
         [Authorize(Roles = "Cliente")]
         [HttpGet("me/Dates")] //citas x user
         public async Task<ActionResult<ResponseSucceded<DatePetDto>>> MyPetsDates()
