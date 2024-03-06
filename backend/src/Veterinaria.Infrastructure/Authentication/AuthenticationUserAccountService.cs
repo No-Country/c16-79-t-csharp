@@ -25,7 +25,6 @@ namespace Veterinaria.Infrastructure.Authentication
     public class AuthenticationUserAccountService : IAuthenticationUserAccountService
     {
         private readonly VeterinariaDbContext _context;
-        private readonly IClientUserRepository _clientUserRepository;
         private readonly UserManager<ApplicationUserAccount> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IClientUserRepository _clientUserRepository;
@@ -36,11 +35,9 @@ namespace Veterinaria.Infrastructure.Authentication
                                     IConfiguration config,
                                     UserManager<ApplicationUserAccount> userManager,
                                     RoleManager<IdentityRole> roleManager,
-                                    IMapper mapper,
-                                    IClientUserRepository clientUserRepository)
+                                    IMapper mapper)
         {
             _context = context;
-            _clientUserRepository = clientUserRepository;
             _userManager = userManager;
             _roleManager = roleManager;
             _mapper = mapper;

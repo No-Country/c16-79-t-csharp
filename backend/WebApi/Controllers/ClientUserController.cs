@@ -22,10 +22,10 @@ namespace WebApi.Controllers
         private readonly IClientUserService _clientUserService;
         private readonly IPetService _petService;
         private readonly IPetRepository _petRepository;
-        private readonly IDateServise _dateService;
+        private readonly IDateService _dateService;
         private readonly IAddressRepository _addressRepository;
         private readonly IMapper _mapper;
-        public ClientUsersController(IClientUserRepository clientUserRepository, IMapper mapper, IClientUserService clientUserService, IPetRepository petRepository, IPetService petService, IAddressRepository addressRepository,IDateServise dateService)
+        public ClientUsersController(IClientUserRepository clientUserRepository, IMapper mapper, IClientUserService clientUserService, IPetRepository petRepository, IPetService petService, IAddressRepository addressRepository,IDateService dateService)
         {
             _clientUserRepository = clientUserRepository;
             _mapper = mapper;
