@@ -24,7 +24,7 @@ namespace WebApi.Controllers
         private readonly IAddressRepository _addressRepository;
         private readonly IMedicalHistoryService _MHService;
         private readonly IMapper _mapper;
-        public ClientUsersController(IClientUserRepository clientUserRepository, IMapper mapper, IClientUserService clientUserService, IPetRepository petRepository, IPetService petService, IAddressRepository addressRepository, IDateServise dateService, IMedicalHistoryService mHService)
+        public ClientUsersController(IClientUserRepository clientUserRepository, IMapper mapper, IClientUserService clientUserService, IPetRepository petRepository, IPetService petService, IAddressRepository addressRepository, IDateService dateService, IMedicalHistoryService mHService)
         {
             _clientUserRepository = clientUserRepository;
             _mapper = mapper;
