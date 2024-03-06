@@ -7,7 +7,7 @@ using Veterinaria.Domain.Services;
 
 namespace Veterinaria.Application.Services;
 
-public class DateService : IDateServise
+public class DateService : IDateService
 {
     private readonly IDateRepository _repository;
     private readonly IServiceService _servicesService;

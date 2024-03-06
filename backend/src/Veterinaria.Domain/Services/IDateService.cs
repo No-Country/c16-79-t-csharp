@@ -3,7 +3,7 @@ using Veterinaria.Domain.Models;
 
 namespace Veterinaria.Domain.Services;
 
-public interface IDateServise
+public interface IDateService
 {
     Task<Date> GetByIdAsync(int id);
     Task<List<Date>> GetAllAsync();

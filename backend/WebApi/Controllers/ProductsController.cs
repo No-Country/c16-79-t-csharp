@@ -98,6 +98,6 @@ namespace WebApi.Controllers
             return Ok(new ResponseSucceded<List<ProductDto>>((int)HttpStatusCode.OK, _mapper.Map<List<ProductDto>>(products)));
         }
         
-
+        // Agregar endpoint httpPatch con id y cant de un producto para actualizar stock del mismo.
     }
 }
