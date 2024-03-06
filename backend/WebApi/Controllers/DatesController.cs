@@ -12,20 +12,18 @@ namespace WebApi.Controllers
     [Route("api/[controller]")]
     public class DatesController : Controller
     {
-        private readonly IDateServise _DateService;
+        private readonly IDateService _DateService;
 
-        public DatesController(IDateServise dateServise)
+        public DatesController(IDateService dateServise)
         {
             _DateService = dateServise;
         }
 
-
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public async Task<ActionResult<ResponseSucceded<IEnumerable<DateDto>>>> GetAll()
         {
             List<Date> Dates = await _DateService.GetAllAsync();
-
-            //TODO: Usar AutoMapper cuando este configurado?
             IEnumerable<DateDto> datesDtos =
                 Dates.Select(c => new DateDto(c.Id, c.Time, c.ServiceId, c.PetId, c.StateDate, EnumExtension.GetEnumDescription(c.StateDate)));
 
@@ -34,17 +32,16 @@ namespace WebApi.Controllers
             );
         }
 
+        [Authorize(Roles = "Admin, Cliente")]
         [HttpGet("{id}")]
         public async Task<ActionResult<ResponseSucceded<DateDto>>> GetById(int id)
         {
             Date Date = await _DateService.GetByIdAsync(id);
-
-            //TODO: usar AutoMapper
             return Ok(new ResponseSucceded<DateDto>((int)HttpStatusCode.OK,
                 new DateDto(Date.Id, Date.Time, Date.ServiceId, Date.PetId, Date.StateDate, EnumExtension.GetEnumDescription(Date.StateDate))));
-            //ver service y pet  
         }
 
+        [Authorize(Roles = "Admin, Cliente")]
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] DateCreateDto createDto)
         {
@@ -52,6 +49,7 @@ namespace WebApi.Controllers
             return Created();
         }
 
+        [Authorize(Roles = "Admin, Cliente")]
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, [FromBody] DateDto updateDto)
         {
@@ -59,7 +57,7 @@ namespace WebApi.Controllers
             return NoContent();
         }
 
-        [Authorize(Roles = "Cliente")]
+        [Authorize(Roles = "Admin, Cliente")]
         [HttpPatch("{id}/cancel")]
         public async Task<ActionResult<ResponseSucceded<DateDto>>> CancelDate(int id)
         {
