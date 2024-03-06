@@ -70,6 +70,7 @@ export const Agenda = () => {
   const handleClick = () => {
     setShowToast((state) => !state);
     guardarAgenda();
+    window.location.reload()
   };
 
   return (

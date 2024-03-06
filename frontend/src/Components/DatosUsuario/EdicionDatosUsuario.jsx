@@ -9,7 +9,7 @@ import { useFetchPut } from "../../Helpers/useFetch";
 export const EdicionDatosUsuario = ({
   nombre,
   telefono,
-  Usuario,
+  usuario,
   apellido,
 }) => {
   // usamos useState para controlar el estado del input del formulario.
@@ -25,7 +25,7 @@ export const EdicionDatosUsuario = ({
   const inputRefApellido = useRef(null);
   const inputRefUserName = useRef(null);
   const inputReftel = useRef(null);
-
+  
   const [openModal, setOpenModal] = useState(false);
 
   //desestructuro lo que necesito del usefetchput
@@ -116,15 +116,16 @@ export const EdicionDatosUsuario = ({
             </div>
             <div>
               <div className="mb-2 block">
-                <Label htmlFor="text" value="Nombre Usuario" />
+                <Label htmlFor="text" value="Usuario" />
               </div>
               <TextInput
-                id="nombreusuario"
-                placeholder="Nombre de usuario"
-                defaultValue={Usuario}
-                onChange={actualizarDatos}
+                id="usuario"
+                placeholder="Usuario"
+                type="text"
                 required
-                name="nombreusuario"
+                defaultValue={usuario}
+                name="usuario"
+                onChange={actualizarDatos}
                 ref={inputRefUserName}
               />
             </div>
