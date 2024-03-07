@@ -15,3 +15,8 @@
 .anchoPassword div:nth-child(1) {
 	width: 100%;
 }
+
+
+.react-datepicker-wrapper{
+    width: 100%;
+}
