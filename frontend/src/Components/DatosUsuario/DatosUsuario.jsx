@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+
 import { Table } from "flowbite-react";
 import { useFetchGet } from "../../Helpers/useFetch";
 import { useEffect, useState } from "react";
@@ -20,7 +22,6 @@ const DatosUsuario = () => {
       }
     };
     handleDatos();
-    //eslint-disable-next-line
   }, []);
 
   return (

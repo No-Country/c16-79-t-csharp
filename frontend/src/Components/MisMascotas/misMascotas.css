@@ -1,12 +1,8 @@
 .cardMascota img {
     display        : block;
     height         : 100%;
-    max-height     : 400px;
+    max-height     : 150px;
     object-fit     :cover;
     object-position: top;
-    width          : 350px;
+    width          : 100%;
 }
-
-/* .cardMascota div{
-    padding: 0;
-} */

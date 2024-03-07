@@ -2,8 +2,6 @@ import { Button, FileInput, Label, Select, TextInput, Spinner } from "flowbite-r
 import { uploadFile } from "../../Helpers/CargarImagen";
 import { useEffect, useState } from "react";
 import { useFetchPost } from "../../Helpers/useFetch";
-
-
 /* eslint-disable react/prop-types */
 export const CargarMascota = ({ nombre, raza, tipo, edad, peso }) => {
   /* le paso por props los datos si encontro mascota en la bd sino el form queda en blanco para cargar nueva mascota */
@@ -14,7 +12,6 @@ export const CargarMascota = ({ nombre, raza, tipo, edad, peso }) => {
 
   /* Desde aca trabajo en la carga de datos */
 
-
   //useState para guardar el input que ira en el body del post
   const [input, setInput] = useState({
     name: "",
@@ -22,22 +19,20 @@ export const CargarMascota = ({ nombre, raza, tipo, edad, peso }) => {
     race: "",
     birthday: "",
     weight: 0,
-    photo: ""
-  })
+    photo: "",
+  });
   //declaramos boton para habilitar y deshabilitar el submit
-  const [boton, setBoton] = useState(true)
+  const [boton, setBoton] = useState(true);
   //llamo a fetchData para armar el POST
   const { fetchData } = useFetchPost("api/ClientUsers/me/pets", input);
 
   //onChange que toma los valores completados en los campos menos la foto
   const actualizarDatos = (e) => {
-
     setInput((prevInput) => ({
       ...prevInput,
       [e.target.name]: e.target.value,
     }));
-
-  }
+  };
 
   let result;
 
@@ -65,10 +60,10 @@ export const CargarMascota = ({ nombre, raza, tipo, edad, peso }) => {
     }
   }
 
-  //creo el useEffect para las acciones posteriores a la carga de datos, dado que setState es asincronico 
+  //creo el useEffect para las acciones posteriores a la carga de datos, dado que setState es asincronico
   useEffect(() => {
     const valoresInput = Object.values(input);
-    const todosCompletos = valoresInput.some(valor => valor !== "");
+    const todosCompletos = valoresInput.some((valor) => valor !== "");
     if (todosCompletos) {
       if (url !== null) {
         setBoton(false);
@@ -83,10 +78,13 @@ export const CargarMascota = ({ nombre, raza, tipo, edad, peso }) => {
 
   return (
     <>
-      <h1 className="py-5 mb-4 text-2xl font-extrabold leading-none tracking-tight text-center text-gray-500 md:text-5xl lg:text-4xl dark:text-white">Carga una nueva mascota</h1>
+      <h1 className="py-5 mb-4 text-2xl font-extrabold leading-none tracking-tight text-center text-gray-500 md:text-5xl lg:text-4xl dark:text-white">
+        Carga una nueva mascota
+      </h1>
       <div className="container flex justify-center w-full mt-10">
-
-        <form className="flex max-w-md flex-col gap-4" /* onSubmit={handleSubmit} */>
+        <form
+          className="flex max-w-md flex-col gap-4" /* onSubmit={handleSubmit} */
+        >
           <div>
             <div className="mb-2 block">
               <Label htmlFor="nombre" value="Nombre de tu mascota" />
@@ -101,7 +99,6 @@ export const CargarMascota = ({ nombre, raza, tipo, edad, peso }) => {
               sizing="md"
               defaultValue={nombre}
               onChange={actualizarDatos}
-
             />
           </div>
 
@@ -124,9 +121,15 @@ export const CargarMascota = ({ nombre, raza, tipo, edad, peso }) => {
             <div className="mb-2 block">
               <Label htmlFor="raza" value="Raza" />
             </div>
-            <TextInput id="raza" name="race" type="text" sizing="md" defaultValue={raza} onChange={actualizarDatos} />
+            <TextInput
+              id="raza"
+              name="race"
+              type="text"
+              sizing="md"
+              defaultValue={raza}
+              onChange={actualizarDatos}
+            />
           </div>
-
 
           {/* TODO: no contamos con campo edad en este momento en la base se hablo con back para que se traiga este campo calculado, ellos quieren que ingresemos fecha de nacimiento con formato dd/mm/yyyy */}
           <div>
@@ -200,7 +203,6 @@ export const CargarMascota = ({ nombre, raza, tipo, edad, peso }) => {
           <Button type="button" disabled={boton} onClick={() => {setTimeout(() => {window.location.reload()}, 1000)}} >Guardar</Button>
         </form>
       </div>
-
     </>
   );
 };
