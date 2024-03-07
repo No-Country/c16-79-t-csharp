@@ -12,8 +12,7 @@ export const Registro = () => {
 
 
   const [errors, setErrors] = useState({})
-  console.log("errors", errors)
-  // const [focused, setFocused] = useState(false);
+   // const [focused, setFocused] = useState(false);
   //agrego un use state para guardar la segunda repeticion de la pass y poder  compararla con el input anterior.
   const [repPass, setRepPass] = useState("")
   // const method = "POST"

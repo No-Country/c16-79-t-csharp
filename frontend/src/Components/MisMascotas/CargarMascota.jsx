@@ -54,13 +54,12 @@ export const CargarMascota = ({ nombre, raza, tipo, edad, peso }) => {
       setLoader(true)
       result = await uploadFile(file);
       setUrl(result);
-      console.log(result);
       setInput((prevInput) => ({
         ...prevInput,
         photo: result,
       }));
       setLoader(false)
-      console.log(input)
+      
     } catch (error) {
       console.error(error);
     }
@@ -72,8 +71,6 @@ export const CargarMascota = ({ nombre, raza, tipo, edad, peso }) => {
     const todosCompletos = valoresInput.some(valor => valor !== "");
     if (todosCompletos) {
       if (url !== null) {
-        console.log(url)
-        console.log("verificarPost")
         setBoton(false);
         fetchData()
       }

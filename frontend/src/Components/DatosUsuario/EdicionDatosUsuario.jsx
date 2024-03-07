@@ -33,7 +33,6 @@ export const EdicionDatosUsuario = ({
 
   //funcion dentro del  onClick para guardar los datos editados
   const editarDatos = async () => {
-    console.log("lognuevo", usuarioValue, telefonoValue, nombreValue, apellidoValue);
     //pasa los campos editables al body del custom hook
     setInput((prevInput) => ({
       ...prevInput,

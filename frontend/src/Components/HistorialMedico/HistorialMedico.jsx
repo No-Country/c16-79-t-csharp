@@ -13,7 +13,6 @@ export const HistorialMedico = () => {
         try {
           const data = await fetchData();
           setHistorialMedico(data.data); // Assuming 'data' is an array
-          console.log(data.data[0].diagnostic, "historial medico");
         } catch (error) {
           console.error("Error fetching data:", error);
         }

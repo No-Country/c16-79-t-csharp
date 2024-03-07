@@ -27,8 +27,6 @@ const NavBar = () => {
 
   // Verificar si el usuario está logueado
   const isLoggedIn = localStorage.getItem("token") ? true : false;
-  console.log(localStorage.getItem("token"),"LOCALSTORAGE")
-  console.log(isLoggedIn,"ISLOGGEDIN")
 
 
   //funcion para  mostrar los botones de acuerdo a su estado de autenticacion
@@ -38,9 +36,7 @@ const NavBar = () => {
       if (localStorage.getItem("token")) {
         try {
           const respuesta = await fetchData()
-          // console.log("Data received:", respuesta.data);
           const pruebaRes = respuesta.data
-          console.log("pruebaRes", pruebaRes)
           setInfo(pruebaRes)
         } catch (error) {
           console.error("Error fetching data:", error);
@@ -49,7 +45,6 @@ const NavBar = () => {
 
     };
     handleDatos();
-    // console.log("pruegaRes: ", info)
   }, []);
 
   return (
