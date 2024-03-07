@@ -18,11 +18,11 @@ export const FooterComponent = () => {
       </div>
       <Footer
         container
-        className="pb-0 bg-gradient-to-b from-purple-50 to-purple-200"
+        className="pb-0 bg-gradient-to-b from-purple-50 to-purple-200 pb-4"
       >
         <div className="w-full">
-          <div className=" justify-around sm:flex sm:justify-around md:grid-cols-1 imagenLogo flex-col md:flex-row">
-            <div className=" w-1/5">
+          <div className="imagenLogo justify-around sm:flex  md:grid-cols-1  sm:flex-col sm:items-center lg:flex-row lg:justify-around">
+            <div className="  w-full flex flex-col items-center justify-center lg:items-start lg:w-1/5">
               <Footer.Brand
                 href="#"
                 src="/Huella_amiga-removebg-preview.png"
@@ -55,14 +55,17 @@ export const FooterComponent = () => {
               </div>
             </div>
             {/* <div className=" mt-6 grid grid-cols-2 gap-4 sm:mt-2 lg:grid-cols-3 sm:gap-6 items-start "> */}
-            <div className=" flex w-3/5 justify-between">
-              <div>
-                <Footer.LinkGroup col>
+            <div className="flex flex-wrap justify-center sm:flex-nowrap sm:w-4/5 md:w-3/5 md:justify-between">
+              <div className="flex justify-evenly w-full sm:w-2/4">
+                <Footer.LinkGroup col className=" sm:w-2/4">
                   <h3 className=" pt-8 mb-0 font-bold leading-none tracking-tight  text-left text-gray-500 md:text-sm lg:text-base dark:text-white">
                     Links
                   </h3>
                   <Footer.Link href="#">
-                    <NavLink to="/" className=" text-black text-light">
+                    <NavLink
+                      to="/"
+                      className=" text-black text-light text-center"
+                    >
                       Inicio
                     </NavLink>
                   </Footer.Link>
@@ -86,9 +89,8 @@ export const FooterComponent = () => {
                     Eukanuba
                   </Footer.Link>
                 </Footer.LinkGroup>
-              </div>
-              <div>
-                <Footer.LinkGroup col>
+
+                <Footer.LinkGroup col className="sm:w-2/4">
                   <h3 className=" pt-8 mb-0 font-bold leading-none tracking-tight  text-left text-gray-500 md:text-sm lg:text-base dark:text-white">
                     Servicios
                   </h3>
@@ -109,11 +111,11 @@ export const FooterComponent = () => {
                   </Footer.Link>
                 </Footer.LinkGroup>
               </div>
-              <div className=" bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)]">
-                <h3 className=" pt-8 mb-0 font-bold leading-none tracking-tight  text-center text-gray-500 md:text-sm lg:text-base dark:text-white">
+              <div className=" ">
+                <h3 className=" pt-8 mb-3 font-bold leading-none tracking-tight  text-center text-gray-500 md:text-sm lg:text-base dark:text-white">
                   Colaboradores
                 </h3>
-                <div className="grid grid-cols-2 gap-4 items-start">
+                <div className="grid grid-cols-2 gap-4 items-start sm:w-full">
                   <Avatar
                     img="https://github.com/Rixda.png"
                     rounded
@@ -138,18 +140,24 @@ export const FooterComponent = () => {
                       </div>
                     </div>
                   </Avatar>
-                  <Avatar
-                    img="https://github.com/alefernandez88.png"
-                    rounded
-                    className=" justify-start"
+                  <a
+                    href="https://www.linkedin.com/in/alefernandez88/"
+                    className="underline-offset-0"
                   >
-                    <div className="space-y-1 font-medium dark:text-white">
-                      <div>Ale Fernandez</div>
-                      <div className="text-sm text-gray-500 dark:text-gray-400">
-                        Frontend Dev React Js
+                    <Avatar
+                      img="https://github.com/alefernandez88.png"
+                      rounded
+                      className=" justify-start"
+                    >
+                      <div className="space-y-1 font-medium dark:text-white">
+                        <div>Ale Fernandez</div>
+                        <div className="text-sm text-gray-500 dark:text-gray-400">
+                          Frontend Dev React Js
+                        </div>
                       </div>
-                    </div>
-                  </Avatar>
+                    </Avatar>
+                  </a>
+
                   <Avatar
                     img="https://github.com/kamilo042.png"
                     rounded
@@ -225,9 +233,6 @@ export const FooterComponent = () => {
                 </div>
               </div>
             </div>
-            {/* <div className=" mt-6">
-              <Mapa></Mapa>
-            </div> */}
           </div>
           <Footer.Divider className=" lg:mt-4 lg:mb-2" />
           <div className="w-full flex flex-col items-center md:flex-row md:items-start md:justify-between">

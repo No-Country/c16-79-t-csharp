@@ -3,7 +3,7 @@ import { uploadFile } from "../../Helpers/CargarImagen";
 import { useEffect, useState } from "react";
 import { useFetchPost } from "../../Helpers/useFetch";
 /* eslint-disable react/prop-types */
-export const CargarMascota = ({ nombre, raza, tipo, edad, peso }) => {
+export const CargarMascota = ({ nombre, raza, tipo, peso }) => {
   /* le paso por props los datos si encontro mascota en la bd sino el form queda en blanco para cargar nueva mascota */
 
   const [file, setFile] = useState(null);
@@ -131,21 +131,6 @@ export const CargarMascota = ({ nombre, raza, tipo, edad, peso }) => {
               sizing="md"
               defaultValue={raza}
               onChange={actualizarDatos}
-            />
-          </div>
-
-          {/* TODO: no contamos con campo edad en este momento en la base se hablo con back para que se traiga este campo calculado, ellos quieren que ingresemos fecha de nacimiento con formato dd/mm/yyyy */}
-          <div>
-            <div className="mb-2 block">
-              <Label htmlFor="edad" value="Edad" />
-            </div>
-            <TextInput
-              id="edad"
-              type="number"
-              min="0"
-              max="30"
-              sizing="md"
-              defaultValue={edad}
             />
           </div>
 
