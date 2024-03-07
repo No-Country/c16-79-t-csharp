@@ -31,7 +31,7 @@ export const Turnos = () => {
 
  
 
-  console.log(" mascotas data desde turnos: ", mascotasData[1]);
+
 
 
 
