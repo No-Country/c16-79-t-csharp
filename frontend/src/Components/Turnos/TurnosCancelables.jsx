@@ -41,7 +41,9 @@ export const TurnosCancelables = () => {
   const recibirId = (id) => {
     console.log(id);
     setIdCancelar(id)
-    window.location.reload()
+    setTimeout(()=>{
+      window.location.reload()
+    }, 1500)
   };
 
   useEffect(() => {
