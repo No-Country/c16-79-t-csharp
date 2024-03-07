@@ -11,8 +11,6 @@ import Mapa from "../Components/Mapa/Mapa";
 import "./navBar.css";
 
 export const FooterComponent = () => {
-
-  
   return (
     <>
       <div className=" mt-12">
@@ -128,7 +126,11 @@ export const FooterComponent = () => {
                       </div>
                     </div>
                   </Avatar>
-                  <Avatar img="https://github.com/AgusVolpe.png" rounded>
+                  <Avatar
+                    img="https://github.com/AgusVolpe.png"
+                    rounded
+                    className=" justify-start"
+                  >
                     <div className="space-y-1 font-medium dark:text-white">
                       <div>Agustin Volpe</div>
                       <div className="text-sm text-gray-500 dark:text-gray-400">
@@ -136,7 +138,11 @@ export const FooterComponent = () => {
                       </div>
                     </div>
                   </Avatar>
-                  <Avatar img="https://github.com/alefernandez88.png" rounded>
+                  <Avatar
+                    img="https://github.com/alefernandez88.png"
+                    rounded
+                    className=" justify-start"
+                  >
                     <div className="space-y-1 font-medium dark:text-white">
                       <div>Ale Fernandez</div>
                       <div className="text-sm text-gray-500 dark:text-gray-400">
@@ -144,7 +150,11 @@ export const FooterComponent = () => {
                       </div>
                     </div>
                   </Avatar>
-                  <Avatar img="https://github.com/kamilo042.png" rounded>
+                  <Avatar
+                    img="https://github.com/kamilo042.png"
+                    rounded
+                    className=" justify-start"
+                  >
                     <div className="space-y-1 font-medium dark:text-white">
                       <div>Camilo Pérez</div>
                       <div className="text-sm text-gray-500 dark:text-gray-400">
@@ -152,7 +162,11 @@ export const FooterComponent = () => {
                       </div>
                     </div>
                   </Avatar>
-                  <Avatar img="https://github.com/CariCosta90.png" rounded>
+                  <Avatar
+                    img="https://github.com/CariCosta90.png"
+                    rounded
+                    className=" justify-start"
+                  >
                     <div className="space-y-1 font-medium dark:text-white">
                       <div>Carina Costa</div>
                       <div className="text-sm text-gray-500 dark:text-gray-400">
@@ -160,7 +174,11 @@ export const FooterComponent = () => {
                       </div>
                     </div>
                   </Avatar>
-                  <Avatar img="https://github.com/ant-villasante98.png" rounded>
+                  <Avatar
+                    img="https://github.com/ant-villasante98.png"
+                    rounded
+                    className=" justify-start"
+                  >
                     <div className="space-y-1 font-medium dark:text-white">
                       <div>Antonio Villasante</div>
                       <div className="text-sm text-gray-500 dark:text-gray-400">
@@ -168,7 +186,11 @@ export const FooterComponent = () => {
                       </div>
                     </div>
                   </Avatar>
-                  <Avatar img="https://github.com/GuillermoCruz27.png" rounded>
+                  <Avatar
+                    img="https://github.com/GuillermoCruz27.png"
+                    rounded
+                    className=" justify-start"
+                  >
                     <div className="space-y-1 font-medium dark:text-white">
                       <div>Joaquin Cruz</div>
                       <div className="text-sm text-gray-500 dark:text-gray-400">
@@ -176,7 +198,11 @@ export const FooterComponent = () => {
                       </div>
                     </div>
                   </Avatar>
-                  <Avatar img="https://github.com/Teche95.png" rounded>
+                  <Avatar
+                    img="https://github.com/Teche95.png"
+                    rounded
+                    className=" justify-start"
+                  >
                     <div className="space-y-1 font-medium dark:text-white">
                       <div>Julián Techeira</div>
                       <div className="text-sm text-gray-500 dark:text-gray-400">
@@ -187,6 +213,7 @@ export const FooterComponent = () => {
                   <Avatar
                     img="https://github.com/MikhailIvanGarcilano.png"
                     rounded
+                    className=" justify-start"
                   >
                     <div className="space-y-1 font-medium dark:text-white">
                       <div>Mikhail Garcilano</div>
