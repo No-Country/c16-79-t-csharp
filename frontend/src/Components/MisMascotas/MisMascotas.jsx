@@ -58,7 +58,7 @@ export const MisMascotas = () => {
                     {d.name}
                   </ListGroup.Item>
                   <ListGroup.Item icon={BsCalendar2DateFill}>
-                    {d.age}
+                  {d.age}
                   </ListGroup.Item>
                   <ListGroup.Item icon={GiWeight}>{d.weight}</ListGroup.Item>
                   <ListGroup.Item icon={MdOutlinePets}>{d.race}</ListGroup.Item>
