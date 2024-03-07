@@ -17,7 +17,6 @@ export const SelecFechaHoraTurno = ({ sendDataToParent }) => {
 
   useEffect(() => {
     sendDataToParent(fechaSeleccionada); // Invocando la función del componente padre y pasando datos como argumento
-    console.log("value fecha y hora: ", fechaSeleccionada);
   }, [fechaSeleccionada]);
 
   return (
@@ -101,8 +100,6 @@ export const SelecFechaHoraTurno = ({ sendDataToParent }) => {
               );
 
               setFechaSeleccionada(nuevaFecha.toISOString());
-              console.log("fecha completa: ", nuevaFecha);
-              console.log("fecha iso: ", nuevaFecha.toISOString());
             } else {
               // Aquí puedes manejar la lógica para informar al usuario que debe seleccionar dentro del rango permitido
               alert(

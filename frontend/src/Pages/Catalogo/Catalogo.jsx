@@ -6,8 +6,6 @@ export const Catalogo = () => {
 
   const [productos, setProductos] = useState([])
 
-  console.log("productos:", productos);
-  // console.log("first", first)
 
   const { fetchData } = useFetchGet("api/Products")
 
@@ -15,7 +13,6 @@ export const Catalogo = () => {
     const handleDatos = async () => {
       try {
         const data = await fetchData()
-        console.log("Data received:", data);
         setProductos(data)
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -41,7 +38,7 @@ export const Catalogo = () => {
       <div className="container mx-auto py-10 px-8 max-w-6xl">
 
         <div className='grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10'>
-          {productos.data?.map(({ id, name, image, description, categories, stock, price }) => (
+          {productos.data?.map(({ id, name, image, description, categories }) => (
             <Card
               className="mb-5 cardProducto"
               key={id}
@@ -62,7 +59,7 @@ export const Catalogo = () => {
                 <p className=" text-gray-700 dark:text-gray-300">Categoría: {categories.map(e => e.name)}</p>
               </div>
               {/* <p className="text-gray-700 dark:text-gray-300">Stock: {stock}</p> */}
-              <div div className="flex flex-col items-center " >
+              <div className="flex flex-col items-center " >
                 {/* <span className="text-3xl font-bold text-gray-900 dark:text-white">${price}</span> */}
                 {/* <a
                   href="#"

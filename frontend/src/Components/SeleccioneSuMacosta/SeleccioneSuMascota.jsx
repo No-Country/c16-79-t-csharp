@@ -10,8 +10,6 @@ export const SeleccioneSuMascota = ({ sendDataToParent }) => {
   const [info, setInfo] = useState([]);
   const [valueMascota, setValueMascota] = useState();
 
-  console.log("info", info);
-
   const { fetchData } = useFetchGet("api/ClientUsers/me/pets");
 
   useEffect(() => {
@@ -37,7 +35,6 @@ export const SeleccioneSuMascota = ({ sendDataToParent }) => {
 
   useEffect(() => {
     sendDataToParent(valueMascota); // Invocando la función del componente padre y pasando datos como argumento
-    console.log("value mascota: ", valueMascota);
   }, [valueMascota]);
 
   return (

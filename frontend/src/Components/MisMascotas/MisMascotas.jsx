@@ -13,7 +13,7 @@ import { useFetchGet } from "../../Helpers/useFetch";
 export const MisMascotas = () => {
   const [info, setInfo] = useState([]);
 
-  // console.log("info", info)
+  
 
   const { fetchData } = useFetchGet("api/ClientUsers/me/pets");
 
@@ -22,9 +22,9 @@ export const MisMascotas = () => {
       if (localStorage.getItem("token")) {
         try {
           const respuesta = await fetchData();
-          // console.log("Data received:", respuesta.data);
+          
           const pruebaRes = respuesta.data;
-          //  console.log("pruebaRes", pruebaRes)
+          
           setInfo(pruebaRes);
         } catch (error) {
           console.error("Error fetching data:", error);
@@ -32,7 +32,7 @@ export const MisMascotas = () => {
       }
     };
     handleDatos();
-    // console.log("pruegaRes: ", info)
+   
   }, []);
 
   return (

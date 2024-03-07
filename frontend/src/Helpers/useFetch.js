@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 const api_url = import.meta.env.VITE_WEB_API_URL
-console.log(api_url)
+
 
 export const useFetchGet = (endPoint) => {
   const fetchData = async () => {
@@ -11,7 +11,7 @@ export const useFetchGet = (endPoint) => {
         "Authorization" : localStorage.getItem("token") ? `Bearer ${localStorage.getItem("token")}` : ""
       }});
       const data = await response.json();
-      console.log("data: ", data);
+      
       return data;
     } catch (error) {
       console.log("Error: " + error);
@@ -41,7 +41,6 @@ export const useFetchLogin = (endPoint, input) => {
           },
           body: JSON.stringify(input),
         });
-        console.log(response, "RESPONSE")
         const data = await response.json();
         /* Linea que setea token */
         if(response.status === 200){
@@ -66,7 +65,6 @@ export const useFetchLogin = (endPoint, input) => {
 /* Cari - Este queda para usar en general - no resetea la variable token */
 export const useFetchPost = (endPoint, input) => {
 
-  // console.log(method)
   const [state, setState] = useState({
     data: "",
   });
@@ -120,7 +118,6 @@ export const useFetchPut = (endPoint, input) => {
           body: JSON.stringify(input),
         });
         const data = await response.json();
-        console.log(" responseee ",response)
         setState({
           data,
         });
@@ -155,7 +152,6 @@ export const useFetchPatch = (endPoint) => {
           body: {},
         });
         const data = await response.json();
-        console.log(" responseee ",response)
         setState({
           data,
         });

@@ -12,8 +12,7 @@ export const Registro = () => {
 
 
   const [errors, setErrors] = useState({})
-  console.log("errors", errors)
-  // const [focused, setFocused] = useState(false);
+   // const [focused, setFocused] = useState(false);
   //agrego un use state para guardar la segunda repeticion de la pass y poder  compararla con el input anterior.
   const [repPass, setRepPass] = useState("")
   // const method = "POST"
@@ -98,7 +97,7 @@ export const Registro = () => {
                     <li>Una minúscula</li>
                     <li>Una mayúscula</li>
                     <li>Un número</li>
-                    <li>Un carácter especial: @$!%*?&</li>
+                    <li>Alguno de estos caracteres especiales: @$!%*?&</li>
                     <li>Longitud mínima de 6 caracteres</li>
                   </ul>
                 </div>
