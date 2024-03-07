@@ -25,7 +25,7 @@ export const Registro = () => {
     if (!/^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/.test(input.email)) {
       errors.email = "Email inválido"
     }
-    if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/.test(input.password)) {
+    if (!/^(?=(?:.\d){1})(?=(?:.[A-Z]){1})(?=(?:.[a-z]){1})(?=(?:.[@$?¡-_]){1})\S{6,}$/.test(input.password)) {
       errors.password = "Password inválido"
     }
 
@@ -98,7 +98,7 @@ export const Registro = () => {
                     <li>Una minúscula</li>
                     <li>Una mayúscula</li>
                     <li>Un número</li>
-                    <li>Un carácter especial: @$!%*?&</li>
+                    <li>Alguno de estos caracteres especiales: @$!%*?&</li>
                     <li>Longitud mínima de 6 caracteres</li>
                   </ul>
                 </div>
