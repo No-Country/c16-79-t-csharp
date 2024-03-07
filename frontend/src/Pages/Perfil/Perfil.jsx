@@ -7,11 +7,33 @@ import { HistorialMedico } from "../../Components/HistorialMedico/HistorialMedic
 import { CargarMascota } from "../../Components/MisMascotas/CargarMascota";
 import { MisMascotas } from "../../Components/MisMascotas/MisMascotas";
 import DatosUsuario from "../../Components/DatosUsuario/DatosUsuario";
+import { useRef, useEffect, useState } from "react";
 
 export const Perfil = () => {
+
+  const tabsRef = useRef(null);
+
+  const storedActiveTab = localStorage.getItem('activeTab');
+  const [activeTab, setActiveTab] = useState(storedActiveTab ? parseInt(storedActiveTab, 10) : 0);
+
+  const handleTabChange = (index) => {
+    setActiveTab(index);
+    localStorage.setItem('activeTab', index.toString());
+  };
+
+  useEffect(() => { 
+    const storedActiveTab = localStorage.getItem('activeTab');
+    console.log("hola");
+    if (storedActiveTab) {
+      setActiveTab(parseInt(storedActiveTab, 10));
+      tabsRef.current?.setActiveTab(activeTab)
+    }
+  }, []);
+
+  
   return (
     <div>
-      <Tabs aria-label="Tabs with icons" style="underline">
+      <Tabs aria-label="Tabs with icons" style="underline" ref={tabsRef}  onActiveTabChange={handleTabChange}>
         <Tabs.Item active title="Datos de usuario" icon={HiUserCircle}>
           <DatosUsuario />
         </Tabs.Item>
