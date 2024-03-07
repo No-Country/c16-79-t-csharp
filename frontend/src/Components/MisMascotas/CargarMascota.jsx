@@ -189,7 +189,7 @@ export const CargarMascota = ({ nombre, raza, tipo, edad, peso }) => {
             {
               !loader
                 ?
-                <Button color="light" onClick={updateFotoUrl} >Cargar Foto</Button>
+                <Button color="light" onClick={updateFotoUrl} disabled={file === null}>Cargar Foto</Button>
                 :
                 <div className="flex flex-row gap-3">
                   <Button>
@@ -198,21 +198,6 @@ export const CargarMascota = ({ nombre, raza, tipo, edad, peso }) => {
                   </Button>
                 </div>
             }
-
-
-            {/* {
-            loader ?
-              <div className="flex flex-row gap-3">
-                <Button>
-                  <Spinner aria-label="Spinner button example" size="sm" />
-                  <span className="pl-3">Loading...</span>
-                </Button>
-              </div>
-              :
-              <Button color="light" onClick={updateFotoUrl}>Cargar Foto</Button>
-            } */}
-
-
 
           </div>
           <Button type="submit" disabled={boton}>Guardar</Button>

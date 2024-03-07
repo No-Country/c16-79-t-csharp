@@ -2,6 +2,7 @@
 	0% {
 		transform: translateX(0);
 	}
+
 	100% {
 		transform: translateX(calc(-400px * 5 - 0.5rem * 10));
 	}
@@ -9,4 +10,8 @@
 
 .animate-scroll {
 	animation: scroll 24s linear infinite;
+}
+
+.anchoPassword div:nth-child(1) {
+	width: 100%;
 }
