@@ -25,7 +25,7 @@ export const Registro = () => {
     if (!/^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/.test(input.email)) {
       errors.email = "Email inválido"
     }
-    if (!/^(?=(?:.\d){1})(?=(?:.[A-Z]){1})(?=(?:.[a-z]){1})(?=(?:.[@$?¡-_]){1})\S{6,}$/.test(input.password)) {
+    if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/.test(input.password)) {
       errors.password = "Password inválido"
     }
 
