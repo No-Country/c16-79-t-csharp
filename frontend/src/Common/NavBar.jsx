@@ -65,7 +65,7 @@ const NavBar = () => {
             />
           </NavLink>
         </Navbar.Brand>
-        <div className="flex md:order-2 mx-auto">
+        <div className="flex mr-0 md:order-2 mx-auto">
           <div>
             {/* Mostrar botones de inicio de sesión y registro solo si el usuario no está logueado */}
             {!isLoggedIn && (
@@ -85,7 +85,7 @@ const NavBar = () => {
             label={
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="icon icon-tabler icon-tabler-user"
+                className="  icon icon-tabler icon-tabler-user"
                 width="24"
                 height="24"
                 viewBox="0 0 24 24"

@@ -7,8 +7,8 @@ import { useFetchGet } from "../../Helpers/useFetch";
 import { useEffect, useState } from "react";
 import { TurnosCancelables } from "./TurnosCancelables";
 
-export const Turnos = ({ mascotasData }) => {
-  const [first, setfirst] = useState();
+export const Turnos = () => {
+  const [turnos, setTurnos] = useState([]); // Se cambió "first" por "turnos"
 
 
 
@@ -18,18 +18,15 @@ export const Turnos = ({ mascotasData }) => {
   //useEffect para traer todas las citas
   useEffect(() => {
     const handleDatos = async () => {
-      if (localStorage.getItem("token")) {
-        try {
-          const objetoTurnos = await fetchData();
-          console.log("Turnos received:", objetoTurnos.data);
-          setfirst(objetoTurnos.data);
-        } catch (error) {
-          console.error("Error fetching data:", error);
-        }
+      try {
+        const objetoTurnos = await fetchData();
+        console.log("Turnos received:", objetoTurnos.data);
+        setTurnos(objetoTurnos.data); // Se cambió "first" por "turnos"
+      } catch (error) {
+        console.error("Error fetching data:", error);
       }
     };
     handleDatos();
-    //eslint-disable-next-line
   }, []);
 
  
@@ -40,7 +37,7 @@ export const Turnos = ({ mascotasData }) => {
 
 
   return (
-    <div className="container w-4/5 mx-auto mt-10 mb-10">
+    <div className="container w-4/5 mx-auto mt-10 mb-10" id="hola">
       <h1 className="py-5 mb-4 text-2xl font-extrabold leading-none tracking-tight text-center text-gray-500 md:text-5xl lg:text-4xl dark:text-white">
         Mis turnos
       </h1>
@@ -58,9 +55,8 @@ export const Turnos = ({ mascotasData }) => {
           </Table.Head>
 
           <Table.Body className="divide-y">
-            {first?.map((turno) => {
-              let dt = new Date(turno.time);
-              console.log("dt: ", dt)
+            {turnos.map((turno) => { // Se cambió "first" por "turnos"
+              const dt = new Date(turno.time);
               return (
                 <Table.Row
                   key={turno.id}
@@ -74,8 +70,7 @@ export const Turnos = ({ mascotasData }) => {
                   <Table.Cell>{turno.stateName}</Table.Cell>
                 </Table.Row>
               );
-            })
-            }
+            })}
           </Table.Body>
         </Table>
       </div>
