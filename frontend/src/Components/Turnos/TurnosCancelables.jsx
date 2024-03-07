@@ -25,7 +25,7 @@ export const TurnosCancelables = () => {
       if (localStorage.getItem("token")) {
         try {
           const objetoTurnos = await fetchData();
-          console.log("Turnos received:", objetoTurnos.data);
+          
           setInputCancel(objetoTurnos.data);
         } catch (error) {
           console.error("Error fetching data:", error);
@@ -39,7 +39,7 @@ export const TurnosCancelables = () => {
   //funcion para recolectar el id y ejecutar el patch para actualizar la lista de cancelados
 
   const recibirId = (id) => {
-    console.log(id,"CONSOLELOG");
+    
     setIdCancelar(id)
      setTimeout(()=> {window.location.reload()},1000) 
   };
@@ -73,7 +73,7 @@ export const TurnosCancelables = () => {
           <Table.Body className="divide-y">
             {inputCancel?.map((turno) => {
               let dt = new Date(turno.time);
-              console.log("dt: ", dt);
+              
               return (
                 <Table.Row
                   key={turno.id}

@@ -20,7 +20,6 @@ export const Turnos = () => {
     const handleDatos = async () => {
       try {
         const objetoTurnos = await fetchData();
-        console.log("Turnos received:", objetoTurnos.data);
         setTurnos(objetoTurnos.data); // Se cambió "first" por "turnos"
       } catch (error) {
         console.error("Error fetching data:", error);

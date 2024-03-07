@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+
 import { Table } from "flowbite-react";
 import { useFetchGet } from "../../Helpers/useFetch";
 import { useEffect, useState } from "react";
@@ -6,8 +8,6 @@ import { EdicionDatosUsuario } from "./EdicionDatosUsuario";
 const DatosUsuario = () => {
   const [first, setfirst] = useState();
 
-  // console.log("first", first);
-
   const { fetchData } = useFetchGet("api/ClientUsers/me");
 
   useEffect(() => {
@@ -15,7 +15,6 @@ const DatosUsuario = () => {
       if (localStorage.getItem("token")) {
         try {
           const data = await fetchData();
-          // console.log("Data received:", data);
           setfirst(data);
         } catch (error) {
           console.error("Error fetching data:", error);
@@ -23,7 +22,6 @@ const DatosUsuario = () => {
       }
     };
     handleDatos();
-    //eslint-disable-next-line
   }, []);
 
   return (

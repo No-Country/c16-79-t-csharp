@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 const SeleccionEstudio = ({ sendDataToParent }) => {
   const [info, setInfo] = useState([]);
   const [valueEstudio, setValueEstudio] = useState();
-  console.log("info", info);
+  
 
   const { fetchData } = useFetchGet("api/Services");
 
@@ -33,7 +33,6 @@ const SeleccionEstudio = ({ sendDataToParent }) => {
 
   useEffect(() => {
     sendDataToParent(valueEstudio); // Invocando la función del componente padre y pasando datos como argumento
-    console.log("value estudio: ", valueEstudio);
   }, [valueEstudio]);
 
 

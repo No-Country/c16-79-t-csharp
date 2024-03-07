@@ -10,21 +10,46 @@
   <h3 style="text-align: center;">¡Bienvenido al Sanatorio Veterinario Huella Amiga!</h3>
 
 En nuestro sanatorio, nos dedicamos a brindar atención médica integral para tus queridas mascotas. Desde perros y gatos hasta aves y reptiles, nuestro equipo de profesionales altamente calificados está aquí para garantizar el bienestar de tus compañeros peludos.
+<div align="center">
+<img src="./frontend/public/HomeMobile.gif" alt="Texto alternativo" style="width: auto; height: 300px; background-color: transparent;">
+<img src="./frontend/public/Home1.gif" alt="Texto alternativo" style="width: auto; height: 300px; background-color: transparent;">
+</div>
 
   <h3 style="text-align: center;">¿Qué puedes encontrar en nuestra página? 📋</h3>
 
-1. __Registro de Usuarios Personalizado:__ Crea tu cuenta personalizada para acceder a nuestros servicios exclusivos y recibir actualizaciones especializadas sobre la salud y el bienestar de tus mascotas.
+1. __Registro de Usuarios:__ Crea tu cuenta personalizada para acceder a nuestros servicios exclusivos y recibir actualizaciones especializadas sobre la salud y el bienestar de tus mascotas.
+   
+<div align="center">
+<img src="./frontend/public/Registro.gif" alt="Texto alternativo" style="width: auto; height: 300px; background-color: transparent;">
+</div>
 
-2. __Agenda de Atención Médica Personalizada:__ Programa fácilmente consultas, vacunaciones, cirugías y otros servicios médicos para tu mascota a través de nuestra agenda en línea, diseñada para adaptarse a tus necesidades y preferencias.
+2. __Agenda de Atención Médica:__ Programa fácilmente consultas, vacunaciones, cirugías y otros servicios médicos para tu mascota a través de nuestra agenda en línea, diseñada para adaptarse a tus necesidades y preferencias.
+
+<div align="center">
+<img src="./frontend/public/Agenda-ezgif.com-crop.gif" alt="Texto alternativo" style="width: auto; height: 300px; background-color: transparent;">
+</div>
 
 3. __Seguimiento Detallado de Historial Médico:__ Accede a los resultados de los estudios médicos realizados a tu mascota y mantente informado de manera detallada sobre su estado de salud y los tratamientos recomendados.
+
+<div align="center">
+<img src="./frontend/public/HistorialMedico-ezgif.com-crop.gif" alt="Texto alternativo" style="width: auto; height: 300px; background-color: transparent;">
+</div>
 
 4. __Visión y Misión de la Clínica:__ Conoce nuestra visión de proporcionar atención veterinaria excepcional y nuestra misión de promover la salud y el bienestar de las mascotas a través de servicios médicos de alta calidad y cuidado compasivo.
 
 5. __Registro de Datos de tu Mascota:__ Mantén un registro completo y actualizado de los datos de tu mascota, incluyendo historial médico, vacunas, tratamientos y más, para una mejor gestión de su salud y bienestar.
+   
+<div align="center">
+<img src="./frontend/public/CargarMascota-ezgif.com-crop.gif" alt="Texto alternativo" style="width: auto; height: 300px; background-color: transparent;">
+</div>
 
 6. __Cancelación de Citas:__ Si necesitas cancelar una cita previamente programada, puedes hacerlo de manera rápida y sencilla a través de nuestra plataforma en línea, facilitando la gestión de tu agenda.
-7. __Catalogo de productos:__ Listado de los productos disponibles a la venta para tus mascotas en nuestro local. Puedes encontrar estos y muchos mas a la venta en tu visita. 
+
+<div align="center">
+<img src="./frontend/public/CancelarCita-ezgif.com-crop.gif" alt="Texto alternativo" style="width: auto; height: 300px; background-color: transparent;">
+</div>
+
+1. __Catalogo de productos:__ Listado de los productos disponibles a la venta para tus mascotas en nuestro local. Puedes encontrar estos y muchos mas a la venta en tu visita. 
 
 <table>
 <tr>

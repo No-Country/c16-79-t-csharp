@@ -1,4 +1,4 @@
-import { Button, Card, Checkbox, Label, TextInput } from 'flowbite-react';
+import { Button, Card, Label, TextInput } from 'flowbite-react';
 import { useState } from 'react';
 import { useFetchLogin } from '../../Helpers/useFetch';
 import { useNavigate } from 'react-router-dom';
@@ -46,7 +46,6 @@ export const Login = () => {
     e.preventDefault()
     try {
       await fetchData()
-      //console.log(response)
       navigate("/");
       window.location.reload()
     } catch (error) {

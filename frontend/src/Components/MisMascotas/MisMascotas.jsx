@@ -6,14 +6,14 @@ import { HiUserCircle } from "react-icons/hi";
 import { BsCalendar2DateFill } from "react-icons/bs";
 import { GiWeight } from "react-icons/gi";
 import { MdOutlinePets } from "react-icons/md";
+import { useState,useEffect } from "react";
+import { useFetchGet } from "../../Helpers/useFetch.js" 
 import "./misMascotas.css";
-import { useEffect, useState } from "react";
-import { useFetchGet } from "../../Helpers/useFetch";
 
 export const MisMascotas = () => {
   const [info, setInfo] = useState([]);
 
-  // console.log("info", info)
+  
 
   const { fetchData } = useFetchGet("api/ClientUsers/me/pets");
 
@@ -22,9 +22,9 @@ export const MisMascotas = () => {
       if (localStorage.getItem("token")) {
         try {
           const respuesta = await fetchData();
-          // console.log("Data received:", respuesta.data);
+          
           const pruebaRes = respuesta.data;
-          //  console.log("pruebaRes", pruebaRes)
+          
           setInfo(pruebaRes);
         } catch (error) {
           console.error("Error fetching data:", error);
@@ -32,7 +32,7 @@ export const MisMascotas = () => {
       }
     };
     handleDatos();
-    // console.log("pruegaRes: ", info)
+   
   }, []);
 
   return (
@@ -58,7 +58,7 @@ export const MisMascotas = () => {
                     {d.name}
                   </ListGroup.Item>
                   <ListGroup.Item icon={BsCalendar2DateFill}>
-                    {d.age}
+                  {d.age}
                   </ListGroup.Item>
                   <ListGroup.Item icon={GiWeight}>{d.weight}</ListGroup.Item>
                   <ListGroup.Item icon={MdOutlinePets}>{d.race}</ListGroup.Item>
