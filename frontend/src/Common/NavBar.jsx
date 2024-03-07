@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Button, Dropdown, Navbar } from "flowbite-react";
 import { NavLink, useNavigate } from "react-router-dom";
 import  { useEffect, useState } from  'react';
@@ -107,9 +108,6 @@ const NavBar = () => {
             <NavLink to="/perfil">
               <Dropdown.Item>Perfil</Dropdown.Item>
             </NavLink>
-            <Dropdown.Item>
-              <NavLink to="/">Catalogo</NavLink>
-            </Dropdown.Item>
             <Dropdown.Divider />
             {/* Botón de cerrar sesión visible solo si el usuario está logueado */}
             {isLoggedIn && (
@@ -124,6 +122,11 @@ const NavBar = () => {
             {/* Enlace al inicio */}
             <NavLink to="/" className="text-base">
               Inicio
+            </NavLink>
+          </Navbar.Link>
+          <Navbar.Link>
+            <NavLink to="/catalogo" className="text-base">
+              Catálogo
             </NavLink>
           </Navbar.Link>
           {/* Enlace a la agenda visible solo si el usuario está logueado */}

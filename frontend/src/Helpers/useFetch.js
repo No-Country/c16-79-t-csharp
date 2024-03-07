@@ -120,7 +120,6 @@ export const useFetchPut = (endPoint, input) => {
           body: JSON.stringify(input),
         });
         const data = await response.json();
-        // localStorage.setItem("token", data.token);
         console.log(" responseee ",response)
         setState({
           data,
@@ -133,17 +132,43 @@ export const useFetchPut = (endPoint, input) => {
     }
   };
 
-  // useEffect(() => {
-  //   if(!endPoint){
-  //     return
-  //   }
-  //   fetchData();
-  //   //eslint-disable-next-line
-  // }, [])
-
   return {
    state,
-  fetchData
+    fetchData
   };
 };
 
+export const useFetchPatch = (endPoint) => {
+
+  const [state, setState] = useState({
+    data: "",
+  });
+
+    const fetchDataPatch = async () => {
+      try {
+        const response = await fetch(`${api_url}/${endPoint}`, {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",            
+            "Authorization" : localStorage.getItem("token") ? `Bearer ${localStorage.getItem("token")}` : ""
+          },
+          body: {},
+        });
+        const data = await response.json();
+        console.log(" responseee ",response)
+        setState({
+          data,
+        });
+
+    } catch (error) {
+      setState({
+        data: "",
+      });
+    }
+  };
+
+  return {
+   state,
+   fetchDataPatch
+  };
+};
