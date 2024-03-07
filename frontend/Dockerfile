@@ -8,6 +8,8 @@ RUN npm ci
 
 COPY . .
 
+RUN cat ./env-docker > ./.env
+
 RUN npm run build
 
 FROM nginx:alpine3.18 AS run

@@ -26,7 +26,7 @@ services:
     build: 
       context: ./backend
     ports:
-      - "4600:8080"
+      - "4900:8080"
     environment:
       - ConnectionStrings__DefaultConnection=Host=database-service;Username=postgres;Port=5432;Password=password;Database=veterinaria
     # env_file:

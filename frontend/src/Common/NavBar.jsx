@@ -118,37 +118,37 @@ const NavBar = () => {
           <Navbar.Toggle />
         </div>
         <Navbar.Collapse>
-          <Navbar.Link>
+
             {/* Enlace al inicio */}
-            <NavLink to="/" className="text-base">
+            <NavLink to="/" className="text-base hover:text-cyan-600 hover:scale-125 transition duration-150 ease-out hover:ease-in">
               Inicio
             </NavLink>
-          </Navbar.Link>
-          <Navbar.Link>
-            <NavLink to="/catalogo" className="text-base">
+
+
+            <NavLink to="/catalogo" className="text-base hover:text-cyan-600 hover:scale-125 transition duration-150 ease-out hover:ease-in">
               Catálogo
             </NavLink>
-          </Navbar.Link>
+
           {/* Enlace a la agenda visible solo si el usuario está logueado */}
           {isLoggedIn && (
-            <Navbar.Link>
-              <NavLink to="/agenda" className="text-base">
+
+              <NavLink to="/agenda" className="text-base hover:text-cyan-600 hover:scale-125 transition duration-150 ease-out hover:ease-in">
                 Agenda
               </NavLink>
-            </Navbar.Link>
+
           )}
-          <Navbar.Link>
+
             {/* Enlace a los servicios */}
-            <NavLink to="/servicios" className="text-base">
+            <NavLink to="/servicios" className="text-base hover:text-cyan-600 hover:scale-125 transition duration-150 ease-out hover:ease-in">
               Servicios
             </NavLink>
-          </Navbar.Link>
-          <Navbar.Link>
+
+
             {/* Enlace a la página "Quienes Somos" */}
-            <NavLink to="/quienessomos" className="text-base">
+            <NavLink to="/quienessomos" className="text-base hover:text-cyan-600 hover:scale-125 transition duration-150 ease-out hover:ease-in">
               Quienes Somos
             </NavLink>
-          </Navbar.Link>
+
           {/* Agregar otros enlaces aquí */}
         </Navbar.Collapse>
       </Navbar>
