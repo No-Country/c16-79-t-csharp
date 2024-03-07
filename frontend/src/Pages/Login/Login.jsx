@@ -5,17 +5,36 @@ import { useNavigate } from 'react-router-dom';
 
 export const Login = () => {
 
+  const [errors, setErrors] = useState({})
   const [input, setInput] = useState(
     {
       email: "",
       password: "",
     }
   )
+
+  const validate = (input) => {
+    let errors = {}
+
+    if (!/^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/.test(input.email)) {
+      errors.email = "Email inválido"
+    }
+    if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/.test(input.password)) {
+      errors.password = "Password inválido"
+    }
+
+    return errors
+  }
+
   const actualizarDatos = (e) => {
     setInput({
       ...input,
       [e.target.name]: e.target.value
     })
+    setErrors(validate({
+      ...input,
+      [e.target.name]: e.target.value
+    }))
   }
 
   const { fetchData } = useFetchLogin("api/UserAccount/login", input);
@@ -43,20 +62,21 @@ export const Login = () => {
         <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
           <div>
             <div className="mb-2 block">
-              <Label htmlFor="email1" value="Your email" />
+              <Label htmlFor="email1" value="Email" />
             </div>
             <TextInput
               id="email1"
               type="email"
-              placeholder="name@flowbite.com"
+              placeholder="name@mail.com"
               required
               onChange={actualizarDatos}
               name="email"
             />
+            {errors.email && <p style={{ color: "red" }}>{errors.email}</p>}
           </div>
           <div>
             <div className="mb-2 block">
-              <Label htmlFor="password1" value="Your password" />
+              <Label htmlFor="password1" value="Contraseña" />
             </div>
             <TextInput
               id="password1"
@@ -64,12 +84,10 @@ export const Login = () => {
               required
               onChange={actualizarDatos}
               name="password" />
+            {errors.password && <p style={{ color: "red" }}>{errors.password}</p>}
           </div>
-          <div className="flex items-center gap-2">
-            <Checkbox id="remember" />
-            <Label htmlFor="remember">Remember me</Label>
-          </div>
-          <Button type="submit">Submit</Button>
+
+          <Button type="submit" disabled={errors.email || errors.password}> Iniciar sesión</Button>
         </form>
       </Card>
     </div>
