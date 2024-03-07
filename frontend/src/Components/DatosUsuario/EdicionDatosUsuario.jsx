@@ -141,7 +141,7 @@ export const EdicionDatosUsuario = ({
                 defaultValue={telefono}
                 name="telefono"
                 onChange={actualizarDatos}
-                ref={inputRefTel}
+                ref={inputReftel}
               />
             </div>
             {/* <div className="flex justify-between">
