@@ -8,7 +8,7 @@ import { CargarMascota } from "../../Components/MisMascotas/CargarMascota";
 import { MisMascotas } from "../../Components/MisMascotas/MisMascotas";
 import DatosUsuario from "../../Components/DatosUsuario/DatosUsuario";
 
-export const Perfil = ({mascotasData}) => {
+export const Perfil = () => {
   return (
     <div>
       <Tabs aria-label="Tabs with icons" style="underline">
@@ -23,7 +23,7 @@ export const Perfil = ({mascotasData}) => {
           <HistorialMedico />
         </Tabs.Item>        
         <Tabs.Item title="Turnos" icon={HiCalendar}>
-          <Turnos mascotasData={mascotasData}/>
+          <Turnos />
         </Tabs.Item>
       </Tabs>
     </div>

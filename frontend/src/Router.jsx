@@ -12,41 +12,13 @@ import { Login } from "./Pages/Login/Login";
 import { Registro } from "./Pages/Registro/Registro";
 
 
-import { useFetchGet } from "./Helpers/useFetch.js"
-import { useEffect, useState } from "react";
-
 export const Router = () => {
-
-  const [info, setInfo] = useState([]);
-
-  // console.log("info", info)
-
-  const { fetchData } = useFetchGet("api/ClientUsers/me/pets");
-
-  useEffect(() => {
-    const handleDatos = async () => {
-      if (localStorage.getItem("token")) {
-        try {
-          const respuesta = await fetchData();
-          // console.log("Data received:", respuesta.data);
-          const pruebaRes = respuesta.data;
-          console.log("pruebaRes", pruebaRes);
-          setInfo(pruebaRes);
-          console.log("nombre mascota desde id: ", info);
-        } catch (error) {
-          console.error("Error fetching data:", error);
-        }
-      }
-    };
-    handleDatos();
-    // console.log("pruegaRes: ", info)
-  }, []);
 
 
   return (
     <Routes>
       <Route path="/" element={<Home />} />
-      <Route path="/perfil" element={<Perfil mascotasData={info} />} />
+      <Route path="/perfil" element={<Perfil />} />
       <Route path="/catalogo" element={<Catalogo />} />
       <Route path="/adoptar" element={<Adoptar />} />
       <Route path="/agenda" element={<Agenda />} />
