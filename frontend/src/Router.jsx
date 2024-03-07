@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Route, Routes } from "react-router-dom";
 import { Home } from "./Pages/Home/Home";
 import { Catalogo } from "./Pages/Catalogo/Catalogo";
@@ -9,6 +10,7 @@ import { QuieneSomos } from "./Pages/QuienesSomos/QuieneSomos";
 import { Perfil } from './Pages/Perfil/Perfil'
 import { Login } from "./Pages/Login/Login";
 import { Registro } from "./Pages/Registro/Registro";
+
 
 import { useFetchGet } from "./Helpers/useFetch.js"
 import { useEffect, useState } from "react";

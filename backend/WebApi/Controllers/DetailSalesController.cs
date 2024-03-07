@@ -5,6 +5,7 @@ using Veterinaria.Application.Dtos;
 using Veterinaria.Application.Dtos.Wrappers;
 using Veterinaria.Domain.Models;
 using Veterinaria.Domain.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebApi.Controllers
 {
@@ -20,6 +21,7 @@ namespace WebApi.Controllers
             _mapper = mapper;
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public async Task<ActionResult<ResponseSucceded<IEnumerable<DetailSaleDto>>>> GetAll()
         {
@@ -32,6 +34,7 @@ namespace WebApi.Controllers
             );
         }
 
+        [Authorize(Roles = "Admin, Cliente")]
         [HttpGet("{id}")]
         public async Task<ActionResult<ResponseSucceded<DetailSaleDto>>> GetById(int id)
         {
@@ -40,6 +43,7 @@ namespace WebApi.Controllers
             return Ok(new ResponseSucceded<DetailSaleDto>((int)HttpStatusCode.OK, _mapper.Map<DetailSaleDto>(detailSale)));
         }
 
+        [Authorize(Roles = "Admin, Cliente")]
         [HttpPost]
         public async Task<ActionResult<ResponseSucceded<DetailSaleDto>>> Create([FromBody] DetailSaleCreateDto detailSaleCreateDto)
         {
@@ -48,6 +52,7 @@ namespace WebApi.Controllers
             return Ok(new ResponseSucceded<DetailSaleDto>((int)HttpStatusCode.OK, _mapper.Map<DetailSaleDto>(detailSale)));
         }
 
+        [Authorize(Roles = "Admin, Cliente")]
         [HttpPut("{id}")]
         public async Task<ActionResult<ResponseSucceded<DetailSaleDto>>> Update(int id, [FromBody] DetailSaleUpdateDto detailSaleUpdateDto)
         {
@@ -56,6 +61,7 @@ namespace WebApi.Controllers
             return Ok(new ResponseSucceded<DetailSaleDto>((int)HttpStatusCode.OK, _mapper.Map<DetailSaleDto>(detailSale)));
         }
 
+        [Authorize(Roles = "Admin, Cliente")]
         [HttpDelete("{id}")]
         public async Task<ActionResult<ResponseSucceded<DetailSaleDto>>> Delete(int id)
         {

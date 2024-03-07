@@ -1,12 +1,7 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 using Veterinaria.Application.Dtos;
 using Veterinaria.Application.Authentication;
-using Veterinaria.Domain.Repositories;
 using Veterinaria.Application.CustomeException;
 
 namespace WebApi.Controllers
@@ -42,10 +37,6 @@ namespace WebApi.Controllers
         public async Task<ActionResult<UserAccountResponseLoginDTO>> Login([FromBody] UserAccountLoginDTO userAccountLoginDTO)
         {
             var loginResponse = await _authenticationService.Login(userAccountLoginDTO);
-            // if (loginResponse.ClientUser is null || string.IsNullOrEmpty(loginResponse.Token))
-            // {
-            //     throw new UnauthorizedException("Nombre de usuario o contraseña incorrectos");
-            // }
             return Ok(loginResponse);
         }
     }

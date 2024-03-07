@@ -21,7 +21,7 @@ export const Perfil = ({mascotasData}) => {
         </Tabs.Item>
         <Tabs.Item title="Historial médico" icon={HiFolderOpen}>
           <HistorialMedico />
-        </Tabs.Item>
+        </Tabs.Item>        
         <Tabs.Item title="Turnos" icon={HiCalendar}>
           <Turnos mascotasData={mascotasData}/>
         </Tabs.Item>

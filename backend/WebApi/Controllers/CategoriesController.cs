@@ -1,4 +1,5 @@
 using System.Net;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Veterinaria.Application.Dtos;
 using Veterinaria.Application.Dtos.Wrappers;
@@ -19,7 +20,7 @@ public class CategoriesController : ControllerBase
     }
 
 
-    [HttpGet] // INFO: Sin autorizacion
+    [HttpGet]
     public async Task<ActionResult<ResponseSucceded<IEnumerable<CategorieDto>>>> GetAll()
     {
         List<Categorie> catetegories = await _categorieService.GetAllAsync();
@@ -31,30 +32,31 @@ public class CategoriesController : ControllerBase
         );
     }
 
-    [HttpGet("{id}")] // INFO: Sin autorizacion
+    [HttpGet("{id}")]
     public async Task<ActionResult<ResponseSucceded<CategorieDto>>> GetById(int id)
     {
         Categorie categorie = await _categorieService.GetByIdAsync(id);
-
-        //TODO: usar AutoMapper
         return Ok(new ResponseSucceded<CategorieDto>((int)HttpStatusCode.OK, new CategorieDto(categorie.Id, categorie.Name)));
     }
 
-    [HttpPost] // INFO: Solo Admin
+    [Authorize(Roles = "Admin")]
+    [HttpPost]
     public async Task<IActionResult> Create([FromBody] CategorieCreateDto createDto)
     {
         Categorie categorie = await _categorieService.CreateAsync(createDto.Name);
         return Created();
     }
 
-    [HttpPut("{id}")] // INFO: Solo Admin
+    [Authorize(Roles = "Admin")]
+    [HttpPut("{id}")]
     public async Task<IActionResult> Update(int id, [FromBody] CategorieCreateDto updateDto)
     {
         await _categorieService.UpdateAsync(id, updateDto.Name);
         return NoContent();
     }
 
-    [HttpDelete("{id}")] // INFO: Solo Admin
+    [Authorize(Roles = "Admin")]
+    [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(int id)
     {
         await _categorieService.DeleteAsync(id);
