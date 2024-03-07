@@ -2,7 +2,6 @@
 import { useEffect, useState } from "react";
 import { SeleccioneSuMascota } from "../../Components/SeleccioneSuMacosta/SeleccioneSuMascota";
 import SeleccionEstudio from "../../Components/SeleccionEstudio/SeleccionEstudio";
-// import { ToastAgenda } from "../../Components/ToastAgenda/ToastAgenda";
 import { useFetchPost } from "../../Helpers/useFetch";
 import { SelecFechaHoraTurno } from "../../Components/SelecFechaHoraTurno/SelecFechaHoraTurno";
 import { Button, Toast } from "flowbite-react";
@@ -26,12 +25,6 @@ export const Agenda = () => {
   const receiveDataFromFecha = (dataF) => {
     setDataFromFecha(dataF);
   };
-
-  useEffect(() => {
-    console.log("recibiendo mascota: ", dataFromMascota);
-    console.log("recibiendo servicio: ", dataFromServicio);
-    console.log("recibiendo fecha y hora: ", dataFromFecha);
-  }, [dataFromMascota, dataFromServicio, dataFromFecha]);
 
   // Lógica del POST
 
@@ -59,8 +52,6 @@ export const Agenda = () => {
 
   const guardarAgenda = () => {
     const valoresInput = Object.values(input);
-    console.log("valores inputs y la concha de t: ");
-    console.log("input en guardar agenda: ", input);
     const todosCompletos = valoresInput.some((valor) => valor !== null);
     if (todosCompletos) {
       fetchData();
@@ -70,7 +61,10 @@ export const Agenda = () => {
   const handleClick = () => {
     setShowToast((state) => !state);
     guardarAgenda();
-    window.location.reload()
+    setTimeout(()=>{
+      window.location.reload()
+    }, 1500)
+    
   };
 
   return (
