@@ -9,59 +9,66 @@ import { MdOutlinePets } from "react-icons/md";
 import "./misMascotas.css";
 
 export const MisMascotas = () => {
+  const [info, setInfo] = useState([]);
 
+  // console.log("info", info)
 
-  const [info, setInfo] = useState([])
-
-  console.log("info", info)
-
-  const { fetchData } = useFetchGet("api/ClientUsers/me/pets")
+  const { fetchData } = useFetchGet("api/ClientUsers/me/pets");
 
   useEffect(() => {
     const handleDatos = async () => {
       if (localStorage.getItem("token")) {
         try {
-          const respuesta = await fetchData()
+          const respuesta = await fetchData();
           // console.log("Data received:", respuesta.data);
-          const pruebaRes = respuesta.data
-          console.log("pruebaRes", pruebaRes)
-          setInfo(pruebaRes)
+          const pruebaRes = respuesta.data;
+          //  console.log("pruebaRes", pruebaRes)
+          setInfo(pruebaRes);
         } catch (error) {
           console.error("Error fetching data:", error);
         }
       }
-
     };
     handleDatos();
     // console.log("pruegaRes: ", info)
   }, []);
 
-
   return (
-    <div className="container max-w-7xl flex justify-center gap-10 mt-10 mb-10">
-      {info.length > 0 ? info?.map((d) => {
-        return (
-          <Card
-            key={d.id}
-            className="max-w-sm cardMascota"
-            imgAlt="Meaningful alt text for an image that is not purely decorative "
-            imgSrc={d.photo}
-          >
-            <div className="flex justify-center ">
-              <ListGroup className="w-48">
-                <ListGroup.Item icon={HiUserCircle} active>
-                  {d.name}
-                </ListGroup.Item>
-                <ListGroup.Item icon={BsCalendar2DateFill}>
-                  {d.edad}
-                </ListGroup.Item>
-                <ListGroup.Item icon={GiWeight}>{d.weight}</ListGroup.Item>
-                <ListGroup.Item icon={MdOutlinePets}>{d.race}</ListGroup.Item>
-              </ListGroup>
-            </div>
-          </Card>
-        );
-      }) : <p>no tiene mascotas</p>}
+    <div className="container max-w-7xl mx-auto flex justify-center gap-10 mt-10 mb-10 flex-wrap content-center">
+      {info.length > 0 ? (
+        info?.map((d) => {
+          return (            
+            <Card
+              key={d.id}
+              className=" w-56 cardMascota"
+
+              /*             imgAlt="Meaningful alt text for an image that is not purely decorative "
+            imgSrc={d.photo} */
+            >
+              <img
+                src={d.photo}
+                alt="Meaningful alt text for an image that is not purely decorative"
+                style={{ height: "300px", objectFit: "cover",}}
+              />
+              <div className="flex justify-center ">
+                <ListGroup className="w-48">
+                  <ListGroup.Item icon={HiUserCircle} active>
+                    {d.name}
+                  </ListGroup.Item>
+                  <ListGroup.Item icon={BsCalendar2DateFill}>
+                    {d.age}
+                  </ListGroup.Item>
+                  <ListGroup.Item icon={GiWeight}>{d.weight}</ListGroup.Item>
+                  <ListGroup.Item icon={MdOutlinePets}>{d.race}</ListGroup.Item>
+                </ListGroup>
+              </div>
+            </Card>           
+
+          );
+        })
+      ) : (
+        <p>no tiene mascotas</p>
+      )}
     </div>
   );
 };

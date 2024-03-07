@@ -2,14 +2,14 @@
 /* eslint-disable react/prop-types */
 "use client";
 
-import { Button, Checkbox, Label, Modal, TextInput } from "flowbite-react";
+import { Button, Label, Modal, TextInput } from "flowbite-react";
 import { useState, useRef, useEffect } from "react";
 import { useFetchPut } from "../../Helpers/useFetch";
 
 export const EdicionDatosUsuario = ({
   nombre,
   telefono,
-  nombreUsu,
+  usuario,
   apellido,
 }) => {
   // usamos useState para controlar el estado del input del formulario.
@@ -24,8 +24,8 @@ export const EdicionDatosUsuario = ({
   const inputRefName = useRef(null);
   const inputRefApellido = useRef(null);
   const inputRefUserName = useRef(null);
-  const inputRefTel = useRef(null);
-
+  const inputReftel = useRef(null);
+  
   const [openModal, setOpenModal] = useState(false);
 
   //desestructuro lo que necesito del usefetchput
@@ -33,13 +33,7 @@ export const EdicionDatosUsuario = ({
 
   //funcion dentro del  onClick para guardar los datos editados
   const editarDatos = async () => {
-    console.log(
-      "lognuevo",
-      usuarioValue,
-      telefonoValue,
-      nombreValue,
-      apellidoValue
-    );
+    console.log("lognuevo", usuarioValue, telefonoValue, nombreValue, apellidoValue);
     //pasa los campos editables al body del custom hook
     setInput((prevInput) => ({
       ...prevInput,
@@ -64,26 +58,24 @@ export const EdicionDatosUsuario = ({
   }, [input]);
 
   //declaro variables para los campos editables
-
   let nombreValue;
   let apellidoValue;
-  let telefonoValue;
   let usuarioValue;
+  let telefonoValue;
 
   const actualizarDatos = () => {
     //este el onchange que lee el valor de los inputs despues de haberlos cambiado y los guarda en las variables que declare arriba
-
     nombreValue = inputRefName.current.value;
     apellidoValue = inputRefApellido.current.value;
-    telefonoValue = inputRefTel.current.value;
     usuarioValue = inputRefUserName.current.value;
+    telefonoValue = inputReftel.current.value;
   };
 
   function onCloseModal() {
     setOpenModal(false);
   }
   return (
-    <div>
+    <div className=" mt-5">
       <Button onClick={() => setOpenModal(true)}>Editar datos</Button>
       <Modal show={openModal} size="md" onClose={onCloseModal} popup>
         <Modal.Header />
@@ -92,58 +84,58 @@ export const EdicionDatosUsuario = ({
             <h3 className="text-xl font-medium text-gray-900 dark:text-white">
               Edición de datos
             </h3>
-
             <div>
               <div className="mb-2 block">
-                <Label htmlFor="name" value="Nombre" />
+                <Label htmlFor="nombre" value="Nombre" />
               </div>
               <TextInput
-                id="name"
+                id="nombre"
                 placeholder="Nombre"
-                defaultValue={nombre}
-                onChange={actualizarDatos}
+                type="text"
                 required
+                defaultValue={nombre}
                 name="nombre"
+                onChange={actualizarDatos}
                 ref={inputRefName}
               />
             </div>
-
             <div>
               <div className="mb-2 block">
-                <Label htmlFor="name" value="Apellido" />
+                <Label htmlFor="text" value="Apellido" />
               </div>
               <TextInput
                 id="apellido"
                 placeholder="Apellido"
-                defaultValue={apellido}
-                onChange={actualizarDatos}
+                type="text"
                 required
-                name="Apellido"
+                defaultValue={apellido}
+                name="apellido"
+                onChange={actualizarDatos}
                 ref={inputRefApellido}
               />
             </div>
-
             <div>
               <div className="mb-2 block">
-                <Label htmlFor="username" value="Nombre Usuario" />
+                <Label htmlFor="text" value="Usuario" />
               </div>
               <TextInput
-                id="username"
-                placeholder="Nombre de usuario"
-                defaultValue={nombreUsu}
-                onChange={actualizarDatos}
+                id="usuario"
+                placeholder="Usuario"
+                type="text"
                 required
-                name="nombreusuario"
+                defaultValue={usuario}
+                name="usuario"
+                onChange={actualizarDatos}
                 ref={inputRefUserName}
               />
             </div>
-
             <div>
               <div className="mb-2 block">
-                <Label htmlFor="phonenumber" value="Teléfono" />
+                <Label htmlFor="text" value="Teléfono" />
               </div>
               <TextInput
-                id="phonenumber"
+                id="telefono"
+                placeholder="Telefono"
                 type="text"
                 required
                 defaultValue={telefono}
@@ -152,8 +144,7 @@ export const EdicionDatosUsuario = ({
                 ref={inputRefTel}
               />
             </div>
-
-            <div className="flex justify-between">
+            {/* <div className="flex justify-between">
               <div className="flex items-center gap-2">
                 <Checkbox id="remember" />
                 <Label htmlFor="remember">Remember me</Label>
@@ -164,13 +155,11 @@ export const EdicionDatosUsuario = ({
               >
                 Lost Password?
               </a>
-            </div>
-
+            </div> */}
             <div className="w-full">
               <Button onClick={editarDatos}>Guardar cambios</Button>
             </div>
-
-            <div className="flex justify-between text-sm font-medium text-gray-500 dark:text-gray-300">
+            {/* <div className="flex justify-between text-sm font-medium text-gray-500 dark:text-gray-300">
               Not registered?&nbsp;
               <a
                 href="#"
@@ -178,7 +167,7 @@ export const EdicionDatosUsuario = ({
               >
                 Create account
               </a>
-            </div>
+            </div> */}
           </div>
         </Modal.Body>
       </Modal>

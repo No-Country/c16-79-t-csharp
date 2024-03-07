@@ -22,12 +22,14 @@ export const Login = () => {
   const navigate = useNavigate()
 
 
+
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
       await fetchData()
       //console.log(response)
       navigate("/");
+      window.location.reload()
     } catch (error) {
       console.log(error)
     }

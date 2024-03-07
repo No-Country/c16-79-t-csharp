@@ -1,9 +1,9 @@
-.imagenLogo img{
+.imagenLogo .logoImg img{
     height: 150px;
 }
 
-.imagenLogo div {
+.colaboradores a{
     display: flex;
-    align-items: center;
-    justify-content: center;
+    align-items: end;
+    justify-content: start;
 }

@@ -519,6 +519,7 @@ COPY public."AspNetUserLogins" ("LoginProvider", "ProviderKey", "ProviderDisplay
 
 COPY public."AspNetUserRoles" ("UserId", "RoleId") FROM stdin;
 ad9b8391-4826-408b-811e-1414ad82f43b	b6e5a8f0-1ea0-4eea-bc18-c3ea0c9233f0
+c81f94a9-c2cf-4452-baf2-faf2e3e7c226	1f7cf397-9221-429c-8811-e04275e05081
 \.
 
 
@@ -536,6 +537,7 @@ COPY public."AspNetUserTokens" ("UserId", "LoginProvider", "Name", "Value") FROM
 
 COPY public."AspNetUsers" ("Id", "UserName", "NormalizedUserName", "Email", "NormalizedEmail", "EmailConfirmed", "PasswordHash", "SecurityStamp", "ConcurrencyStamp", "PhoneNumber", "PhoneNumberConfirmed", "TwoFactorEnabled", "LockoutEnd", "LockoutEnabled", "AccessFailedCount") FROM stdin;
 ad9b8391-4826-408b-811e-1414ad82f43b	admin@email.com	ADMIN@EMAIL.COM	admin@email.com	ADMIN@EMAIL.COM	f	AQAAAAIAAYagAAAAEDtiF4rP5KdCBHbt3q18aRUN2GAtc2jlEQDZopFV5jS8+FhOUX3MaoowQhQDx6Wibg==	2MN53JTC2RB5EMD4K3SJSPFGIDD5AD4U	e3041463-ca70-4174-86bb-9d27f1c85292	\N	f	f	\N	t	0
+c81f94a9-c2cf-4452-baf2-faf2e3e7c226	agustin@email.com	AGUSTIN@EMAIL.COM	agustin@email.com	AGUSTIN@EMAIL.COM	f	AQAAAAIAAYagAAAAEB6PKgJK2vKQKCN2fwN8ic9WH+DKyaR+pqogfT1kyoBjSKjAQ5J0hVCzD5Z1adHnkQ==	RRVLDFKR4KOHMHP6WDSGAG7D7ZEXFJ6B	d1a6d3e1-e4de-42ed-acc6-a5ba040ce44e	\N	f	f	\N	t	0
 \.
 
 
@@ -590,6 +592,7 @@ COPY public."Categories" ("Id", "Name") FROM stdin;
 
 COPY public."ClientUsers" ("Id", "Name", "LastName", "UserName", "PhoneNumber", "UserAccountId") FROM stdin;
 1					ad9b8391-4826-408b-811e-1414ad82f43b
+2	Miguel	De la Fuente	ElBartoXD	123-23535-5813	c81f94a9-c2cf-4452-baf2-faf2e3e7c226
 \.
 
 
@@ -598,6 +601,13 @@ COPY public."ClientUsers" ("Id", "Name", "LastName", "UserName", "PhoneNumber", 
 --
 
 COPY public."Dates" ("Id", "Time", "ServiceId", "PetId", "StateDate") FROM stdin;
+1	2024-03-07 18:00:00+00	2	1	3
+2	2024-03-08 19:00:00+00	3	2	3
+3	2024-03-03 19:00:00+00	1	4	3
+4	2024-03-09 15:00:00+00	3	3	3
+5	2024-03-11 16:30:00+00	2	3	3
+6	2024-03-15 18:30:00+00	1	4	3
+7	2024-03-20 18:30:00+00	3	2	3
 \.
 
 
@@ -614,6 +624,11 @@ COPY public."DetailSales" ("Id", "SubTotal", "Quantity", "SaleId", "ProductId") 
 --
 
 COPY public."MedicalHistories" ("Id", "Diagnostic", "Medic", "Time", "PetId") FROM stdin;
+1	Fractura de pata	Dr. Pérez	2024-03-05 08:15:23.456+00	3
+2	Gastritis	Dra. González	2024-03-05 14:30:45.789+00	2
+3	Infección de oído	Dr. Sánchez	2024-03-05 11:45:12.123+00	4
+4	Conjuntivitis	Dra. Martínez	2024-03-05 17:20:35.987+00	1
+5	Deshidratación	Dr. López	2024-03-05 19:00:59.321+00	3
 \.
 
 
@@ -622,6 +637,10 @@ COPY public."MedicalHistories" ("Id", "Diagnostic", "Medic", "Time", "PetId") FR
 --
 
 COPY public."Pets" ("Id", "Name", "Type", "Race", "Birthday", "Weight", "Photo", "ClientUserId") FROM stdin;
+1	Max	Perro	Labrador Retriever	2023-10-12	4	https://i.pinimg.com/736x/d7/e6/50/d7e650e5dd4f9f4cdf3c07a483c83dfb.jpg	2
+2	Luna	Gato	Otros	2020-04-25	4	https://i.pinimg.com/736x/da/9f/4a/da9f4a89b3eeefedc675aa25536235d8.jpg	2
+3	Mochi	Gato	Siamés	2022-11-15	4	https://i.pinimg.com/736x/d6/eb/28/d6eb285bcd26c45009e68f0581d87e36.jpg	2
+4	Sven	Perro	Bulldog Francés	2020-02-03	9	https://i.pinimg.com/736x/a2/91/dc/a291dc4f869e5cae10b4623d04b8742d.jpg	2
 \.
 
 
@@ -705,14 +724,14 @@ SELECT pg_catalog.setval('public."Categories_Id_seq"', 8, true);
 -- Name: ClientUsers_Id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public."ClientUsers_Id_seq"', 1, true);
+SELECT pg_catalog.setval('public."ClientUsers_Id_seq"', 2, true);
 
 
 --
 -- Name: Dates_Id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public."Dates_Id_seq"', 1, false);
+SELECT pg_catalog.setval('public."Dates_Id_seq"', 7, true);
 
 
 --
@@ -726,14 +745,14 @@ SELECT pg_catalog.setval('public."DetailSales_Id_seq"', 1, false);
 -- Name: MedicalHistories_Id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public."MedicalHistories_Id_seq"', 1, false);
+SELECT pg_catalog.setval('public."MedicalHistories_Id_seq"', 5, true);
 
 
 --
 -- Name: Pets_Id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public."Pets_Id_seq"', 1, false);
+SELECT pg_catalog.setval('public."Pets_Id_seq"', 4, true);
 
 
 --

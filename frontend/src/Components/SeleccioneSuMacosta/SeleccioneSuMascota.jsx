@@ -1,12 +1,14 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
-import { Dropdown } from "flowbite-react";
+import { Select, Label } from "flowbite-react";
 import { useFetchGet } from "../../Helpers/useFetch";
 import { useEffect, useState } from "react";
 
-export const SeleccioneSuMascota = () => {
+export const SeleccioneSuMascota = ({ sendDataToParent }) => {
   const [info, setInfo] = useState([]);
+  const [valueMascota, setValueMascota] = useState();
 
   console.log("info", info);
 
@@ -27,17 +29,34 @@ export const SeleccioneSuMascota = () => {
     handleDatos();
   }, []);
 
+  //Lógica para enviar datos al padre
+
+  const sendData = (e) => {
+    setValueMascota(e.target.value);
+  };
+
+  useEffect(() => {
+    sendDataToParent(valueMascota); // Invocando la función del componente padre y pasando datos como argumento
+    console.log("value mascota: ", valueMascota);
+  }, [valueMascota]);
+
   return (
     <div>
-      <Dropdown label="Seleccione su mascota" dismissOnClick={false}>
-        {info.length > 0 ? (
-          info?.map((d) => {
-            return <Dropdown.Item key={d.id}>{d.name}</Dropdown.Item>;
-          })
-        ) : (
-            <Dropdown.Item >No tiene mascotas cargadas </Dropdown.Item>
-        )}
-      </Dropdown>
+      <div className="max-w-md">
+        <div className="mb-2 block">
+          <Label htmlFor="mascota" value="Seleccione su mascota" />
+        </div>
+        <Select id="mascota" required onChange={sendData}>
+          <option>--</option>
+          {info.length > 0 ? (
+            info?.map((d) => {
+              return <option value={d.id} key={d.id}>{d.name}</option>;
+            })
+          ) : (
+            <option>No tiene mascotas cargadas </option>
+          )}
+        </Select>
+      </div>
     </div>
   );
 };

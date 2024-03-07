@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 using Veterinaria.Application.CustomeException;
 using Veterinaria.Domain.Models;
 using Veterinaria.Domain.Repositories;
@@ -6,12 +7,12 @@ using Veterinaria.Domain.Services;
 
 namespace Veterinaria.Application.Services;
 
-public class DateService : IDateServise
+public class DateService : IDateService
 {
     private readonly IDateRepository _repository;
     private readonly IServiceService _servicesService;
     private readonly IPetRepository _petRepository;
-    public DateService(IDateRepository repository, IServiceService servicesService,IPetRepository petRepository)
+    public DateService(IDateRepository repository, IServiceService servicesService, IPetRepository petRepository)
     {
         _repository = repository;
         _servicesService = servicesService;
@@ -25,10 +26,11 @@ public class DateService : IDateServise
     public async Task<Date> CreateAsync(DateTime time, int serviceId, int petId)
     {
         await _servicesService.GetByIdAsync(serviceId);
-        
+
         var pet = await _petRepository.FindByIdAsync(petId);
-        if (pet == null){
-            throw ResourceNotFoundException.NotFoundById<Pet,int>(petId);
+        if (pet == null)
+        {
+            throw ResourceNotFoundException.NotFoundById<Pet, int>(petId);
         }
         Date model = Date.Create(time, serviceId, petId);
         Date savedModel = await _repository.AddAsync(model);
@@ -59,11 +61,26 @@ public class DateService : IDateServise
     {
         await _servicesService.GetByIdAsync(serviceId);
         var pet = await _petRepository.FindByIdAsync(petId);
-        if (pet == null){
-            throw ResourceNotFoundException.NotFoundById<Pet,int>(petId);
+        if (pet == null)
+        {
+            throw ResourceNotFoundException.NotFoundById<Pet, int>(petId);
         }
         Date model = await GetByIdAsync(id);
         model.UpdateModel(time, serviceId, petId, state);
+        Date updatedModel = await _repository.UpdateAsync(model);
+        return updatedModel;
+    }
+    public async Task<List<Date>> GetAllByClientUser(int id)
+    {
+
+        return await _repository.FindAllByClientUserAsync(id);
+
+    }
+
+    public async Task<Date> CancelDate(int id)
+    {
+        Date model = await GetByIdAsync(id);
+        model.StateDate = DateState.Canceled;
         Date updatedModel = await _repository.UpdateAsync(model);
         return updatedModel;
     }

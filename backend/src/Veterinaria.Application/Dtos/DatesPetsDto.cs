@@ -1,13 +1,14 @@
-﻿using Veterinaria.Domain.Models;
+using Veterinaria.Domain.Models;
 
 namespace Veterinaria.Application.Dtos;
 
-public record DateDto(
+public record DatePetDto(
     int Id,
     DateTime Time,
     int ServiceId ,
+    string ServiceType,
     int PetId ,
+    string PetName,
     DateState StateDate,
     string StateName=""
 );
-

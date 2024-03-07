@@ -12,5 +12,6 @@ namespace Veterinaria.Domain.Services
         Task<List<Categorie>> GetCategoriesAsync(int id);
         Task<Product> DeleteCategoryAsync(int id, int? categoryId);
         Task<Product> AddCategoriesAsync(int id, List<int> CategoryIds);
+        Task<List<Product>> GetLastFiveProductsAsync();
     }
 }

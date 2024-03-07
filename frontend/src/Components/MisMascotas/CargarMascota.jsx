@@ -1,4 +1,4 @@
-import { Button, FileInput, Label, Select, TextInput } from "flowbite-react";
+import { Button, FileInput, Label, Select, TextInput, Spinner } from "flowbite-react";
 import { uploadFile } from "../../Helpers/CargarImagen";
 import { useEffect, useState } from "react";
 import { useFetchPost } from "../../Helpers/useFetch";
@@ -8,6 +8,7 @@ export const CargarMascota = ({ nombre, raza, tipo, edad, peso }) => {
 
   const [file, setFile] = useState(null);
   const [url, setUrl] = useState(null);
+  const [loader, setLoader] = useState(false)
 
   /* Desde aca trabajo en la carga de datos */
 
@@ -45,6 +46,7 @@ export const CargarMascota = ({ nombre, raza, tipo, edad, peso }) => {
         alert("Solo se permiten archivos de imagen.");
         return;
       }
+      setLoader(true)
       result = await uploadFile(file);
       setUrl(result);
       console.log(result);
@@ -52,11 +54,12 @@ export const CargarMascota = ({ nombre, raza, tipo, edad, peso }) => {
         ...prevInput,
         photo: result,
       }));
-      console.log("Lo que guarda del form: ", input);
+      setLoader(false)
+      console.log(input)
     } catch (error) {
       console.error(error);
     }
-  };
+  }
 
   //creo el useEffect para las acciones posteriores a la carga de datos, dado que setState es asincronico
   useEffect(() => {
@@ -67,11 +70,14 @@ export const CargarMascota = ({ nombre, raza, tipo, edad, peso }) => {
         console.log(url);
         console.log("verificarPost");
         setBoton(false);
-        fetchData();
+        fetchData()
       }
     }
+    // setLoader(false)
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [input, url]);
+  }, [input, url])
+
 
   return (
     <>
@@ -88,6 +94,7 @@ export const CargarMascota = ({ nombre, raza, tipo, edad, peso }) => {
             </div>
 
             {/* se pone temporalmente default value, para que sea editable se tiene que cambiar a value */}
+
             <TextInput
               id="nombre"
               name="name"
@@ -181,9 +188,20 @@ export const CargarMascota = ({ nombre, raza, tipo, edad, peso }) => {
               onChange={(e) => setFile(e.target.files[0])}
               name="photo"
             />
-            <Button color="light" onClick={updateFotoUrl}>
-              Cargar Foto
-            </Button>
+
+            {
+              !loader
+                ?
+                <Button color="light" onClick={updateFotoUrl} disabled={file === null}>Cargar Foto</Button>
+                :
+                <div className="flex flex-row gap-3">
+                  <Button>
+                    <Spinner aria-label="Spinner button example" size="sm" />
+                    <span className="pl-3">Cargando foto...</span>
+                  </Button>
+                </div>
+            }
+
           </div>
           <Button type="submit" disabled={boton}>
             Guardar
