@@ -39,11 +39,9 @@ export const TurnosCancelables = () => {
   //funcion para recolectar el id y ejecutar el patch para actualizar la lista de cancelados
 
   const recibirId = (id) => {
-    console.log(id);
+    console.log(id,"CONSOLELOG");
     setIdCancelar(id)
-    setTimeout(()=>{
-      window.location.reload()
-    }, 1500)
+     setTimeout(()=> {window.location.reload()},1000) 
   };
 
   useEffect(() => {
