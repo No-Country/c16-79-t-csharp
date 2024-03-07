@@ -1,7 +1,7 @@
 import { Card } from "flowbite-react";
-import perro_pata from "./mano-perro.jpg";
-import cat_vet from "./cat-vet.jpg";
-import cat_doc from "./cat-doc.jpg";
+import perro_pata from "./mano-perro.webp";
+import cat_vet from "./cat-vet.webp";
+import cat_doc from "./cat-doc.webp";
 
 export const QuieneSomos = () => {
   return (

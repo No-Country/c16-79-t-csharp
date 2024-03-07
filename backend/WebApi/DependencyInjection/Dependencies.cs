@@ -41,7 +41,7 @@ public static class Dependencies
 
     public static IServiceCollection AddDependencyApplication(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddScoped<IDateServise, DateService>();
+        services.AddScoped<IDateService, DateService>();
         services.AddScoped<IMedicalHistoryService, MedicalHistoryService>();
         services.AddScoped<IProductService, ProductService>();
         services.AddScoped<ISaleService, SaleService>();

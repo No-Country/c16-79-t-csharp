@@ -1,61 +1,57 @@
-import { Accordion } from 'flowbite-react';
+import {  Card } from 'flowbite-react';
+import { useEffect, useState } from "react";
+import { useFetchGet } from '../../Helpers/useFetch';
 
 export const HistorialMedico = () => {
+  const [historialMedico, setHistorialMedico] = useState([]);
+
+  const { fetchData } = useFetchGet("api/ClientUsers/me/pets/medicalhistories");
+
+  useEffect(() => {
+    const handleDatos = async () => {
+      if (localStorage.getItem("token")) {
+        try {
+          const data = await fetchData();
+          setHistorialMedico(data.data); // Assuming 'data' is an array
+          console.log(data.data[0].diagnostic, "historial medico");
+        } catch (error) {
+          console.error("Error fetching data:", error);
+        }
+      }
+    };
+    handleDatos();
+    //eslint-disable-next-line
+  }, []);
+
   return (
-    <>
-    <Accordion className='container w-4/5 mx-auto mt-10 mb-10'>
-      <Accordion.Panel>
-        <Accordion.Title>Vacunas</Accordion.Title>
-        <Accordion.Content>
-          <p className="mb-2 text-gray-500 dark:text-gray-400">
-          Tipo de vacuna, fecha de administración, próxima dosis
-          </p>
-
-        </Accordion.Content>
-      </Accordion.Panel>
-      <Accordion.Panel>
-        <Accordion.Title>Medicamentos</Accordion.Title>
-        <Accordion.Content>
-          <p className="mb-2 text-gray-500 dark:text-gray-400">
-          Nombre del medicamento, dosis, frecuencia, motivo de prescripción
-          </p>
-        </Accordion.Content>
-      </Accordion.Panel>
-      <Accordion.Panel>
-        <Accordion.Title>Cirugías o procedimientos realizados</Accordion.Title>
-        <Accordion.Content>
-          <p className="mb-2 text-gray-500 dark:text-gray-400">
-          Descripción, fecha
-          </p>
-        </Accordion.Content>
-      </Accordion.Panel>
-      <Accordion.Panel>
-        <Accordion.Title>Enfermedades previas</Accordion.Title>
-        <Accordion.Content>
-          <p className="mb-2 text-gray-500 dark:text-gray-400">
-          Descripción, tratamiento realizado
-          </p>
-
-        </Accordion.Content>
-      </Accordion.Panel>
-      <Accordion.Panel>
-        <Accordion.Title>Tratamientos antiparasitarios</Accordion.Title>
-        <Accordion.Content>
-          <p className="mb-2 text-gray-500 dark:text-gray-400">
-          Tipo de tratamiento, fecha de administración, próxima dosis
-          </p>
-        </Accordion.Content>
-      </Accordion.Panel>
-      <Accordion.Panel>
-        <Accordion.Title>Notas Adicionales</Accordion.Title>
-        <Accordion.Content>
-          <p className="mb-2 text-gray-500 dark:text-gray-400">
-          Notas adicionales o comentarios
-          </p>
-
-        </Accordion.Content>
-      </Accordion.Panel>
-    </Accordion>
-    </>
-  )
-}
+  
+    <div className='container flex gap-10 mx-auto flex-wrap justify-center'>
+    {historialMedico.map((item, index) => (
+      <Card key={index}  className="max-w-sm bg-[radial-gradient(ellipse_80%_80%at_50%-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))]">
+                
+        <p className="font-bold text-xl text-gray-700 dark:text-gray-400 text-center">
+          {item.petName}
+        </p> 
+        <h5 className="text-base  tracking-tight text-gray-600 dark:text-white">
+          Diagnóstico
+        </h5>
+        <p className="font-normal text-lg text-gray-800 dark:text-gray-800">
+          {item.diagnostic}
+        </p>
+        <h5 className="text-base  tracking-tight text-gray-600 dark:text-white">
+          Médico Veterinario
+        </h5>
+        <p className="font-normal text-lg text-gray-700 dark:text-gray-800">
+          {item.medic}
+        </p>
+        <h5 className="text-base tracking-tight text-gray-600 dark:text-white">
+          Fecha
+        </h5>
+        <p className="font-normal text-lg text-gray-700 dark:text-gray-800">
+          {(new Date(item.time)).toLocaleDateString()}
+        </p>        
+      </Card>
+    ))}
+    </div>
+  );
+};

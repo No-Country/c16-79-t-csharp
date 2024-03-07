@@ -50,7 +50,7 @@ export const TurnosCancelables = () => {
   
 
   return (
-    <>
+    <div>
       <h1 className="py-5 mb-4 text-2xl font-extrabold leading-none tracking-tight text-center text-gray-500 md:text-5xl lg:text-4xl dark:text-white">
         Turnos cancelables
       </h1>
@@ -101,6 +101,6 @@ export const TurnosCancelables = () => {
           </Table.Body>
         </Table>
       </div>
-    </>
+    </div>
   );
 };
