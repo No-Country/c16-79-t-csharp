@@ -98,7 +98,7 @@ export const Registro = () => {
                     <li>Una minúscula</li>
                     <li>Una mayúscula</li>
                     <li>Un número</li>
-                    <li>Un carácter especial: @$!%*?&</li>
+                    <li>Alguno de estos caracteres especiales: @$!%*?&</li>
                     <li>Longitud mínima de 6 caracteres</li>
                   </ul>
                 </div>
