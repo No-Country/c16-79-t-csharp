@@ -200,7 +200,7 @@ export const CargarMascota = ({ nombre, raza, tipo, edad, peso }) => {
             }
 
           </div>
-          <Button type="submit" disabled={boton}>Guardar</Button>
+          <Button type="button" disabled={boton} onClick={() => {setTimeout(() => {window.location.reload()}, 1000)}} >Guardar</Button>
         </form>
       </div>
 
