@@ -124,7 +124,6 @@ const NavBar = () => {
               Inicio
             </NavLink>
 
-
             <NavLink to="/catalogo" className="text-base hover:text-cyan-600 hover:scale-125 transition duration-150 ease-out hover:ease-in">
               Catálogo
             </NavLink>

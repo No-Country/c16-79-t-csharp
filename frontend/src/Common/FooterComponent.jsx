@@ -121,33 +121,41 @@ export const FooterComponent = () => {
                     rounded
                     className=" justify-start"
                   >
-                    <div className="space-y-1 font-medium dark:text-white">
-                      <div>Adrián lucero</div>
-                      <div className="text-sm text-gray-500 dark:text-gray-400">
-                        Backend Dev .Net c#
+                    <a target="_blank" href="https://github.com/Rixda">
+                      <div className="space-y-1 font-medium dark:text-white">
+                        <div>Adrián lucero</div>
+                        <div className="text-sm text-gray-500 dark:text-gray-400">
+                          Backend Dev .Net c#
+                        </div>
                       </div>
-                    </div>
+                    </a>
                   </Avatar>
                   <Avatar
                     img="https://github.com/AgusVolpe.png"
                     rounded
                     className=" justify-start"
                   >
-                    <div className="space-y-1 font-medium dark:text-white">
-                      <div>Agustin Volpe</div>
-                      <div className="text-sm text-gray-500 dark:text-gray-400">
-                        Backend Dev .Net c#
+                    <a
+                      target="_blank"
+                      href="https://www.linkedin.com/in/agustin-volpe/"
+                    >
+                      <div className="space-y-1 font-medium dark:text-white">
+                        <div>Agustin Volpe</div>
+                        <div className="text-sm text-gray-500 dark:text-gray-400">
+                          Backend Dev .Net c#
+                        </div>
                       </div>
-                    </div>
+                    </a>
                   </Avatar>
-                  <a
-                    href="https://www.linkedin.com/in/alefernandez88/"
-                    className="underline-offset-0"
+
+                  <Avatar
+                    img="https://github.com/alefernandez88.png"
+                    rounded
+                    className=" justify-start"
                   >
-                    <Avatar
-                      img="https://github.com/alefernandez88.png"
-                      rounded
-                      className=" justify-start"
+                    <a
+                      target="_blank"
+                      href="https://www.linkedin.com/in/alefernandez88/"
                     >
                       <div className="space-y-1 font-medium dark:text-white">
                         <div>Ale Fernandez</div>
@@ -155,80 +163,97 @@ export const FooterComponent = () => {
                           Frontend Dev React Js
                         </div>
                       </div>
-                    </Avatar>
-                  </a>
-
+                    </a>
+                  </Avatar>
                   <Avatar
                     img="https://github.com/kamilo042.png"
                     rounded
                     className=" justify-start"
                   >
-                    <div className="space-y-1 font-medium dark:text-white">
-                      <div>Camilo Pérez</div>
-                      <div className="text-sm text-gray-500 dark:text-gray-400">
-                        Frontend Dev React Js
+                    <a target="_blank" href="https://www.linkedin.com/in/camilo-perez-398b62186/">
+                      <div className="space-y-1 font-medium dark:text-white">
+                        <div>Camilo Pérez</div>
+                        <div className="text-sm text-gray-500 dark:text-gray-400">
+                          Frontend Dev React Js
+                        </div>
                       </div>
-                    </div>
+                    </a>
                   </Avatar>
                   <Avatar
                     img="https://github.com/CariCosta90.png"
                     rounded
                     className=" justify-start"
                   >
-                    <div className="space-y-1 font-medium dark:text-white">
-                      <div>Carina Costa</div>
-                      <div className="text-sm text-gray-500 dark:text-gray-400">
-                        Frontend Dev React Js
+                    <a target="_blank" href="https://www.linkedin.com/in/carina-costa-54891233/">
+                      <div className="space-y-1 font-medium dark:text-white">
+                        <div>Carina Costa</div>
+                        <div className="text-sm text-gray-500 dark:text-gray-400">
+                          Frontend Dev React Js
+                        </div>
                       </div>
-                    </div>
+                    </a>
                   </Avatar>
                   <Avatar
                     img="https://github.com/ant-villasante98.png"
                     rounded
                     className=" justify-start"
                   >
-                    <div className="space-y-1 font-medium dark:text-white">
-                      <div>Antonio Villasante</div>
-                      <div className="text-sm text-gray-500 dark:text-gray-400">
-                        Backend Dev .Net c#
+                    <a
+                      target="_blank"
+                      href="https://www.linkedin.com/in/helí-antonio-villasante-hilares-96465b263"
+                    >
+                      <div className="space-y-1 font-medium dark:text-white">
+                        <div>Antonio Villasante</div>
+                        <div className="text-sm text-gray-500 dark:text-gray-400">
+                          Backend Dev .Net c#
+                        </div>
                       </div>
-                    </div>
+                    </a>
                   </Avatar>
                   <Avatar
                     img="https://github.com/GuillermoCruz27.png"
                     rounded
                     className=" justify-start"
                   >
-                    <div className="space-y-1 font-medium dark:text-white">
-                      <div>Joaquin Cruz</div>
-                      <div className="text-sm text-gray-500 dark:text-gray-400">
-                        Backend Dev .Net c#
+                    <a target="_blank" href="http://www.linkedin.com/in/guillermo-joaquin-cruz">
+                      <div className="space-y-1 font-medium dark:text-white">
+                        <div>Joaquin Cruz</div>
+                        <div className="text-sm text-gray-500 dark:text-gray-400">
+                          Backend Dev .Net c#
+                        </div>
                       </div>
-                    </div>
+                    </a>
                   </Avatar>
                   <Avatar
                     img="https://github.com/Teche95.png"
                     rounded
                     className=" justify-start"
                   >
-                    <div className="space-y-1 font-medium dark:text-white">
-                      <div>Julián Techeira</div>
-                      <div className="text-sm text-gray-500 dark:text-gray-400">
-                        Frontend Dev React Js
+                    <a target="_blank" href="https://www.linkedin.com/in/gustavo-julian-techeira">
+                      <div className="space-y-1 font-medium dark:text-white">
+                        <div>Julián Techeira</div>
+                        <div className="text-sm text-gray-500 dark:text-gray-400">
+                          Frontend Dev React Js
+                        </div>
                       </div>
-                    </div>
+                    </a>
                   </Avatar>
                   <Avatar
                     img="https://github.com/MikhailIvanGarcilano.png"
                     rounded
                     className=" justify-start"
                   >
-                    <div className="space-y-1 font-medium dark:text-white">
-                      <div>Mikhail Garcilano</div>
-                      <div className="text-sm text-gray-500 dark:text-gray-400">
-                        Testing QA
+                    <a
+                      target="_blank"
+                      href="https://www.linkedin.com/in/camilo-perez-398b62186"
+                    >
+                      <div className="space-y-1 font-medium dark:text-white">
+                        <div>Mikhail Garcilano</div>
+                        <div className="text-sm text-gray-500 dark:text-gray-400">
+                          Testing QA
+                        </div>
                       </div>
-                    </div>
+                    </a>
                   </Avatar>
                 </div>
               </div>
